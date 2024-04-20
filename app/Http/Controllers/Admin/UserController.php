@@ -19,8 +19,7 @@ class UserController extends Controller
         $users = (new User())->newQuery()
             ->get();
 
-        // TODO прокинуть блейд
-        return view('', [
+        return view('profile.admin.index_users', [
             'users' => $users,
         ]);
     }

@@ -10,9 +10,10 @@ $router = app('router');
 Auth::routes();
 
 $router->get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
-$router->get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+$router->get('/profile', [App\Http\Controllers\HomeController::class, 'index'])->name('profile');
 
 $router->group([
     'middleware' => 'admin',
