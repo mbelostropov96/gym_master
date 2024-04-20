@@ -18,5 +18,8 @@ $router->group([
     'middleware' => 'admin',
     'prefix' => 'admin',
 ], function () use ($router) {
-    $router->get('user/index', [UserController::class, 'indexUser'])->name('admin.user.index');
+    $router->get('users', [UserController::class, 'index'])->name('users.index');
+    $router->get('users/{id}', [UserController::class, 'show'])->name('users.show');
+    $router->patch('users/{id}', [UserController::class, 'update'])->name('users.update');
+    $router->delete('users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
