@@ -10,5 +10,5 @@ return [
     'dashboard_hello' => 'Привет, :name, твоя роль - :role',
     'dashboard.users.header' => 'Пользователи',
     'dashboard.users_list' => 'Скисок пользователей',
-    'admin.index_users.header' => 'Скисок пользователей',
+    'admin.users.header' => 'Скисок пользователей',
 ];

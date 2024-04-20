@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 @if (Auth::user()->role === 'admin')
-                    @include('profile.admin.users')
+                    @include('profile.dashboard.users')
                 @endif
             </div>
         </div>
