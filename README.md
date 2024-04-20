@@ -3,8 +3,8 @@
 ```bash
 
 # clone the repo
-git clone ...
-cd gachi_gym
+git clone git@github.com:mbelostropov96/gym_master.git
+cd gym_master
 
 
 # install dependencies
