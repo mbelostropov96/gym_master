@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
+ * @property integer $id
  * @property string $first_name
  * @property string $middle_name
  * @property string $last_name
@@ -46,6 +47,7 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
+        'id' => 'integer',
         'first_name' => 'string',
         'middle_name' => 'string',
         'last_name' => 'string',

@@ -25,7 +25,6 @@ class EditUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required', 'integer', 'min:1'],
             'first_name' => ['string', 'max:255'],
             'middle_name' => ['string', 'max:255'],
             'last_name' => ['string', 'max:255'],

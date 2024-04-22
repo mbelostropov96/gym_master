@@ -6,12 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EditUserRequest;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
-use Illuminate\Contracts\Foundation\Application as ApplicationContract;
+use Illuminate\Http\RedirectResponse;
 
-class UserController extends Controller
+class UserAdminController extends Controller
 {
     /**
      * @return Renderable
@@ -41,13 +38,14 @@ class UserController extends Controller
     }
 
     /**
+     * @param int $id
      * @param EditUserRequest $request
-     * @return Factory|Application|View|ApplicationContract
+     * @return RedirectResponse
      */
-    public function update(EditUserRequest $request): Factory|Application|View|ApplicationContract
+    public function update(int $id, EditUserRequest $request): RedirectResponse
     {
         (new User())->newQuery()
-            ->findOrFail($request['id'])
+            ->findOrFail($id)
             ->update($request->validated());
 
         return redirect('');
@@ -55,9 +53,9 @@ class UserController extends Controller
 
     /**
      * @param int $id
-     * @return Factory|Application|View|ApplicationContract
+     * @return RedirectResponse
      */
-    public function destroy(int $id): Factory|Application|View|ApplicationContract
+    public function destroy(int $id): RedirectResponse
     {
         (new User())->newQuery()
             ->findOrFail($id)
