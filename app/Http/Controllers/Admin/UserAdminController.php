@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EditUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -16,6 +16,10 @@ class UserAdminController extends Controller
     public function index(): Renderable
     {
         $users = (new User())->newQuery()
+            ->with([
+                'clientInfo',
+                'instructorInfo',
+            ])
             ->get();
 
         return view('profile.admin.users', [
@@ -30,6 +34,10 @@ class UserAdminController extends Controller
     public function show(int $id): Renderable
     {
         $user = (new User())->newQuery()
+            ->with([
+                'clientInfo',
+                'instructorInfo',
+            ])
             ->findOrFail($id);
 
         return view('', [
@@ -39,14 +47,16 @@ class UserAdminController extends Controller
 
     /**
      * @param int $id
-     * @param EditUserRequest $request
+     * @param UpdateUserRequest $request
      * @return RedirectResponse
      */
-    public function update(int $id, EditUserRequest $request): RedirectResponse
+    public function update(int $id, UpdateUserRequest $request): RedirectResponse
     {
+        $data = $request->all();
+
         (new User())->newQuery()
             ->findOrFail($id)
-            ->update($request->validated());
+            ->update($data);
 
         return redirect('');
     }

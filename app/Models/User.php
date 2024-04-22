@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\UserRoles;
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -64,7 +64,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::creating(function ($model) {
-            $model->role = UserRoles::CLIENT->value;
+            $model->role = UserRole::CLIENT->value;
         });
     }
 

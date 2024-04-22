@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Enums\UserRoles;
+use App\Enums\UserRole;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class AdminAccess
         /** @var User $user */
         $user = Auth::user();
 
-        if (!$user || $user->role !== UserRoles::ADMIN->value) {
+        if (!$user || $user->role !== UserRole::ADMIN->value) {
             return redirect(route('profile'));
         }
 

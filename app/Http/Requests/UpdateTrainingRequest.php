@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\UserRoles;
+use App\Enums\TrainingType;
+use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 
-class EditUserRequest extends FormRequest
+class UpdateTrainingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +27,17 @@ class EditUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['string', 'max:255'],
-            'middle_name' => ['string', 'max:255'],
-            'last_name' => ['string', 'max:255'],
-            'role' => [
-                new Enum(UserRoles::class),
+            'name' => ['string', 'max:255'],
+            'description' => ['string'],
+            'type' => [
+                'required',
+                new Enum(TrainingType::class),
+            ],
+            'date' => ['required', 'date_format:Y-m-d H:i:s'],
+            'duration' => ['string', 'between:1,300'],
+            'instructor_id' => [
+                'string',
+                Rule::exists(User::TABLE, 'id')
             ],
         ];
     }
