@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditUserRequest;
 use App\Models\User;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -13,9 +14,9 @@ use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 class UserController extends Controller
 {
     /**
-     * @return Factory|Application|View|ApplicationContract
+     * @return Renderable
      */
-    public function index(): Factory|Application|View|ApplicationContract
+    public function index(): Renderable
     {
         $users = (new User())->newQuery()
             ->get();
@@ -27,9 +28,9 @@ class UserController extends Controller
 
     /**
      * @param int $id
-     * @return Factory|Application|View|ApplicationContract
+     * @return Renderable
      */
-    public function show(int $id): Factory|Application|View|ApplicationContract
+    public function show(int $id): Renderable
     {
         $user = (new User())->newQuery()
             ->findOrFail($id);
@@ -49,7 +50,7 @@ class UserController extends Controller
             ->findOrFail($request['id'])
             ->update($request->validated());
 
-        return view('');
+        return redirect('');
     }
 
     /**
