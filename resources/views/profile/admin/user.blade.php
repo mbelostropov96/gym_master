@@ -74,6 +74,7 @@
                 </div>
                 @if ($user->role === UserRole::CLIENT->value)
                     @include('profile.admin.user.balance')
+                    @include('profile.admin.user.balance_history')
                 @endif
             </div>
         </div>

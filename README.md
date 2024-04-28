@@ -25,4 +25,7 @@ php artisan db:seed
 
 # start web server
 php artisan serve
+
+# for frontend development
+npm run dev
 ```

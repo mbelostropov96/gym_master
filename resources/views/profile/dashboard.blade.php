@@ -14,7 +14,7 @@
                         @endif
                         {{ __('gym.dashboard_hello', [
                             'name' => Auth::user()->first_name,
-                            'role' => Auth::user()->role,
+                            'role' => __('gym.' . Auth::user()->role),
                         ])  }}
                     </div>
                 </div>

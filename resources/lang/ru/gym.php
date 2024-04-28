@@ -23,5 +23,11 @@ return [
     'current_balance' => 'Текущий баланс',
     'balance_change' => 'Изменить баланс',
     'apply_balance_amount' => 'Изменение баланса',
+    'user.balance_history' => 'История баланса',
     'currency_symbol' => '₽',
+    'operation_id' => 'ID операции',
+    'operation_created_at' => 'Дата операции',
+    'old_balance' => 'Исходный баланс',
+    'balance_change_amount' => 'Сумма изменения баланса',
+    'operation_description' => 'Описание',
 ];
