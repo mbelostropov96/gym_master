@@ -20,6 +20,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $remember_token
  * @property string $created_at
  * @property string $updated_at
+ *
+ * @property ClientInfo $clientInfo
+ * @property InstructorInfo $instructorInfo
  */
 class User extends Authenticatable
 {

@@ -23,6 +23,7 @@ $router->group([
     $router->get('users', [UserAdminController::class, 'index'])->name('users.index');
     $router->get('users/{id}', [UserAdminController::class, 'show'])->name('users.show');
     $router->patch('users/{id}', [UserAdminController::class, 'update'])->name('users.update');
+    $router->patch('users/balance/{id}', [UserAdminController::class, 'updateBalance'])->name('users.balance.update');
     $router->delete('users/{id}', [UserAdminController::class, 'destroy'])->name('users.destroy');
 
     $router->get('trainings', [TrainingAdminController::class, 'index'])->name('trainings.index');

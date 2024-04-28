@@ -5,20 +5,11 @@ namespace App\Http\Requests;
 use App\Enums\TrainingType;
 use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 
-class UpdateTrainingRequest extends FormRequest
+class UpdateTrainingRequest extends AbstractRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *

@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use RuntimeException;
 
 class RegisterController extends Controller
 {
@@ -66,6 +65,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data): User
     {
+        /** @var User $user */
         $user = (new User())->newQuery()->create([
             'first_name' => $data['first_name'],
             'middle_name' => $data['middle_name'],
@@ -74,9 +74,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        if (!($user instanceof User)) {
-            throw new RuntimeException('loh', 228);
-        }
+        $user->clientInfo()->create([
+            'client_id' => $user->id,
+        ]);
 
         return $user;
     }
