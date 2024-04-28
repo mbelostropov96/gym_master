@@ -24,9 +24,9 @@ class UserFactory extends Factory
             'first_name' => 'admin',
             'middle_name' => '',
             'last_name' => '',
-            'email' => 'admin',
+            'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
-            'role' => UserRole::CLIENT->value,
+            'role' => UserRole::ADMIN->value,
             'remember_token' => Str::random(10),
         ];
     }
