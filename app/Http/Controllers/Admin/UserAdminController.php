@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\BalanceEvent;
 use App\Models\ClientInfo;
 use App\Models\User;
+use App\Service\DTO\UserDTO;
+use App\Service\UserService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +16,13 @@ use RuntimeException;
 
 class UserAdminController extends Controller
 {
+    private UserService $userService;
+
+    public function __construct()
+    {
+        $this->userService = new UserService();
+    }
+
     /**
      * @return Renderable
      */
@@ -33,13 +42,11 @@ class UserAdminController extends Controller
      */
     public function show(int $id): Renderable
     {
-        $user = (new User())->newQuery()
-            ->with([
-                'clientInfo',
-                'instructorInfo',
-                'balanceEvents',
-            ])
-            ->findOrFail($id);
+        $user = $this->userService->show($id, [
+            'clientInfo',
+            'instructorInfo',
+            'balanceEvents',
+        ]);
 
         return view('profile.admin.user', [
             'user' => $user,
@@ -53,11 +60,9 @@ class UserAdminController extends Controller
      */
     public function update(int $id, UpdateUserRequest $request): RedirectResponse
     {
-        $data = $request->all();
+        $data = $request->validatedWithCasts();
 
-        (new User())->newQuery()
-            ->findOrFail($id)
-            ->update($data);
+        $this->userService->update($id, new UserDTO($data));
 
         return redirect()->to(route('users.update', ['id' => $id]));
     }
@@ -104,9 +109,7 @@ class UserAdminController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        (new User())->newQuery()
-            ->findOrFail($id)
-            ->delete();
+        $this->userService->destroy($id);
 
         return redirect()->to(route('users.index'));
     }

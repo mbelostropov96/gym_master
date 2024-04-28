@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Enums\UserRole;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\Password;
 
@@ -24,8 +25,23 @@ class UpdateUserRequest extends AbstractRequest
             'email' => ['email:rfc,dns'],
             'password' => ['string', Password::min(8)],
             'role' => [
+                Rule::excludeIf(auth()->user()->role !== UserRole::ADMIN->value),
                 new Enum(UserRole::class),
             ],
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function validatedWithCasts(): array
+    {
+        $result = $this->validated();
+
+        if (isset($result['password'])) {
+            $result['password'] = Hash::make($result['password']);
+        }
+
+        return $result;
     }
 }
