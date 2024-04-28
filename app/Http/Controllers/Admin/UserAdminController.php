@@ -94,7 +94,7 @@ class UserAdminController extends Controller
                 'description' => 'Деньги не сделают тебя счастливее. Сейчас у меня 50 миллионов, и я так же счастлив, как и тогда, когда у меня было 48 миллионов',
             ]);
 
-        return redirect('');
+        return redirect()->to(route('users.show', ['id' => $id]));
     }
 
     /**
