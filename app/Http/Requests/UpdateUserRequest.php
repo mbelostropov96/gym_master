@@ -37,12 +37,4 @@ class UpdateUserRequest extends FormRequest
             ],
         ];
     }
-
-    /**
-     * @return void
-     */
-    protected function passedValidation(): void
-    {
-        $this->replace(['password' => Hash::make($this->password)]);
-    }
 }
