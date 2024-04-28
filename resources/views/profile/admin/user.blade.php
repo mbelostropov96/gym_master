@@ -7,7 +7,7 @@
             <button class="btn btn-primary"> {{ __('gym.back_to_list') }} </button>
         </a>
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">{{ __('gym.user.card') }}</div>
                     <div class="card-body">
@@ -72,10 +72,10 @@
                         </form>
                     </div>
                 </div>
+                @if ($user->role === UserRole::CLIENT->value)
+                    @include('profile.admin.user.balance')
+                @endif
             </div>
-            @if ($user->role === UserRole::CLIENT->value)
-                @include('profile.admin.user.balance')
-            @endif
         </div>
     </div>
 @endsection
