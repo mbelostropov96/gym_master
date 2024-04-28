@@ -76,12 +76,13 @@ class UserAdminController extends Controller
         }
 
         (new ClientInfo())->newQuery()
-            ->findOrFail($id)
+            ->where('client_id', '=', $id)
+            ->first()
             ->update([
-                'balance' => $balance,
+                'balance' => (int)$balance,
             ]);
 
-        return redirect('');
+        return redirect()->to(route('users.show', ['id' => $id]));
     }
 
     /**
