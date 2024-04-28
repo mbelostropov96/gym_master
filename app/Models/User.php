@@ -66,7 +66,7 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::creating(function ($model) {
+        static::creating(function (self $model) {
             $model->role = UserRole::CLIENT->value;
         });
     }
