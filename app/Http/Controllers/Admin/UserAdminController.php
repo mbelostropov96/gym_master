@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\BalanceEvent;
 use App\Models\ClientInfo;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use RuntimeException;
 
 class UserAdminController extends Controller
 {
@@ -17,10 +20,6 @@ class UserAdminController extends Controller
     public function index(): Renderable
     {
         $users = (new User())->newQuery()
-            ->with([
-                'clientInfo',
-                'instructorInfo',
-            ])
             ->get();
 
         return view('profile.admin.users', [
@@ -64,21 +63,35 @@ class UserAdminController extends Controller
 
     /**
      * @param int $id
-     * @param UpdateUserRequest $request
+     * @param Request $request
      * @return RedirectResponse
      */
-    public function updateBalance(int $id, UpdateUserRequest $request): RedirectResponse
+    public function updateBalance(int $id, Request $request): RedirectResponse
     {
-        $balance = $request->get('balance');
+        $balance = (int)$request->get('balance');
 
-        if ($balance === null) {
-            throw new \RuntimeException('ti loh', 228);
+        /** @var ClientInfo $clientInfo */
+        $clientInfo = (new ClientInfo())->newQuery()
+            ->where('client_id', '=', $id)
+            ->first();
+
+        $currentBalance = $clientInfo->balance;
+        $newBalance = $balance + $currentBalance;
+
+        if ($newBalance < 0) {
+            throw new RuntimeException('ti loh', 228);
         }
 
-        (new ClientInfo())->newQuery()
-            ->findOrFail($id)
-            ->update([
-                'balance' => $balance,
+        $clientInfo->update([
+            'balance' => $newBalance,
+        ]);
+
+        (new BalanceEvent())->newQuery()
+            ->create([
+                'client_id' => $id,
+                'old_balance' => $currentBalance,
+                'balance_change' => $balance,
+                'description' => 'Деньги не сделают тебя счастливее. Сейчас у меня 50 миллионов, и я так же счастлив, как и тогда, когда у меня было 48 миллионов',
             ]);
 
         return redirect('');
