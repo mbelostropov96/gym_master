@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -24,6 +25,7 @@ use Laravel\Sanctum\HasApiTokens;
  *
  * @property ClientInfo $clientInfo
  * @property InstructorInfo $instructorInfo
+ * @property Collection|BalanceEvent[] $balanceEvents
  */
 class User extends Authenticatable
 {
