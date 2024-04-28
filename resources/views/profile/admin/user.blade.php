@@ -18,8 +18,7 @@
                                 <label for="last_name"
                                        class="col-md-4 col-form-label text-md-end">{{ __('gym.last_name')}}</label>
                                 <div class="col-md-6">
-                                    <input id="last_name" class="form-control" name="last_name" value="{{ $user->last_name }}" required
-                                           autofocus>
+                                    <input id="last_name" class="form-control" name="last_name" value="{{ $user->last_name }}" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -27,7 +26,7 @@
                                        class="col-md-4 col-form-label text-md-end">{{ __('gym.first_name')}}</label>
                                 <div class="col-md-6">
                                     <input id="first_name" class="form-control"  name="first_name" value="{{ $user->first_name }}" required
-                                           autofocus>
+                                           >
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -35,15 +34,14 @@
                                        class="col-md-4 col-form-label text-md-end">{{ __('gym.middle_name')}}</label>
                                 <div class="col-md-6">
                                     <input id="middle_name" class="form-control"  name="middle_name" value="{{ $user->middle_name }}" required
-                                           autofocus>
+                                           >
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="email"
                                        class="col-md-4 col-form-label text-md-end">{{ __('gym.email')}}</label>
                                 <div class="col-md-6">
-                                    <input id="email" class="form-control" type="email" name="email" value="{{ $user->email }}" required
-                                           autofocus>
+                                    <input id="email" class="form-control" type="email" name="email" value="{{ $user->email }}" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -75,6 +73,9 @@
                     </div>
                 </div>
             </div>
+            @if ($user->role === UserRole::CLIENT->value)
+                @include('profile.admin.user.balance')
+            @endif
         </div>
     </div>
 @endsection

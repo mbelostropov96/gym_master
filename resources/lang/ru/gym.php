@@ -15,8 +15,13 @@ return [
     'dashboard.users_list' => 'Список пользователей',
     'admin.users.header' => 'Список пользователей',
     'user.card' => 'Карточка пользователя',
+    'user.balance' => 'Баланс пользователя',
     'save' => 'Сохранить',
     'back_to_list' => 'Вернуться к списку',
     'back' => 'Вернуться',
     'delete' => 'Удалить',
+    'current_balance' => 'Текущий баланс',
+    'balance_change' => 'Изменить баланс',
+    'apply_balance_amount' => 'Изменение баланса',
+    'currency_symbol' => '₽',
 ];
