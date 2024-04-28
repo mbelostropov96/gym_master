@@ -41,7 +41,7 @@ class UserAdminController extends Controller
             ])
             ->findOrFail($id);
 
-        return view('', [
+        return view('profile.admin.user', [
             'user' => $user,
         ]);
     }
@@ -59,7 +59,7 @@ class UserAdminController extends Controller
             ->findOrFail($id)
             ->update($data);
 
-        return redirect('');
+        return redirect()->to(route('users.update', ['id' => $id]));
     }
 
     /**
@@ -94,6 +94,6 @@ class UserAdminController extends Controller
             ->findOrFail($id)
             ->delete();
 
-        return redirect('users.index');
+        return redirect()->to(route('users.index'));
     }
 }

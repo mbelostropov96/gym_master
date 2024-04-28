@@ -28,12 +28,4 @@ class UpdateUserRequest extends AbstractRequest
             ],
         ];
     }
-
-    /**
-     * @return void
-     */
-    protected function passedValidation(): void
-    {
-        $this->replace(['password' => Hash::make($this->password)]);
-    }
 }

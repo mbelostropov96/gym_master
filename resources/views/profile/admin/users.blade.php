@@ -20,13 +20,13 @@
                             </thead>
                             <tbody>
                             @foreach ($users as $user)
-                                <tr>
-                                    <th>{{ $user->id }}</th>
+                                <tr class='clickable-row' data-href='{{ route('users.update', ['id' => $user->id]) }}'>
+                                    <th>{{ $user->id }}</a></th>
                                     <td>{{ $user->last_name }}</td>
                                     <td>{{ $user->first_name }}</td>
                                     <td>{{ $user->middle_name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role }}</td>
+                                    <td>{{ __('gym.' . $user->role) }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
