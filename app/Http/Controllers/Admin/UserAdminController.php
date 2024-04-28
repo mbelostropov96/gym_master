@@ -37,6 +37,7 @@ class UserAdminController extends Controller
             ->with([
                 'clientInfo',
                 'instructorInfo',
+                'balanceEvents',
             ])
             ->findOrFail($id);
 
