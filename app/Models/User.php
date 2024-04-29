@@ -98,6 +98,6 @@ class User extends Authenticatable
             BalanceEvent::class,
             'client_id',
             'id'
-        );
+        )->orderByDesc('created_at');
     }
 }
