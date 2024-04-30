@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\View\Components\Profile\Profile;
 use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
@@ -23,6 +24,6 @@ class HomeController extends Controller
      */
     public function index(): Renderable
     {
-        return view('profile.dashboard');
+        return (new Profile())->render();
     }
 }
