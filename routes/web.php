@@ -27,13 +27,13 @@ $router->group([
     $router->patch('users/balance/{id}', [UserAdminController::class, 'updateBalance'])->name('users.balance.update');
     $router->delete('users/{id}', [UserAdminController::class, 'destroy'])->name('users.destroy');
 
-    $router->get('training-template', [TrainingTemplateAdminController::class, 'index'])->name('training-template.index');
-    $router->get('training-template/{id}', [TrainingTemplateAdminController::class, 'show'])->name('training-template.show')
+    $router->get('training-templates', [TrainingTemplateAdminController::class, 'index'])->name('training-templates.index');
+    $router->get('training-templates/{id}', [TrainingTemplateAdminController::class, 'show'])->name('training-templates.show')
         ->where('id', '[0-9]+');
-    $router->get('training-template/create', [TrainingTemplateAdminController::class, 'create'])->name('training-template.create');
-    $router->post('training-template', [TrainingTemplateAdminController::class, 'store'])->name('training-template.store');
-    $router->patch('training-template/{id}', [TrainingTemplateAdminController::class, 'update'])->name('training-template.update');
-    $router->delete('training-template/{id}', [TrainingTemplateAdminController::class, 'destroy'])->name('training-template.destroy');
+    $router->get('training-templates/create', [TrainingTemplateAdminController::class, 'create'])->name('training-templates.create');
+    $router->post('training-templates', [TrainingTemplateAdminController::class, 'store'])->name('training-templates.store');
+    $router->patch('training-templates/{id}', [TrainingTemplateAdminController::class, 'update'])->name('training-templates.update');
+    $router->delete('training-templates/{id}', [TrainingTemplateAdminController::class, 'destroy'])->name('training-templates.destroy');
 
     $router->get('trainings', [TrainingAdminController::class, 'index'])->name('trainings.index');
     $router->get('trainings/{id}', [TrainingAdminController::class, 'show'])->name('trainings.show')
