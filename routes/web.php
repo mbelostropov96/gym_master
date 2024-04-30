@@ -28,14 +28,17 @@ $router->group([
     $router->delete('users/{id}', [UserAdminController::class, 'destroy'])->name('users.destroy');
 
     $router->get('training-template', [TrainingTemplateAdminController::class, 'index'])->name('training-template.index');
-    $router->get('training-template/{id}', [TrainingTemplateAdminController::class, 'show'])->name('training-template.show');
+    $router->get('training-template/{id}', [TrainingTemplateAdminController::class, 'show'])->name('training-template.show')
+        ->where('id', '[0-9]+');
     $router->get('training-template/create', [TrainingTemplateAdminController::class, 'create'])->name('training-template.create');
     $router->post('training-template', [TrainingTemplateAdminController::class, 'store'])->name('training-template.store');
     $router->patch('training-template/{id}', [TrainingTemplateAdminController::class, 'update'])->name('training-template.update');
     $router->delete('training-template/{id}', [TrainingTemplateAdminController::class, 'destroy'])->name('training-template.destroy');
 
     $router->get('trainings', [TrainingAdminController::class, 'index'])->name('trainings.index');
-    $router->get('trainings/{id}', [TrainingAdminController::class, 'show'])->name('trainings.show');
+    $router->get('trainings/{id}', [TrainingAdminController::class, 'show'])->name('trainings.show')
+        ->where('id', '[0-9]+');
+    $router->get('trainings/create', [TrainingAdminController::class, 'create'])->name('trainings.create');
     $router->post('trainings', [TrainingAdminController::class, 'store'])->name('trainings.store');
     $router->patch('trainings/{id}', [TrainingAdminController::class, 'update'])->name('trainings.update');
     $router->delete('trainings/{id}', [TrainingAdminController::class, 'destroy'])->name('trainings.destroy');
