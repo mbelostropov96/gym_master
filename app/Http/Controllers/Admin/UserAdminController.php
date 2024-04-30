@@ -67,7 +67,7 @@ class UserAdminController extends Controller
      */
     public function update(int $id, UpdateUserRequest $request): RedirectResponse
     {
-        $data = $request->validatedWithCasts();
+        $data = $request->validated();
 
         $this->userService->update($id, new UserDTO($data));
 

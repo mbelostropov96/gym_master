@@ -3,24 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer $id
  * @property string $name
  * @property string $description
  * @property string $type
- * @property string $datetime_start
- * @property string $datetime_end
- * @property integer $instructor_id
+ * @property integer $price
+ * @property string $duration
  * @property string $created_at
  * @property string $updated_at
  */
-class Training extends Model
+class TrainingTemplate extends Model
 {
     use HasFactory;
 
-    public const TABLE = 'trainings';
+    public const TABLE = 'training_templates';
 
     protected $table = self::TABLE;
 
@@ -28,9 +27,8 @@ class Training extends Model
         'name',
         'description',
         'type',
-        'datetime_start',
-        'datetime_end',
-        'instructor_id',
+        'price',
+        'duration',
         'created_at',
         'updated_at',
     ];
@@ -40,19 +38,9 @@ class Training extends Model
         'name' => 'string',
         'description' => 'string',
         'type' => 'string',
-        'datetime_start' => 'datetime',
-        'datetime_end' => 'datetime',
-        'instructor_id' => 'integer',
+        'price' => 'integer',
+        'duration' => 'string',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    public function instructor(): BelongsTo
-    {
-        return $this->belongsTo(
-            User::class,
-            'instructor_id',
-            'id'
-        );
-    }
 }

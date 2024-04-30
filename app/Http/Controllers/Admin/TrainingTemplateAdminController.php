@@ -3,24 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateTrainingRequest;
-use App\Http\Requests\StoreTrainingRequest;
-use App\Models\Training;
+use App\Http\Requests\StoreTrainingTemplateRequest;
+use App\Http\Requests\UpdateTrainingTemplateRequest;
+use App\Models\TrainingTemplate;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 
-class TrainingAdminController extends Controller
+class TrainingTemplateAdminController extends Controller
 {
     /**
      * @return Renderable
      */
     public function index(): Renderable
     {
-        $trainings = (new Training())->newQuery()
+        $trainingTemplates = (new TrainingTemplate())->newQuery()
             ->get();
 
         return view('', [
-            'trainings' => $trainings,
+            'trainings' => $trainingTemplates,
         ]);
     }
 
@@ -30,40 +30,40 @@ class TrainingAdminController extends Controller
      */
     public function show(int $id): Renderable
     {
-        $training = (new Training())->newQuery()
+        $trainingTemplates = (new TrainingTemplate())->newQuery()
             ->findOrFail($id);
 
         return view('', [
-            'training' => $training,
+            'training' => $trainingTemplates,
         ]);
     }
 
     /**
-     * @param StoreTrainingRequest $request
+     * @param StoreTrainingTemplateRequest $request
      * @return Renderable
      */
-    public function store(StoreTrainingRequest $request): Renderable
+    public function store(StoreTrainingTemplateRequest $request): Renderable
     {
         $data = $request->validated();
 
-        $training = (new Training())->newQuery()
+        $trainingTemplates = (new TrainingTemplate())->newQuery()
             ->create($data);
 
         return view('', [
-            'training' => $training,
+            'training' => $trainingTemplates,
         ]);
     }
 
     /**
      * @param int $id
-     * @param UpdateTrainingRequest $request
+     * @param UpdateTrainingTemplateRequest $request
      * @return RedirectResponse
      */
-    public function update(int $id, UpdateTrainingRequest $request): RedirectResponse
+    public function update(int $id, UpdateTrainingTemplateRequest $request): RedirectResponse
     {
         $data = $request->validated();
 
-        (new Training())->newQuery()
+        (new TrainingTemplate())->newQuery()
             ->findOrFail($id)
             ->update($data);
 
@@ -76,7 +76,7 @@ class TrainingAdminController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        (new Training())->newQuery()
+        (new TrainingTemplate())->newQuery()
             ->findOrFail($id)
             ->delete();
 
