@@ -29,6 +29,7 @@ $router->group([
 
     $router->get('training-template', [TrainingTemplateAdminController::class, 'index'])->name('training-template.index');
     $router->get('training-template/{id}', [TrainingTemplateAdminController::class, 'show'])->name('training-template.show');
+    $router->get('training-template/create', [TrainingTemplateAdminController::class, 'create'])->name('training-template.create');
     $router->post('training-template', [TrainingTemplateAdminController::class, 'store'])->name('training-template.store');
     $router->patch('training-template/{id}', [TrainingTemplateAdminController::class, 'update'])->name('training-template.update');
     $router->delete('training-template/{id}', [TrainingTemplateAdminController::class, 'destroy'])->name('training-template.destroy');

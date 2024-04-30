@@ -28,6 +28,8 @@ class Handler extends ExceptionHandler
         });
     }
 
-//    public function report(Throwable $e): void{
-//        dd($e->getMessage());}
+//    public function report(Throwable $e): void
+//    {
+//        dd($e->getMessage());
+//    }
 }
