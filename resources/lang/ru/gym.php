@@ -30,4 +30,5 @@ return [
     'old_balance' => 'Исходный баланс',
     'balance_change_amount' => 'Сумма изменения баланса',
     'operation_description' => 'Описание',
+    'back_to_profile' => 'Вернуться к профилю',
 ];
