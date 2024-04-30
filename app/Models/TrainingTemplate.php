@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $description
  * @property string $type
  * @property integer $price
- * @property string $duration
+ * @property integer $duration
  * @property string $created_at
  * @property string $updated_at
  */
@@ -39,7 +39,7 @@ class TrainingTemplate extends Model
         'description' => 'string',
         'type' => 'string',
         'price' => 'integer',
-        'duration' => 'string',
+        'duration' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

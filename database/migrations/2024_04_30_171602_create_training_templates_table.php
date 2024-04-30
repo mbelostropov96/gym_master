@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('type');
             $table->unsignedBigInteger('price');
-            $table->string('duration');
+            $table->integer('duration');
             $table->timestamps();
         });
     }

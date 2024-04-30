@@ -39,6 +39,14 @@ class TrainingAdminController extends Controller
     }
 
     /**
+     * @return Renderable
+     */
+    public function create(): Renderable
+    {
+        return view('');
+    }
+
+    /**
      * @param StoreTrainingRequest $request
      * @return Renderable
      */
