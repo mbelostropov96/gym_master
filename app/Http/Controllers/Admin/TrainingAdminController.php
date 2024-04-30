@@ -66,7 +66,7 @@ class TrainingAdminController extends Controller
      */
     public function createByTemplate(Request $request): Renderable
     {
-        if (null === $trainingTemplateId = $request->get('training_template_id')) {
+        if (null === $trainingTemplateId = $request->get('id')) {
             throw new InvalidArgumentException('toje loh', 322);
         }
 
