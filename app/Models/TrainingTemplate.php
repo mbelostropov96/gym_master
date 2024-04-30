@@ -39,7 +39,7 @@ class TrainingTemplate extends Model
         'description' => 'string',
         'type' => 'string',
         'price' => 'integer',
-        'duration' => 'string',
+        'duration' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
