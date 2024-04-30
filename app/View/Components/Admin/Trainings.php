@@ -19,18 +19,27 @@ class Trainings extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public readonly Collection $trainingTemplates,
+        public readonly Collection $trainings,
+        public readonly Collection $instructors,
     ) {
         $this->attributeNameMap = [
             'id' => 'ID',
-            'name' => __('gym.training_template_name'),
-            'type' => __('gym.training_template_type'),
+            'name' => __('gym.training_name'),
+            'type' => __('gym.training_type'),
             'price' => __('gym.training_price'),
-            'start' => __('gym.training_start_date'),
+            'datetime_start' => __('gym.training_start'),
+            'datetime_end' => __('gym.training_end'),
+            'instructor_name' =>  __('gym.instructor_name'),
         ];
         $this->clickableRouteWithId = 'training.update';
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
+
+        $keyedInstructors = $this->instructors->keyBy('id');
+        foreach ($this->trainings as $training) {
+            $training->instructor_name = $keyedInstructors[$training->instructor_id]?->name
+                ?? $training->instructor_id;
+        }
     }
 
     /**
@@ -38,6 +47,6 @@ class Trainings extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.admin.trainings');
+        return view('components.admin.trainings.index');
     }
 }

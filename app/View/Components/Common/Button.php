@@ -13,7 +13,7 @@ class Button extends Component
      */
     public function __construct(
         public string $ref = '',
-        public string $label= '',
+        public string $label = '',
     ) {}
 
     /**

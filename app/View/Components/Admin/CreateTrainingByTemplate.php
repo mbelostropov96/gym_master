@@ -2,18 +2,20 @@
 
 namespace App\View\Components\Admin;
 
+use App\Models\TrainingTemplate;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
-class SelectTrainingType extends Component
+class CreateTrainingByTemplate extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public readonly string $currentTrainingType,
-        public readonly bool $isDisabled = false,
+        public TrainingTemplate $trainingTemplate,
+        public Collection $instructors,
     ) {}
 
     /**
@@ -21,6 +23,6 @@ class SelectTrainingType extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.admin.select-training-type');
+        return view('components.admin.create-training-by-template');
     }
 }

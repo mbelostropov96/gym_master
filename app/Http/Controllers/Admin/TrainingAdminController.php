@@ -9,6 +9,9 @@ use App\Http\Requests\StoreTrainingRequest;
 use App\Models\Training;
 use App\Models\TrainingTemplate;
 use App\Models\User;
+use App\View\Components\Admin\CreateTraining as CreateTrainingComponent;
+use App\View\Components\Admin\CreateTrainingByTemplate as CreateTrainingByTemplateComponent;
+use App\View\Components\Admin\Trainings as TrainingsComponent;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,9 +30,13 @@ class TrainingAdminController extends Controller
             ])
             ->get();
 
-        return view('', [
-            'trainings' => $trainings,
-        ]);
+        $instructors = (new User())->newQuery()
+            ->where('role', '=', UserRole::INSTRUCTOR->value)
+            ->get();
+
+        $trainingsComponent = new TrainingsComponent($trainings, $instructors);
+
+        return $trainingsComponent->render()->with($trainingsComponent->data());
     }
 
     /**
@@ -57,7 +64,9 @@ class TrainingAdminController extends Controller
         $trainingTemplates = (new TrainingTemplate())->newQuery()
             ->get();
 
-        return view('');
+        $createTrainingComponent = new CreateTrainingComponent($trainingTemplates);
+
+        return $createTrainingComponent->render()->with($createTrainingComponent->data());
     }
 
     /**
@@ -66,10 +75,11 @@ class TrainingAdminController extends Controller
      */
     public function createByTemplate(Request $request): Renderable
     {
-        if (null === $trainingTemplateId = $request->get('training_template_id')) {
+        if (null === $trainingTemplateId = $request->get('id')) {
             throw new InvalidArgumentException('toje loh', 322);
         }
 
+        /** @var TrainingTemplate $trainingTemplate */
         $trainingTemplate = (new TrainingTemplate())->newQuery()
             ->findOrFail($trainingTemplateId);
 
@@ -77,10 +87,12 @@ class TrainingAdminController extends Controller
             ->where('role', '=', UserRole::INSTRUCTOR->value)
             ->get();
 
-        return view('', [
-            'trainingTemplateId' => $trainingTemplateId,
-            'instructors' => $instructors,
-        ]);
+        $createTrainingByTemplateComponent = new CreateTrainingByTemplateComponent(
+            $trainingTemplate,
+            $instructors,
+        );
+
+        return $createTrainingByTemplateComponent->render()->with($createTrainingByTemplateComponent->data());
     }
 
     /**

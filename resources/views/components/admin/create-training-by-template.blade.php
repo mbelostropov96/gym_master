@@ -1,0 +1,56 @@
+@extends('layouts.app')
+
+@section('content')
+    <x-common::justify-container>
+        <x-slot:content>
+            <x-common::button :ref="route('trainings.store')" :label="__('gym.back_to_templates')"/>
+            <x-common::card :headerName="__('gym.create_training')">
+                <x-slot:body>
+                    <x-common::form
+                        :method="'POST'"
+                        :action="route('training-templates.store')"
+                        :buttonLabel="__('gym.create')"
+                    >
+                        <x-slot:content>
+                            <x-common::input
+                                :label="__('gym.training_name')"
+                                :name="'name'"
+                                :value="$trainingTemplate->name"
+                            />
+                            <x-admin::select-training-type
+                                :isDisabled="true"
+                                :currentTrainingType="$trainingTemplate->type"
+                            />
+                            <x-common::input
+                                :label="__('gym.instructor_name')"
+                                :name="'instructor_name'"
+                                :isDisabled="true"
+                                :value="Auth::user()->id"
+                            />
+                            <x-common::input
+                                :label="__('gym.training_description')"
+                                :name="'description'"
+                            />
+                            <x-common::input
+                                :label="__('gym.training_price')"
+                                :name="'price'"
+                                :isDisabled="true"
+                            />
+                            <x-common::input
+                                :label="__('gym.training_start')"
+                                :name="'datetime_start'"
+                                :type="'datetime-local'"
+                            />
+                            <x-common::input
+                                :label="__('gym.training_template_duration')"
+                                :name="'duration'"
+                                :isDisabled="true"
+                                :value="$trainingTemplate->duration"
+                            />
+                        </x-slot:content>
+                    </x-common::form>
+                </x-slot:body>
+            </x-common::card>
+        </x-slot:content>
+    </x-common::justify-container>
+@endsection
