@@ -7,10 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Http\Requests\StoreTrainingRequest;
 use App\Models\Training;
+use App\Models\TrainingTemplate;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 
 class TrainingAdminController extends Controller
 {
@@ -48,19 +50,35 @@ class TrainingAdminController extends Controller
     }
 
     /**
+     * @return Renderable
+     */
+    public function create(): Renderable
+    {
+        $trainingTemplates = (new TrainingTemplate())->newQuery()
+            ->get();
+
+        return view('');
+    }
+
+    /**
      * @param Request $request
      * @return Renderable
      */
-    public function create(Request $request): Renderable
+    public function createByTemplate(Request $request): Renderable
     {
-        $trainingTemplateIds = $request->get('training_template_id');
+        if (null === $trainingTemplateId = $request->get('training_template_id')) {
+            throw new InvalidArgumentException('toje loh', 322);
+        }
+
+        $trainingTemplate = (new TrainingTemplate())->newQuery()
+            ->findOrFail($trainingTemplateId);
 
         $instructors = (new User())->newQuery()
             ->where('role', '=', UserRole::INSTRUCTOR->value)
             ->get();
 
         return view('', [
-            'trainingTemplateIds' => $trainingTemplateIds,
+            'trainingTemplateId' => $trainingTemplateId,
             'instructors' => $instructors,
         ]);
     }
