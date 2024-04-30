@@ -3,12 +3,12 @@
 @section('content')
     <x-common::justify-container>
         <x-slot:content>
-            <x-common::button :ref="route('training-template.index')" :label="__('gym.back_to_list')"/>
+            <x-common::button :ref="route('training-templates.index')" :label="__('gym.back_to_list')"/>
             <x-common::card :headerName="__('gym.training-template-card')">
                 <x-slot:body>
                     <x-common::form
                         :method="'PATCH'"
-                        :action="route('training-template.update', ['id' => $trainingTemplate->id])"
+                        :action="route('training-templates.update', ['id' => $trainingTemplate->id])"
                         :buttonLabel="__('gym.save')"
                     >
                         <x-slot:content>
@@ -37,7 +37,7 @@
                             />
                         </x-slot:content>
                     </x-common:form>
-                    <form method='POST' action="{{ route('training-template.destroy', ['id' => $trainingTemplate->id]) }}">
+                    <form method='POST' action="{{ route('training-templates.destroy', ['id' => $trainingTemplate->id]) }}">
                         @csrf
                         @method('DELETE')
                         <div class="col-md-8 offset-md-4">

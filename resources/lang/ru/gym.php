@@ -33,7 +33,7 @@ return [
     'balance_change_amount' => 'Сумма изменения баланса',
     'operation_description' => 'Описание',
     'back_to_profile' => 'Вернуться к профилю',
-    'training_templates' => 'Виды шаблонов тренировок',
+    'training_templates' => 'Шаблоны тренировок',
     'training_template_name' => 'Шаблон тренировки',
     'training_template_type' => 'Тип',
     'training_template_description' => 'Описание тренировки',
@@ -43,5 +43,6 @@ return [
     'training_type' => 'Тип тренировки',
     'single' => 'Индивидуальная',
     'group' => 'Групповая',
-    'training-template-card' => 'Карточка шаблона тренировки'
+    'training-template-card' => 'Карточка шаблона тренировки',
+    'trainings' => 'Тренировки',
 ];
