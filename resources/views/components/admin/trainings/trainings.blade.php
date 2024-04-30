@@ -1,3 +1,3 @@
 <div>
-    <!-- The biggest battle is the war against ignorance. - Mustafa Kemal Atatürk -->
+    <!-- Не тот мужик, кто баб ебал, а тот ебал, кто баб мужик. - Мамут Рахал -->
 </div>
