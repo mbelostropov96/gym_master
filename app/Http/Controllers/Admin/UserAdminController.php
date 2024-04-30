@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Service\DTO\UserDTO;
 use App\Service\UserService;
 use App\View\Components\Admin\User as UserComponent;
-use App\View\Components\Admin\Users;
+use App\View\Components\Admin\Users as UsersComponent;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -33,16 +33,9 @@ class UserAdminController extends Controller
         $users = (new User())->newQuery()
             ->get();
 
-        $attributeNameMap = [
-            'id' => 'ID',
-            'last_name' => __('gym.last_name'),
-            'first_name' => __('gym.first_name'),
-            'middle_name' => __('gym.middle_name'),
-            'email' => __('gym.email'),
-            'role' => __('gym.role'),
-        ];
+        $usersComponent = new UsersComponent($users);
 
-        return (new Users($attributeNameMap, $users))->render();
+        return $usersComponent->render()->with($usersComponent->data());
     }
 
     /**
@@ -57,7 +50,9 @@ class UserAdminController extends Controller
             'balanceEvents',
         ]);
 
-        return (new UserComponent($user))->render();
+        $userComponent = new UserComponent($user);
+
+        return $userComponent->render()->with($userComponent->data());
     }
 
     /**
