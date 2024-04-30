@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTrainingTemplateRequest;
 use App\Http\Requests\UpdateTrainingTemplateRequest;
 use App\Models\TrainingTemplate;
+use App\View\Components\Admin\CreateTrainingTemplate as CreateTrainingTemplateComponent;
+use App\View\Components\Admin\TrainingTemplate\TrainingTemplateCard as TrainingTemplateCardComponent;
+use App\View\Components\Admin\TrainingTemplates as TrainingTemplatesComponent;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 
@@ -19,9 +22,9 @@ class TrainingTemplateAdminController extends Controller
         $trainingTemplates = (new TrainingTemplate())->newQuery()
             ->get();
 
-        return view('', [
-            'trainings' => $trainingTemplates,
-        ]);
+        $trainingTemplatesComponent = new TrainingTemplatesComponent($trainingTemplates);
+
+        return $trainingTemplatesComponent->render()->with($trainingTemplatesComponent->data());
     }
 
     /**
@@ -30,12 +33,13 @@ class TrainingTemplateAdminController extends Controller
      */
     public function show(int $id): Renderable
     {
-        $trainingTemplates = (new TrainingTemplate())->newQuery()
+        /** @var TrainingTemplate $trainingTemplate */
+        $trainingTemplate = (new TrainingTemplate())->newQuery()
             ->findOrFail($id);
 
-        return view('', [
-            'training' => $trainingTemplates,
-        ]);
+        $trainingTemplateComponent = new TrainingTemplateCardComponent($trainingTemplate);
+
+        return $trainingTemplateComponent->render()->with($trainingTemplateComponent->data());
     }
 
     /**
@@ -43,23 +47,23 @@ class TrainingTemplateAdminController extends Controller
      */
     public function create(): Renderable
     {
-        return view('');
+        $createTrainingTemplateComponent = new CreateTrainingTemplateComponent();
+
+        return $createTrainingTemplateComponent->render();
     }
 
     /**
      * @param StoreTrainingTemplateRequest $request
-     * @return Renderable
+     * @return RedirectResponse
      */
-    public function store(StoreTrainingTemplateRequest $request): Renderable
+    public function store(StoreTrainingTemplateRequest $request): RedirectResponse
     {
         $data = $request->validated();
 
-        $trainingTemplates = (new TrainingTemplate())->newQuery()
+        (new TrainingTemplate())->newQuery()
             ->create($data);
 
-        return view('', [
-            'training' => $trainingTemplates,
-        ]);
+        return redirect()->to(route('training-template.index'));
     }
 
     /**
@@ -75,7 +79,7 @@ class TrainingTemplateAdminController extends Controller
             ->findOrFail($id)
             ->update($data);
 
-        return redirect('');
+        return redirect()->to(route('training-template.show', ['id' => $id]));
     }
 
     /**
@@ -88,6 +92,6 @@ class TrainingTemplateAdminController extends Controller
             ->findOrFail($id)
             ->delete();
 
-        return redirect('');
+        return redirect()->to(route('training-template.index'));
     }
 }
