@@ -31,7 +31,6 @@ $router->group([
     $router->get('training-template/{id}', [TrainingTemplateAdminController::class, 'show'])->name('training-template.show')
         ->where('id', '[0-9]+');
     $router->get('training-template/create', [TrainingTemplateAdminController::class, 'create'])->name('training-template.create');
-    $router->get('training-template/{id}', [TrainingTemplateAdminController::class, 'show'])->name('training-template.show');
     $router->post('training-template', [TrainingTemplateAdminController::class, 'store'])->name('training-template.store');
     $router->patch('training-template/{id}', [TrainingTemplateAdminController::class, 'update'])->name('training-template.update');
     $router->delete('training-template/{id}', [TrainingTemplateAdminController::class, 'destroy'])->name('training-template.destroy');
