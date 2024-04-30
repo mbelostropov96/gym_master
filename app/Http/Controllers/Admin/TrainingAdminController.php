@@ -20,6 +20,9 @@ class TrainingAdminController extends Controller
     public function index(): Renderable
     {
         $trainings = (new Training())->newQuery()
+            ->with([
+                'instructor',
+            ])
             ->get();
 
         return view('', [
@@ -34,6 +37,9 @@ class TrainingAdminController extends Controller
     public function show(int $id): Renderable
     {
         $training = (new Training())->newQuery()
+            ->with([
+                'instructor',
+            ])
             ->findOrFail($id);
 
         return view('', [
