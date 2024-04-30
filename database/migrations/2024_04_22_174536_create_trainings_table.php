@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('type');
+            $table->string('price');
             $table->timestamp('datetime_start');
             $table->timestamp('datetime_end');
             $table->unsignedBigInteger('instructor_id');

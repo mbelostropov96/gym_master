@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $name
  * @property string $description
  * @property string $type
+ * @property integer $price
  * @property string $datetime_start
  * @property string $datetime_end
  * @property integer $instructor_id
@@ -28,6 +29,7 @@ class Training extends Model
         'name',
         'description',
         'type',
+        'price',
         'datetime_start',
         'datetime_end',
         'instructor_id',
@@ -40,6 +42,7 @@ class Training extends Model
         'name' => 'string',
         'description' => 'string',
         'type' => 'string',
+        'price' => 'integer',
         'datetime_start' => 'datetime',
         'datetime_end' => 'datetime',
         'instructor_id' => 'integer',
