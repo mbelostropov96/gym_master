@@ -58,4 +58,8 @@ return [
     'choose_template_to_create_training' => 'Выберите шаблон, по которому хотите создать тренировку',
     'your_balance' => 'Ваш баланс',
     'standard_balance_top_up' => 'Пополнение баланса',
+    'training_reservations' => 'Записи на тренировки',
+    'table_no_data' => 'Нет данных по запросу',
+    'available_trainings' => 'Доступные тренировки',
+    'your_reservations' => 'Ваши записи',
 ];

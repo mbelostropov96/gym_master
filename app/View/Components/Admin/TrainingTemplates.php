@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Admin;
 
+use App\View\ComponentTraits\HasTableTrait;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -9,11 +10,7 @@ use Illuminate\View\Component;
 
 class TrainingTemplates extends Component
 {
-    public string $clickableRouteWithId;
-    public array $columnsName;
-    public array $columns;
-
-    private array $attributeNameMap;
+    use HasTableTrait;
 
     /**
      * Create a new component instance.

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Client;
 
 use App\Enums\TrainingType;
+use App\Enums\UserRole;
 use App\Models\ClientInfo;
 use App\Models\Reservation;
 use App\Models\Training;
+use App\Models\User;
+use App\View\Components\Reservations\ReservationsList;
+use App\View\Components\Trainings\TrainingsList;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +39,13 @@ class TrainingClientController
             return true;
         });
 
-        return view('');
+        $instructors = (new User())->newQuery()
+            ->where('role', '=', UserRole::INSTRUCTOR->value)
+            ->get();
+
+        $trainingsListComponent = new TrainingsList($trainings, $instructors);
+
+        return $trainingsListComponent->render()->with($trainingsListComponent->data());
     }
 
     /**
@@ -57,7 +67,9 @@ class TrainingClientController
             })
             ->get();
 
-        return view('');
+        $trainingsListComponent = new ReservationsList($trainings);
+
+        return $trainingsListComponent->render()->with($trainingsListComponent->data());
     }
 
     /**
