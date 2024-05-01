@@ -1,3 +1,4 @@
+@php use App\Enums\TrainingType; @endphp
 @extends('layouts.app')
 
 @section('content')
@@ -16,10 +17,16 @@
                                 :label="__('gym.training_template_name')"
                                 :name="'name'"
                             />
-                            <x-admin::select-training-type :currentTrainingType="''"/>
-                            <x-common::input
+                            <x-common::select
+                                :label="__('gym.training_template_type')"
+                                :name="'type'"
+                                :values="array_column(TrainingType::cases(), 'value')"
+                                :current-value="''"
+                            />
+                            <x-common::textarea
                                 :label="__('gym.training_template_description')"
                                 :name="'description'"
+                                :value="'Стандартная тренировка'"
                             />
                             <x-common::input
                                 :label="__('gym.training_template_price')"
@@ -28,6 +35,7 @@
                             <x-common::input
                                 :label="__('gym.training_template_duration')"
                                 :name="'duration'"
+                                :type="'number'"
                             />
                         </x-slot:content>
                     </x-common::form>

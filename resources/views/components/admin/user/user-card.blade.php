@@ -1,3 +1,4 @@
+@php use App\Enums\UserRole @endphp
 <x-common::card :headerName="__('gym.user.card')">
     <x-slot:body>
         <x-common::form
@@ -26,7 +27,12 @@
                    :value="$user->email"
                    :name="'email'"
                />
-               <x-admin::select-role :currentRole="$user->role"/>
+               <x-common::select
+                   :label="__('gym.role')"
+                   :name="'role'"
+                   :values="array_column(UserRole::cases(), 'value')"
+                   :current-value="$user->role"
+               />
            </x-slot:content>
         </x-common:form>
         <form method='POST' action="{{ route('users.destroy', ['id' => $user->id]) }}">

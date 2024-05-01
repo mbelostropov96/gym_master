@@ -24,8 +24,8 @@ class UpdateTrainingRequest extends AbstractRequest
                 'required',
                 new Enum(TrainingType::class),
             ],
-            'datetime_start' => ['date_format:Y-m-d H:i:s'],
-            'datetime_end' => ['date_format:Y-m-d H:i:s'],
+            'datetime_start' => ['date_format:Y-m-d\TH:i'],
+            'datetime_end' => ['date_format:Y-m-d\TH:i'],
             'instructor_id' => [
                 'string',
                 Rule::exists(User::TABLE, 'id')

@@ -22,7 +22,7 @@ class AdminAccess
         /** @var User $user */
         $user = Auth::user();
 
-        if (!$user || $user->role !== UserRole::ADMIN->value) {
+        if (!$user || $user->role === UserRole::CLIENT->value) {
             return redirect(route('profile'));
         }
 

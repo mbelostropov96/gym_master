@@ -99,14 +99,14 @@ class UserAdminController extends Controller
                 'client_id' => $id,
                 'old_balance' => $currentBalance,
                 'balance_change' => $balance,
-                'description' => 'Деньги не сделают тебя счастливее. Сейчас у меня 50 миллионов, и я так же счастлив, как и тогда, когда у меня было 48 миллионов',
+                'description' => __('gym.standard_balance_top_up'),
             ]);
 
         return redirect()->to(route('users.show', ['id' => $id]));
     }
 
     /**
-     * @param int $id
+     * @param int $idApp\Models\Use
      * @return RedirectResponse
      */
     public function destroy(int $id): RedirectResponse

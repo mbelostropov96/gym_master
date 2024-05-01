@@ -31,13 +31,13 @@ class Trainings extends Component
             'datetime_end' => __('gym.training_end'),
             'instructor_name' =>  __('gym.instructor_name'),
         ];
-        $this->clickableRouteWithId = 'training.update';
+        $this->clickableRouteWithId = 'trainings.update';
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
 
         $keyedInstructors = $this->instructors->keyBy('id');
         foreach ($this->trainings as $training) {
-            $training->instructor_name = $keyedInstructors[$training->instructor_id]?->name
+            $training->instructor_name = $keyedInstructors[$training->instructor_id]?->getFullName()
                 ?? $training->instructor_id;
         }
     }

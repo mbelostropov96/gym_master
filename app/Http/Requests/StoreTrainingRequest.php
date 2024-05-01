@@ -24,8 +24,10 @@ class StoreTrainingRequest extends AbstractRequest
                 'required',
                 new Enum(TrainingType::class),
             ],
-            'datetime_start' => ['required', 'date_format:Y-m-d H:i:s'],
-            'datetime_end' => ['required', 'date_format:Y-m-d H:i:s'],
+            'price' => ['required', 'string'],
+            'datetime_start' => ['required', 'date_format:Y-m-d\TH:i'],
+            'datetime_end' => ['date_format:Y-m-d\TH:i'],
+            'duration' => ['string'],
             'instructor_id' => [
                 'required',
                 'string',

@@ -102,4 +102,14 @@ class User extends Authenticatable
             'id'
         )->orderByDesc('created_at');
     }
+
+    public function getFullName() : string
+    {
+        return  sprintf(
+            '%s %s %s',
+            $this->last_name,
+            $this->first_name,
+            $this->middle_name
+        );
+    }
 }
