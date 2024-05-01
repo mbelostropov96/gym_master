@@ -71,8 +71,10 @@ class User extends Authenticatable
         parent::boot();
 
         static::creating(function (self $model) {
-            $model->role = UserRole::CLIENT->value;
-            $model->password = Hash::make($model->password);
+            if ($model->id !== 1) {
+                $model->role = UserRole::CLIENT->value;
+                $model->password = Hash::make($model->password);
+            }
         });
     }
 

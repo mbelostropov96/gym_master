@@ -21,11 +21,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'id' => 1,
             'first_name' => 'admin',
             'middle_name' => '',
             'last_name' => '',
             'email' => 'admin@admin.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make(12345678),
             'role' => UserRole::ADMIN->value,
             'remember_token' => Str::random(10),
         ];

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
  * @property integer $id
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $updated_at
  *
  * @property Collection|User[] $instructor
+ * @property Collection|User[] $clients
  */
 class Training extends Model
 {
@@ -59,6 +61,18 @@ class Training extends Model
             User::class,
             'instructor_id',
             'id'
+        );
+    }
+
+    public function clients(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            User::class,
+            Reservation::class,
+            'training_id',
+            'id',
+            'id',
+            'client_id'
         );
     }
 }

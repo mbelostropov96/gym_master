@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\TrainingAdminController;
 use App\Http\Controllers\Admin\TrainingTemplateAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
+use App\Http\Controllers\Client\TrainingClientController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +17,7 @@ $router->get('/', function () {
     return view('auth.login');
 });
 
-$router->get('/profile', [App\Http\Controllers\HomeController::class, 'index'])->name('profile');
+$router->get('/profile', [HomeController::class, 'index'])->name('profile');
 
 $router->group([
     'middleware' => 'admin',
@@ -44,3 +46,5 @@ $router->group([
     $router->patch('trainings/{id}', [TrainingAdminController::class, 'update'])->name('trainings.update');
     $router->delete('trainings/{id}', [TrainingAdminController::class, 'destroy'])->name('trainings.destroy');
 });
+
+$router->get('/trainings', [TrainingClientController::class, 'index'])->name('trainings.index');
