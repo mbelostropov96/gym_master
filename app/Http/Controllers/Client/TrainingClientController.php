@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Client;
 
 use App\Enums\TrainingType;
+use App\Models\Reservation;
 use App\Models\Training;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Query\JoinClause;
 
 class TrainingClientController
 {
@@ -32,5 +34,32 @@ class TrainingClientController
         });
 
         return view('');
+    }
+
+    public function reservations(): Renderable
+    {
+        $trainings = (new Training())->newQuery()
+            ->with([
+                'instructor',
+            ])
+            ->where('reservations.client_id', '=', auth()->user()->id)
+            ->join(Reservation::TABLE, static function (JoinClause $join) {
+                $join->on(
+                    sprintf('%s.training_id',Reservation::TABLE),
+                    '=',
+                    sprintf('%s.id',Training::TABLE)
+                );
+            })
+            ->get();
+
+        return view('');
+    }
+
+    public function singUp(int $trainingId): Renderable
+    {
+        $training = (new Training())->newQuery()
+            ->findOrFail($trainingId);
+
+        // TODO закончить создание записи
     }
 }

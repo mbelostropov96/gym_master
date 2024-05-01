@@ -37,14 +37,15 @@ $router->group([
     $router->patch('training-templates/{id}', [TrainingTemplateAdminController::class, 'update'])->name('training-templates.update');
     $router->delete('training-templates/{id}', [TrainingTemplateAdminController::class, 'destroy'])->name('training-templates.destroy');
 
-    $router->get('trainings', [TrainingAdminController::class, 'index'])->name('trainings.index');
-    $router->get('trainings/{id}', [TrainingAdminController::class, 'show'])->name('trainings.show')
+    $router->get('trainings', [TrainingAdminController::class, 'index'])->name('admin.trainings.index');
+    $router->get('trainings/{id}', [TrainingAdminController::class, 'show'])->name('admin.trainings.show')
         ->where('id', '[0-9]+');
-    $router->get('trainings/create', [TrainingAdminController::class, 'create'])->name('trainings.create');
-    $router->get('trainings/create-by-template', [TrainingAdminController::class, 'createByTemplate'])->name('create-by-template.create');
-    $router->post('trainings', [TrainingAdminController::class, 'store'])->name('trainings.store');
-    $router->patch('trainings/{id}', [TrainingAdminController::class, 'update'])->name('trainings.update');
-    $router->delete('trainings/{id}', [TrainingAdminController::class, 'destroy'])->name('trainings.destroy');
+    $router->get('trainings/create', [TrainingAdminController::class, 'create'])->name('admin.trainings.create');
+    $router->get('trainings/create-by-template', [TrainingAdminController::class, 'createByTemplate'])->name('admin.create-by-template.create');
+    $router->post('trainings', [TrainingAdminController::class, 'store'])->name('admin.trainings.store');
+    $router->patch('trainings/{id}', [TrainingAdminController::class, 'update'])->name('admin.trainings.update');
+    $router->delete('trainings/{id}', [TrainingAdminController::class, 'destroy'])->name('admin.trainings.destroy');
 });
 
 $router->get('/trainings', [TrainingClientController::class, 'index'])->name('trainings.index');
+$router->get('/reservations', [TrainingClientController::class, 'reservations'])->name('reservations.index');
