@@ -6,14 +6,18 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Button extends Component
+class Textarea extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public string $ref = '',
+        public string $id = '',
         public string $label = '',
+        public string $name = '',
+        public mixed $value = '',
+        public bool $isDisabled = false,
+        public ?string $type = null,
     ) {}
 
     /**
@@ -21,6 +25,6 @@ class Button extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.common.button');
+        return view('components.common.textarea');
     }
 }

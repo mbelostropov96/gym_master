@@ -7,7 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
-class TrainingTemplates extends Component
+class CreateTraining extends Component
 {
     public string $clickableRouteWithId;
     public array $columnsName;
@@ -19,7 +19,7 @@ class TrainingTemplates extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public readonly Collection $trainingTemplates,
+        public Collection $trainingTemplates
     ) {
         $this->attributeNameMap = [
             'id' => 'ID',
@@ -28,7 +28,7 @@ class TrainingTemplates extends Component
             'price' => __('gym.training_template_price'),
             'duration' => __('gym.training_template_duration'),
         ];
-        $this->clickableRouteWithId = 'training-templates.update';
+        $this->clickableRouteWithId = 'create-by-template.create';
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
     }
@@ -38,6 +38,6 @@ class TrainingTemplates extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.admin.training-templates.index');
+        return view('components.admin.trainings.create-training');
     }
 }

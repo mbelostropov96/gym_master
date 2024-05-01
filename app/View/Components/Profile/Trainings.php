@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
-class TrainingTemplates extends Component
+class Trainings extends Component
 {
     /**
      * Create a new component instance.
@@ -23,11 +23,11 @@ class TrainingTemplates extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.profile.training-templates');
+        return view('components.profile.trainings');
     }
 
     public function shouldRender() : bool
     {
-        return Auth::user()->role === UserRole::ADMIN->value;
+        return Auth::user()->role !== UserRole::CLIENT->value;
     }
 }

@@ -9,9 +9,17 @@ use App\Http\Requests\StoreTrainingRequest;
 use App\Models\Training;
 use App\Models\TrainingTemplate;
 use App\Models\User;
+use App\View\Components\Admin\Training as TrainingComponent;
+use App\View\Components\Admin\CreateTraining as CreateTrainingComponent;
+use App\View\Components\Admin\CreateTrainingByTemplate as CreateTrainingByTemplateComponent;
+use App\View\Components\Admin\Trainings as TrainingsComponent;
+use DateInterval;
+use DateTime;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
 
 class TrainingAdminController extends Controller
@@ -21,15 +29,24 @@ class TrainingAdminController extends Controller
      */
     public function index(): Renderable
     {
-        $trainings = (new Training())->newQuery()
+        $builder = (new Training())->newQuery()
             ->with([
                 'instructor',
-            ])
+            ]);
+
+        if (Auth::user()->role === UserRole::INSTRUCTOR->value) {
+            $builder->where('instructor_id', Auth::id());
+        }
+
+        $trainings = $builder->get();
+
+        $instructors = (new User())->newQuery()
+            ->where('role', '=', UserRole::INSTRUCTOR->value)
             ->get();
 
-        return view('', [
-            'trainings' => $trainings,
-        ]);
+        $trainingsComponent = new TrainingsComponent($trainings, $instructors);
+
+        return $trainingsComponent->render()->with($trainingsComponent->data());
     }
 
     /**
@@ -38,15 +55,24 @@ class TrainingAdminController extends Controller
      */
     public function show(int $id): Renderable
     {
+        /** @var Training $training */
         $training = (new Training())->newQuery()
             ->with([
                 'instructor',
             ])
             ->findOrFail($id);
 
-        return view('', [
-            'training' => $training,
-        ]);
+        $instructors = (new User())->newQuery()
+            ->where('role', '=', UserRole::INSTRUCTOR->value)
+            ->get();
+
+        $trainingComponent = new TrainingComponent(
+            $training,
+            $instructors,
+        );
+
+        return $trainingComponent->render()->with($trainingComponent->data());
+
     }
 
     /**
@@ -57,7 +83,9 @@ class TrainingAdminController extends Controller
         $trainingTemplates = (new TrainingTemplate())->newQuery()
             ->get();
 
-        return view('');
+        $createTrainingComponent = new CreateTrainingComponent($trainingTemplates);
+
+        return $createTrainingComponent->render()->with($createTrainingComponent->data());
     }
 
     /**
@@ -70,6 +98,7 @@ class TrainingAdminController extends Controller
             throw new InvalidArgumentException('toje loh', 322);
         }
 
+        /** @var TrainingTemplate $trainingTemplate */
         $trainingTemplate = (new TrainingTemplate())->newQuery()
             ->findOrFail($trainingTemplateId);
 
@@ -77,26 +106,33 @@ class TrainingAdminController extends Controller
             ->where('role', '=', UserRole::INSTRUCTOR->value)
             ->get();
 
-        return view('', [
-            'trainingTemplateId' => $trainingTemplateId,
-            'instructors' => $instructors,
-        ]);
+        $createTrainingByTemplateComponent = new CreateTrainingByTemplateComponent(
+            $trainingTemplate,
+            $instructors,
+        );
+
+        return $createTrainingByTemplateComponent->render()->with($createTrainingByTemplateComponent->data());
     }
 
     /**
      * @param StoreTrainingRequest $request
-     * @return Renderable
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function store(StoreTrainingRequest $request): Renderable
+    public function store(StoreTrainingRequest $request): RedirectResponse
     {
         $data = $request->validated();
+        if (!isset($data['datetime_end'])) {
+            $duration = $data['duration'];
+            $datetimeStart = DateTime::createFromFormat('Y-m-d\TH:i', $data['datetime_start']);
+            $data['datetime_end'] = $datetimeStart->add(new DateInterval('PT' . $duration . 'H'));
+            unset($data['duration']);
+        }
 
-        $training = (new Training())->newQuery()
+        (new Training())->newQuery()
             ->create($data);
 
-        return view('', [
-            'training' => $training,
-        ]);
+        return redirect()->to(route('trainings.index'));
     }
 
     /**
@@ -112,7 +148,7 @@ class TrainingAdminController extends Controller
             ->findOrFail($id)
             ->update($data);
 
-        return redirect('');
+        return redirect()->to(route('trainings.show', ['id' => $id]));
     }
 
     /**
@@ -125,6 +161,6 @@ class TrainingAdminController extends Controller
             ->findOrFail($id)
             ->delete();
 
-        return redirect('');
+        return redirect()->to(route('trainings.index'));
     }
 }

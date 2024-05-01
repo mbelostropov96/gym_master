@@ -1,14 +1,15 @@
+@php use App\Enums\TrainingType; @endphp
 @extends('layouts.app')
 
 @section('content')
     <x-common::justify-container>
         <x-slot:content>
-            <x-common::button :ref="route('training-template.index')" :label="__('gym.back_to_list')"/>
+            <x-common::button :ref="route('training-templates.index')" :label="__('gym.back_to_list')"/>
             <x-common::card :headerName="__('gym.training-template-card')">
                 <x-slot:body>
                     <x-common::form
                         :method="'PATCH'"
-                        :action="route('training-template.update', ['id' => $trainingTemplate->id])"
+                        :action="route('training-templates.update', ['id' => $trainingTemplate->id])"
                         :buttonLabel="__('gym.save')"
                     >
                         <x-slot:content>
@@ -17,8 +18,13 @@
                                 :name="'name'"
                                 :value="$trainingTemplate->name"
                             />
-                            <x-admin::select-training-type :currentTrainingType="$trainingTemplate->type"/>
-                            <x-common::input
+                            <x-common::select
+                                :label="__('gym.training_template_type')"
+                                :name="'type'"
+                                :values="array_column(TrainingType::cases(), 'value')"
+                                :current-value="$trainingTemplate->type"
+                            />
+                            <x-common::textarea
                                 :label="__('gym.training_template_description')"
                                 :name="'description'"
                                 :value="$trainingTemplate->description"
@@ -37,7 +43,7 @@
                             />
                         </x-slot:content>
                     </x-common:form>
-                    <form method='POST' action="{{ route('training-template.destroy', ['id' => $trainingTemplate->id]) }}">
+                    <form method='POST' action="{{ route('training-templates.destroy', ['id' => $trainingTemplate->id]) }}">
                         @csrf
                         @method('DELETE')
                         <div class="col-md-8 offset-md-4">

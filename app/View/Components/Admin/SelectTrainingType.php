@@ -13,10 +13,8 @@ class SelectTrainingType extends Component
      */
     public function __construct(
         public readonly string $currentTrainingType,
-    )
-    {
-        //
-    }
+        public readonly bool $isDisabled = false,
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

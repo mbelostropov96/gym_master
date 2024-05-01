@@ -6,6 +6,7 @@
             <x-profile::general-info/>
             <x-profile::users/>
             <x-profile::training-templates/>
+            <x-profile::trainings/>
         </x-slot:content>
     </x-common::justify-container>
 @endsection
