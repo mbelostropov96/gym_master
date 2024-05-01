@@ -48,4 +48,6 @@ $router->group([
 });
 
 $router->get('/trainings', [TrainingClientController::class, 'index'])->name('trainings.index');
-$router->get('/reservations', [TrainingClientController::class, 'reservations'])->name('reservations.index');
+$router->get('/reservations', [TrainingClientController::class, 'reservations'])->name('trainings.reservations');
+$router->post('/reserve/{id}', [TrainingClientController::class, 'reserve'])->name('trainings.reserve')
+    ->where('id', '[0-9]+');
