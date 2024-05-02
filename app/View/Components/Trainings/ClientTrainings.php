@@ -29,7 +29,7 @@ class ClientTrainings extends Component
             'datetime_end' => __('gym.training_end'),
             'instructor_name' =>  __('gym.instructor_name'),
         ];
-        $this->clickableRouteWithId = 'trainings.reserve';
+        $this->clickableRouteWithId = 'trainings.show';
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
 

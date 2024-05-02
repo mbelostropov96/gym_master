@@ -48,6 +48,10 @@ $router->group([
 });
 
 $router->get('/trainings', [TrainingClientController::class, 'index'])->name('trainings.index');
+$router->get('/trainings/{id}', [TrainingClientController::class, 'show'])->name('trainings.show')
+    ->where('id', '[0-9]+');
 $router->get('/reservations', [TrainingClientController::class, 'reservations'])->name('trainings.reservations');
 $router->get('/reserve/{id}', [TrainingClientController::class, 'reserve'])->name('trainings.reserve')
+    ->where('id', '[0-9]+');
+$router->delete('/reserve/{id}', [TrainingClientController::class, 'destroyReservation'])->name('trainings.reserve.destroy')
     ->where('id', '[0-9]+');

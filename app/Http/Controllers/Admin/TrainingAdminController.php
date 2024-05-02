@@ -35,10 +35,12 @@ class TrainingAdminController extends Controller
             ]);
 
         if (Auth::user()->role === UserRole::INSTRUCTOR->value) {
-            $builder->where('instructor_id', Auth::id());
+            $builder->where('instructor_id', '=', Auth::id());
         }
 
-        $trainings = $builder->get();
+        $trainings = $builder
+            ->orderByDesc('id')
+            ->get();
 
         $instructors = (new User())->newQuery()
             ->where('role', '=', UserRole::INSTRUCTOR->value)

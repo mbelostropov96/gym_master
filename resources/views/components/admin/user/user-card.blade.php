@@ -35,12 +35,5 @@
                />
            </x-slot:content>
         </x-common:form>
-        <form method='POST' action="{{ route('users.destroy', ['id' => $user->id]) }}">
-            @csrf
-            @method('DELETE')
-            <div class="col-md-8 offset-md-4">
-                <button class="btn btn-danger" type="submit"> {{ __('gym.delete') }} </button>
-            </div>
-        </form>
     </x-slot:body>
 </x-common::card>

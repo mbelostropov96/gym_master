@@ -1,21 +1,19 @@
 <?php
 
-namespace App\View\Components\Common;
+namespace App\View\Components\Trainings;
 
+use App\Models\Training;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Form extends Component
+class TrainingCard extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public readonly string $method,
-        public readonly string $action,
-        public readonly string $buttonLabel,
-        public readonly bool $noAction = false,
+        public readonly Training $training,
     ) {}
 
     /**
@@ -23,6 +21,6 @@ class Form extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.common.form');
+        return view('components.trainings.training-card');
     }
 }

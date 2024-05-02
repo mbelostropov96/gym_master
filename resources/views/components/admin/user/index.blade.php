@@ -2,7 +2,18 @@
 @section('content')
     <x-common::justify-container>
         <x-slot:content>
-            <x-common::button :ref="route('users.index')" :label="__('gym.back_to_list')"/>
+            <div class="d-flex justify-content-between">
+                <div class="p-1">
+                    <x-common::button :ref="route('users.index')" :label="__('gym.back_to_list')"/>
+                </div>
+                <div class="p-1">
+                    <form method='POST' action="{{ route('users.destroy', ['id' => $user->id]) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger" type="submit"> {{ __('gym.delete_user') }} </button>
+                    </form>
+                </div>
+            </div>
             <x-admin::user-card :user="$user" />
             <x-admin::user-balance :user="$user" />
             <x-admin::user-balance-history :user="$user" />

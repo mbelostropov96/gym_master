@@ -21,7 +21,7 @@
                         @if($num === 0)
                             <th>{{ $element->$elementAttribute }}</th>
                         @else
-                            <td>
+                            <td class="text-wrap">
                                 {{
                                     __('gym.' . $element->$elementAttribute) === 'gym.' . $element->$elementAttribute
                                         ? $element->$elementAttribute

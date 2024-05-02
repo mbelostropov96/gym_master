@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Reservations;
 
+use App\Models\Training;
 use App\View\ComponentTraits\HasTableTrait;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -20,7 +21,7 @@ class ClientReservations extends Component
         public readonly Collection $instructors,
     ) {
          $this->attributeNameMap = [
-            'id' => 'ID',
+             'training_id' => __('gym.training_id'),
              'name' => __('gym.training_name'),
              'type' => __('gym.training_type'),
              'price' => __('gym.training_price'),
@@ -28,14 +29,15 @@ class ClientReservations extends Component
              'datetime_end' => __('gym.training_end'),
              'instructor_name' =>  __('gym.instructor_name'),
         ];
-        $this->clickableRouteWithId = 'trainings.reservations';
+        $this->clickableRouteWithId = 'trainings.show';
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
 
-        $keyedInstructors = $this->instructors->keyBy('id');
+        /** @var Training $training */
         foreach ($this->reservedTrainings as $training) {
-            $training->instructor_name = $keyedInstructors[$training->instructor_id]?->getFullName()
+            $training->instructor_name = $training->instructor?->getFullName()
                 ?? $training->instructor_id;
+            $training->id = $training->training_id;
         }
     }
 

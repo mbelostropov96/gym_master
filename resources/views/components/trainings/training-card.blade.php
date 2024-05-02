@@ -1,4 +1,4 @@
-@php use App\Enums\TrainingType;use App\Enums\UserRole; @endphp
+@php use App\Enums\TrainingType; @endphp
 @extends('layouts.app')
 
 @section('content')
@@ -6,35 +6,43 @@
         <x-slot:content>
             <div class="d-flex justify-content-between">
                 <div class="p-1">
-                    <x-common::button :ref="route('admin.trainings.index')" :label="__('gym.back_to_trainings')"/>
+                    <x-common::button :ref="route('trainings.index')" :label="__('gym.back_to_trainings')"/>
                 </div>
-                <div class="p-1">
-                    <form method='POST' action="{{ route('admin.trainings.destroy', ['id' => $training->id]) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger" type="submit"> {{ __('gym.delete') }} </button>
-                    </form>
-                </div>
+                @if ($training->clients->where('id', '=', Auth::user()->id)->isEmpty())
+                    <div class="p-2">
+                        <x-common::button :ref="route('trainings.reserve', ['id' => $training->id])" :label="__('gym.reserve')"/>
+                    </div>
+                @else
+                    <div class="p-2">
+                        <form method='POST' action="{{ route('trainings.reserve.destroy', ['id' => $training->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" type="submit"> {{ __('gym.cancel_reservation') }} </button>
+                        </form>
+                    </div>
+                @endif
             </div>
             <x-common::card :headerName="__('gym.training')">
                 <x-slot:body>
                     <x-common::form
                         :method="'PATCH'"
-                        :action="route('admin.trainings.update', ['id' => $training->id])"
-                        :buttonLabel="__('gym.save')"
+                        :action="''"
+                        :buttonLabel="''"
+                        :no-action="true"
                     >
                         <x-slot:content>
                             <x-common::input
                                 :label="__('gym.training_name')"
                                 :name="'name'"
+                                :isDisabled="true"
                                 :value="$training->name"
                             />
                             <x-common::select
                                 :label="__('gym.instructor_name')"
                                 :name="'instructor_id'"
-                                :values="$instructorsMap"
+                                :values="[$training->instructor->id => $training->instructor->getFullName()]"
                                 :current-value="$training->instructor->getFullName()"
-                                :isDisabled="Auth::user()->role !== UserRole::ADMIN->value"
+                                :isDisabled="true"
                                 :useValueId="true"
                             />
                             <x-common::select
@@ -48,6 +56,7 @@
                                 :label="__('gym.training_description')"
                                 :name="'description'"
                                 :value="$training->description"
+                                :isDisabled="true"
                             />
                             <x-common::input
                                 :label="__('gym.training_price')"
@@ -60,12 +69,14 @@
                                 :name="'datetime_start'"
                                 :type="'datetime-local'"
                                 :value="$training->datetime_start"
+                                :isDisabled="true"
                             />
                             <x-common::input
                                 :label="__('gym.training_end')"
                                 :name="'datetime_end'"
                                 :type="'datetime-local'"
                                 :value="$training->datetime_end"
+                                :isDisabled="true"
                             />
                         </x-slot:content>
                     </x-common::form>
