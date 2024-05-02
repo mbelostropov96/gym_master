@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property string $created_at
  * @property string $updated_at
  *
- * @property Collection|User[] $instructor
+ * @property User $instructor
  * @property Collection|User[] $clients
  */
 class Training extends Model

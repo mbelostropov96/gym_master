@@ -83,4 +83,9 @@ return [
     'your_reservations' => 'Ваши записи',
     'instructor_experience' => 'Стаж работы',
     'instructor_qualification' => 'Квалификация',
+    'reserve' => 'Записаться',
+    'training_id' => 'ID тренировки',
+    'cancel_reservation' => 'Отменить запись',
+    'balance_training_withdraw' => 'Возврат средств за тренировку',
+    'delete_user' => 'Удалить пользователя',
 ];

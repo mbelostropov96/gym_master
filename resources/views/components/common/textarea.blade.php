@@ -13,7 +13,7 @@
             class="form-control"
             name="{{ $name }}"
             type="{{ $type ?? 'string' }}"
-            @disabled($isDisabled)
+            @readonly($isDisabled)
             @required(!$isDisabled)
             {{ $attributes }}
         >{{ $value }}</textarea>

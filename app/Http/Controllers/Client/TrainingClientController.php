@@ -11,6 +11,7 @@ use App\Models\Training;
 use App\Models\User;
 use App\View\Components\Reservations\ClientReservations;
 use App\View\Components\Trainings\ClientTrainings;
+use App\View\Components\Trainings\TrainingCard;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\RedirectResponse;
@@ -28,6 +29,7 @@ class TrainingClientController
                 'clients',
                 'instructor',
             ])
+            ->orderByDesc('id')
             ->get();
 
         $trainings = $trainings->filter(static function (Training $training) {
@@ -52,6 +54,29 @@ class TrainingClientController
         return $trainingsListComponent->render()->with($trainingsListComponent->data());
     }
 
+
+    /**
+     * @param int $id
+     * @return Renderable
+     */
+    public function show(int $id): Renderable
+    {
+        /** @var Training $training */
+        $training = (new Training())->newQuery()
+            ->with([
+                'instructor',
+                'clients',
+            ])
+            ->findOrFail($id);
+
+        $trainingComponent = new TrainingCard(
+            $training,
+        );
+
+        return $trainingComponent->render()->with($trainingComponent->data());
+
+    }
+
     /**
      * @return Renderable
      */
@@ -69,6 +94,7 @@ class TrainingClientController
                 );
             })
             ->where(sprintf('%s.client_id',Reservation::TABLE), '=', auth()->user()->id)
+            ->orderByDesc(sprintf('%s.id',Reservation::TABLE))
             ->get();
 
         $instructors = (new User())->newQuery()
@@ -134,6 +160,55 @@ class TrainingClientController
                 ->create([
                     'training_id' => $trainingId,
                     'client_id' => auth()->user()->id,
+                ]);
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+        }
+
+        return redirect()->to(route('trainings.reservations'));
+    }
+
+    /**
+     * @param int $trainingId
+     * @return RedirectResponse
+     */
+    public function destroyReservation(int $trainingId): RedirectResponse
+    {
+        try {
+            /** @var Training $training */
+            $training = (new Training())->newQuery()
+                ->findOrFail($trainingId);
+
+            /** @var Reservation $reservation */
+            $reservation = (new Reservation())->newQuery()
+                ->where('client_id', '=', auth()->user()->id)
+                ->where('training_id', '=', $trainingId)
+                ->firstOrFail();
+
+            $reservation->delete();
+
+            /** @var ClientInfo $clientInfo */
+            $clientInfo = (new ClientInfo())->newQuery()
+                ->where('client_id', '=', auth()->user()->id)
+                ->first();
+
+            $oldBalance = $clientInfo->balance;
+            $clientInfo->balance += $training->price;
+            $clientInfo->save();
+
+            (new BalanceEvent())->newQuery()
+                ->create([
+                    'client_id' => auth()->user()->id,
+                    'old_balance' => $oldBalance,
+                    'balance_change' => $training->price,
+                    'description' => sprintf(
+                        '%s: %s[ID:%s]',
+                        __('gym.balance_training_withdraw'),
+                        $training->name,
+                        $training->id,
+                    )
                 ]);
 
             DB::commit();

@@ -1,12 +1,12 @@
 <x-common::card :header-name="__('gym.dashboard')">
     <x-slot:body>
-        <div class="row justify-content-center just">
-            <div class="card col-md-9 col-sm-12">
+        <div class="row justify-content-center">
+            <div class=" col-md-9 col-sm-12">
                 <table class="table">
                     <tbody>
                     @foreach ($contents as $name => $value)
                         <tr>
-                            <th>{{ $name }}</th>
+                            <th class="text-end">{{ $name }}</th>
                             <td>
                                 {{
                                     __('gym.' . $value) === 'gym.' . $value

@@ -16,7 +16,12 @@
             @endforeach
         </select>
         @if ($isDisabled)
-            <input type="hidden" name="{{ $name }}" value="{{ $useValueId ? $valueId : $value }}" />
+            <input type="hidden" name="{{ $name }}" value="{{
+                $useValueId
+                    ? array_flip($values)[$currentValue]
+                    : $currentValue
+                }}"
+            />
         @endif
     </div>
 </div>
