@@ -29,7 +29,8 @@ class TrainingClientController
                 'clients',
                 'instructor',
             ])
-            ->orderByDesc('id')
+            ->where('datetime_start', '>', date('Y-m-d H:i:s', time()))
+            ->orderBy('datetime_start')
             ->get();
 
         $trainings = $trainings->filter(static function (Training $training) {
