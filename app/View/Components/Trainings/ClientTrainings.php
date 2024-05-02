@@ -1,14 +1,16 @@
 <?php
 
-namespace App\View\Components\Admin;
+namespace App\View\Components\Trainings;
 
+use App\Enums\UserRole;
 use App\View\ComponentTraits\HasTableTrait;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
-class Trainings extends Component
+class ClientTrainings extends Component
 {
     use HasTableTrait;
 
@@ -20,7 +22,6 @@ class Trainings extends Component
         public readonly Collection $instructors,
     ) {
         $this->attributeNameMap = [
-            'id' => 'ID',
             'name' => __('gym.training_name'),
             'type' => __('gym.training_type'),
             'price' => __('gym.training_price'),
@@ -28,7 +29,7 @@ class Trainings extends Component
             'datetime_end' => __('gym.training_end'),
             'instructor_name' =>  __('gym.instructor_name'),
         ];
-        $this->clickableRouteWithId = 'admin.trainings.update';
+        $this->clickableRouteWithId = 'trainings.reserve';
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
 
@@ -44,6 +45,11 @@ class Trainings extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.admin.trainings.index');
+        return view('components.trainings.index');
+    }
+
+    public function shouldRender() : bool
+    {
+        return Auth::user()->role === UserRole::CLIENT->value;
     }
 }

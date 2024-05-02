@@ -132,7 +132,7 @@ class TrainingAdminController extends Controller
         (new Training())->newQuery()
             ->create($data);
 
-        return redirect()->to(route('trainings.index'));
+        return redirect()->to(route('admin.trainings.index'));
     }
 
     /**
@@ -148,7 +148,7 @@ class TrainingAdminController extends Controller
             ->findOrFail($id)
             ->update($data);
 
-        return redirect()->to(route('trainings.show', ['id' => $id]));
+        return redirect()->to(route('admin.trainings.show', ['id' => $id]));
     }
 
     /**
@@ -161,6 +161,6 @@ class TrainingAdminController extends Controller
             ->findOrFail($id)
             ->delete();
 
-        return redirect()->to(route('trainings.index'));
+        return redirect()->to(route('admin.trainings.index'));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Admin;
 
+use App\View\ComponentTraits\HasTableTrait;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -9,11 +10,7 @@ use Illuminate\View\Component;
 
 class CreateTraining extends Component
 {
-    public string $clickableRouteWithId;
-    public array $columnsName;
-    public array $columns;
-
-    private array $attributeNameMap;
+    use HasTableTrait;
 
     /**
      * Create a new component instance.
@@ -28,7 +25,7 @@ class CreateTraining extends Component
             'price' => __('gym.training_template_price'),
             'duration' => __('gym.training_template_duration'),
         ];
-        $this->clickableRouteWithId = 'create-by-template.create';
+        $this->clickableRouteWithId = 'admin.create-by-template.create';
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
     }

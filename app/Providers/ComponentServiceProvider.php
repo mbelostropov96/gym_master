@@ -23,5 +23,7 @@ class ComponentServiceProvider extends ServiceProvider
         Blade::componentNamespace('App\\View\\Components\\Admin', 'admin');
         Blade::componentNamespace('App\\View\\Components\\Common', 'common');
         Blade::componentNamespace('App\\View\\Components\\Profile', 'profile');
+        Blade::componentNamespace('App\\View\\Components\\Reservations', 'reservations');
+        Blade::componentNamespace('App\\View\\Components\\Trainings', 'trainings');
     }
 }

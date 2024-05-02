@@ -3,7 +3,7 @@
         <x-common::form
             :method="'PATCH'"
             :action="route('users.balance.update', ['id' => $user->id])"
-            :buttonLabel="__('gym.balance_change')"
+            :buttonLabel="__('gym.balance_top_up')"
         >
             <x-slot:content>
                 <x-common::input
