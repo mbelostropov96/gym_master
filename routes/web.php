@@ -14,7 +14,7 @@ $router = app('router');
 Auth::routes();
 
 $router->get('/', function () {
-    return view('auth.login');
+    return redirect('/profile');
 });
 
 $router->get('/profile', [HomeController::class, 'index'])->name('profile');
@@ -49,5 +49,5 @@ $router->group([
 
 $router->get('/trainings', [TrainingClientController::class, 'index'])->name('trainings.index');
 $router->get('/reservations', [TrainingClientController::class, 'reservations'])->name('trainings.reservations');
-$router->post('/reserve/{id}', [TrainingClientController::class, 'reserve'])->name('trainings.reserve')
+$router->get('/reserve/{id}', [TrainingClientController::class, 'reserve'])->name('trainings.reserve')
     ->where('id', '[0-9]+');

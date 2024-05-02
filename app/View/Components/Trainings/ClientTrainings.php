@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
-class TrainingsList extends Component
+class ClientTrainings extends Component
 {
     use HasTableTrait;
 
@@ -29,8 +29,7 @@ class TrainingsList extends Component
             'datetime_end' => __('gym.training_end'),
             'instructor_name' =>  __('gym.instructor_name'),
         ];
-        // @TODO new ручка
-        $this->clickableRouteWithId = 'admin.trainings.update';
+        $this->clickableRouteWithId = 'trainings.reserve';
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
 

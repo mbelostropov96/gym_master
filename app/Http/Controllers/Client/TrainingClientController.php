@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Client;
 
 use App\Enums\TrainingType;
 use App\Enums\UserRole;
+use App\Models\BalanceEvent;
 use App\Models\ClientInfo;
 use App\Models\Reservation;
 use App\Models\Training;
 use App\Models\User;
-use App\View\Components\Reservations\ReservationsList;
-use App\View\Components\Trainings\TrainingsList;
+use App\View\Components\Reservations\ClientReservations;
+use App\View\Components\Trainings\ClientTrainings;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Query\JoinClause;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 
 class TrainingClientController
@@ -32,6 +34,8 @@ class TrainingClientController
             if (
                 $training->type === TrainingType::SINGLE->value
                 && $training->clients->isNotEmpty()
+                || $training->type === TrainingType::GROUP->value
+                 && $training->clients->where('id', '=', auth()->user()->id)->isNotEmpty()
             ) {
                 return false;
             }
@@ -43,7 +47,7 @@ class TrainingClientController
             ->where('role', '=', UserRole::INSTRUCTOR->value)
             ->get();
 
-        $trainingsListComponent = new TrainingsList($trainings, $instructors);
+        $trainingsListComponent = new ClientTrainings($trainings, $instructors);
 
         return $trainingsListComponent->render()->with($trainingsListComponent->data());
     }
@@ -57,7 +61,6 @@ class TrainingClientController
             ->with([
                 'instructor',
             ])
-            ->where('reservations.client_id', '=', auth()->user()->id)
             ->join(Reservation::TABLE, static function (JoinClause $join) {
                 $join->on(
                     sprintf('%s.training_id',Reservation::TABLE),
@@ -65,18 +68,23 @@ class TrainingClientController
                     sprintf('%s.id',Training::TABLE)
                 );
             })
+            ->where(sprintf('%s.client_id',Reservation::TABLE), '=', auth()->user()->id)
             ->get();
 
-        $trainingsListComponent = new ReservationsList($trainings);
+        $instructors = (new User())->newQuery()
+            ->where('role', '=', UserRole::INSTRUCTOR->value)
+            ->get();
+
+        $trainingsListComponent = new ClientReservations($trainings, $instructors);
 
         return $trainingsListComponent->render()->with($trainingsListComponent->data());
     }
 
     /**
      * @param int $trainingId
-     * @return Renderable
+     * @return RedirectResponse
      */
-    public function reserve(int $trainingId): Renderable
+    public function reserve(int $trainingId): RedirectResponse
     {
         DB::beginTransaction();
         try {
@@ -90,6 +98,8 @@ class TrainingClientController
             if (
                 $training->type === TrainingType::SINGLE->value
                 && $training->clients->isNotEmpty()
+                || $training->type === TrainingType::GROUP->value
+                && $training->clients->where('id', '=', auth()->user()->id)->isNotEmpty()
             ) {
                 throw new \RuntimeException('snovaa loh', 200);
             }
@@ -100,25 +110,37 @@ class TrainingClientController
                 ->first();
 
             if ($clientInfo->balance < $training->price) {
-                throw new \RuntimeException('snovaa loh', 200);
+                throw new \RuntimeException('Your balance is low', 200);
             }
 
+            $oldBalance = $clientInfo->balance;
             $clientInfo->balance = $clientInfo->balance - $training->price;
             $clientInfo->save();
+
+            (new BalanceEvent())->newQuery()
+                ->create([
+                    'client_id' => auth()->user()->id,
+                    'old_balance' => $oldBalance,
+                    'balance_change' =>  $clientInfo->balance - $oldBalance,
+                    'description' => sprintf(
+                        '%s: %s[ID:%s]',
+                        __('gym.standard_balance_training_payment'),
+                        $training->name,
+                        $training->id,
+                    )
+                ]);
 
             (new Reservation())->newQuery()
                 ->create([
                     'training_id' => $trainingId,
-                    'client_id' => $clientInfo->id,
+                    'client_id' => auth()->user()->id,
                 ]);
 
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
-
-            dd($e->getMessage());
         }
 
-        return view('');
+        return redirect()->to(route('trainings.reservations'));
     }
 }

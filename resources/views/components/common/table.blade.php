@@ -1,7 +1,5 @@
 @if ($contents->isEmpty())
-    <div class="alert alert-warning" role="alert">
-        {{ __('gym.table_no_data') }}
-    </div>
+    <x-common::alert :type="'warning'" :message="__('gym.table_no_data')"/>
 @else
     <table class="table">
         <thead>
