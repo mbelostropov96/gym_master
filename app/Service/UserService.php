@@ -7,11 +7,11 @@ use App\Service\DTO\UserDTO;
 
 class UserService
 {
-    public function show(int $id, array $relation = []): User
+    public function show(int $id, array $relations = []): User
     {
         /** @var User $user */
         $user = (new User())->newQuery()
-            ->with($relation)
+            ->with($relations)
             ->findOrFail($id);
 
         return $user;

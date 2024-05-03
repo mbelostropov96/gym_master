@@ -17,8 +17,7 @@ class ClientReservations extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public readonly Collection $reservedTrainings,
-        public readonly Collection $instructors,
+        public readonly Collection $reservedTrainings
     ) {
          $this->attributeNameMap = [
              'training_id' => __('gym.training_id'),

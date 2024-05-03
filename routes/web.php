@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Client\ReservationClientController;
 use App\Http\Controllers\Client\TrainingClientController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,6 +20,10 @@ $router->get('/', function () {
 });
 
 $router->get('/profile', [HomeController::class, 'index'])->name('profile');
+
+$router->get('users/{id}', [UserController::class, 'show'])->name('users.show');
+$router->patch('users/{id}', [UserController::class, 'update'])->name('users.update');
+$router->delete('users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
 $router->group([
     'middleware' => 'admin',

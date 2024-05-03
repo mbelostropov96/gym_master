@@ -106,7 +106,7 @@ class UserAdminController extends Controller
     }
 
     /**
-     * @param int $idApp\Models\Use
+     * @param int $id
      * @return RedirectResponse
      */
     public function destroy(int $id): RedirectResponse
