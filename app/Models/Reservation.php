@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property integer $id
  * @property integer $client_id
  * @property integer $training_id
+ *
+ * @property Training $training
  */
 class Reservation extends Model
 {
@@ -27,4 +30,13 @@ class Reservation extends Model
         'client_id' => 'integer',
         'training_id' => 'integer',
     ];
+
+    public function training(): BelongsTo
+    {
+        return $this->belongsTo(
+            Training::class,
+            'training_id',
+            'id'
+        );
+    }
 }

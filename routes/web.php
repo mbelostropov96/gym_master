@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\TrainingAdminController;
 use App\Http\Controllers\Admin\TrainingTemplateAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
+use App\Http\Controllers\Client\ReservationClientController;
 use App\Http\Controllers\Client\TrainingClientController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Routing\Router;
@@ -23,19 +24,19 @@ $router->group([
     'middleware' => 'admin',
     'prefix' => 'admin',
 ], function () use ($router) {
-    $router->get('users', [UserAdminController::class, 'index'])->name('users.index');
-    $router->get('users/{id}', [UserAdminController::class, 'show'])->name('users.show');
-    $router->patch('users/{id}', [UserAdminController::class, 'update'])->name('users.update');
-    $router->patch('users/balance/{id}', [UserAdminController::class, 'updateBalance'])->name('users.balance.update');
-    $router->delete('users/{id}', [UserAdminController::class, 'destroy'])->name('users.destroy');
+    $router->get('users', [UserAdminController::class, 'index'])->name('admin.users.index');
+    $router->get('users/{id}', [UserAdminController::class, 'show'])->name('admin.users.show');
+    $router->patch('users/{id}', [UserAdminController::class, 'update'])->name('admin.users.update');
+    $router->patch('users/balance/{id}', [UserAdminController::class, 'updateBalance'])->name('admin.users.balance.update');
+    $router->delete('users/{id}', [UserAdminController::class, 'destroy'])->name('admin.users.destroy');
 
-    $router->get('training-templates', [TrainingTemplateAdminController::class, 'index'])->name('training-templates.index');
-    $router->get('training-templates/{id}', [TrainingTemplateAdminController::class, 'show'])->name('training-templates.show')
+    $router->get('training-templates', [TrainingTemplateAdminController::class, 'index'])->name('admin.training-templates.index');
+    $router->get('training-templates/{id}', [TrainingTemplateAdminController::class, 'show'])->name('admin.training-templates.show')
         ->where('id', '[0-9]+');
-    $router->get('training-templates/create', [TrainingTemplateAdminController::class, 'create'])->name('training-templates.create');
-    $router->post('training-templates', [TrainingTemplateAdminController::class, 'store'])->name('training-templates.store');
-    $router->patch('training-templates/{id}', [TrainingTemplateAdminController::class, 'update'])->name('training-templates.update');
-    $router->delete('training-templates/{id}', [TrainingTemplateAdminController::class, 'destroy'])->name('training-templates.destroy');
+    $router->get('training-templates/create', [TrainingTemplateAdminController::class, 'create'])->name('admin.training-templates.create');
+    $router->post('training-templates', [TrainingTemplateAdminController::class, 'store'])->name('admin.training-templates.store');
+    $router->patch('training-templates/{id}', [TrainingTemplateAdminController::class, 'update'])->name('admin.training-templates.update');
+    $router->delete('training-templates/{id}', [TrainingTemplateAdminController::class, 'destroy'])->name('admin.training-templates.destroy');
 
     $router->get('trainings', [TrainingAdminController::class, 'index'])->name('admin.trainings.index');
     $router->get('trainings/{id}', [TrainingAdminController::class, 'show'])->name('admin.trainings.show')
@@ -47,11 +48,13 @@ $router->group([
     $router->delete('trainings/{id}', [TrainingAdminController::class, 'destroy'])->name('admin.trainings.destroy');
 });
 
-$router->get('/trainings', [TrainingClientController::class, 'index'])->name('trainings.index');
-$router->get('/trainings/{id}', [TrainingClientController::class, 'show'])->name('trainings.show')
-    ->where('id', '[0-9]+');
-$router->get('/reservations', [TrainingClientController::class, 'reservations'])->name('trainings.reservations');
-$router->get('/reserve/{id}', [TrainingClientController::class, 'reserve'])->name('trainings.reserve')
-    ->where('id', '[0-9]+');
-$router->delete('/reserve/{id}', [TrainingClientController::class, 'destroyReservation'])->name('trainings.reserve.destroy')
-    ->where('id', '[0-9]+');
+$router->group([
+    'middleware' => 'client',
+], function () use ($router) {
+    $router->get('/trainings', [TrainingClientController::class, 'index'])->name('trainings.index');
+    $router->get('/trainings/{id}', [TrainingClientController::class, 'show'])->name('trainings.show');
+
+    $router->get('/reservations', [ReservationClientController::class, 'index'])->name('reservations.index');
+    $router->post('/reservations', [ReservationClientController::class, 'store'])->name('reservations.store');
+    $router->delete('/reservations/{id}', [ReservationClientController::class, 'destroy'])->name('reservations.destroy');
+});

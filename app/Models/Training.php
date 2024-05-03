@@ -7,6 +7,7 @@ use App\Models\Traits\Sortable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property string $updated_at
  *
  * @property User $instructor
+ * @property Collection|Reservation[] $reservations
  * @property Collection|User[] $clients
  */
 class Training extends Model
@@ -64,6 +66,15 @@ class Training extends Model
         return $this->belongsTo(
             User::class,
             'instructor_id',
+            'id'
+        );
+    }
+
+    public function reservations(): HasMany
+    {
+        return $this->hasMany(
+            Reservation::class,
+            'training_id',
             'id'
         );
     }
