@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Client;
 
 use App\Enums\TrainingType;
 use App\Enums\UserRole;
+use App\Http\Builder\Filters\TrainingFilter;
+use App\Http\Builder\Sorters\AbstractSorter;
+use App\Http\Builder\Sorters\TrainingSorter;
 use App\Models\BalanceEvent;
 use App\Models\ClientInfo;
 use App\Models\Reservation;
 use App\Models\Training;
 use App\Models\User;
+use App\Service\TrainingService;
 use App\View\Components\Reservations\ClientReservations;
 use App\View\Components\Trainings\ClientTrainings;
 use App\View\Components\Trainings\TrainingCard;
@@ -24,21 +28,25 @@ class TrainingClientController
      */
     public function index(): Renderable
     {
-        $trainings = (new Training())->newQuery()
-            ->with([
-                'clients',
-                'instructor',
-            ])
-            ->where('datetime_start', '>', date('Y-m-d H:i:s', time()))
-            ->orderBy('datetime_start')
-            ->get();
+        $trainingFilter = new TrainingFilter([
+            TrainingFilter::MORE_DATETIME_START => date('Y-m-d H:i:s', time()),
+        ]);
+        $trainingSorter = new TrainingSorter([
+            TrainingSorter::ORDER_BY_DATETIME_START => AbstractSorter::SORT_ASC,
+        ]);
+        $relations = [
+            'clients',
+            'instructor',
+        ];
+
+        $trainings = (new TrainingService())->index($trainingFilter, $trainingSorter, $relations);
 
         $trainings = $trainings->filter(static function (Training $training) {
             if (
                 $training->type === TrainingType::SINGLE->value
                 && $training->clients->isNotEmpty()
                 || $training->type === TrainingType::GROUP->value
-                 && $training->clients->where('id', '=', auth()->user()->id)->isNotEmpty()
+                && $training->clients->contains('id', '=', auth()->user()->id)
             ) {
                 return false;
             }
@@ -46,6 +54,7 @@ class TrainingClientController
             return true;
         });
 
+        // TODO выпилить. Инструктора есть в тренировках
         $instructors = (new User())->newQuery()
             ->where('role', '=', UserRole::INSTRUCTOR->value)
             ->get();
@@ -54,7 +63,6 @@ class TrainingClientController
 
         return $trainingsListComponent->render()->with($trainingsListComponent->data());
     }
-
 
     /**
      * @param int $id
@@ -75,7 +83,6 @@ class TrainingClientController
         );
 
         return $trainingComponent->render()->with($trainingComponent->data());
-
     }
 
     /**

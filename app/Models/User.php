@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -73,7 +72,6 @@ class User extends Authenticatable
         static::creating(function (self $model) {
             if ($model->id !== 1) {
                 $model->role = UserRole::CLIENT->value;
-                $model->password = Hash::make($model->password);
             }
         });
     }
@@ -105,9 +103,10 @@ class User extends Authenticatable
         )->orderByDesc('created_at');
     }
 
-    public function getFullName() : string
+    // TODO use \App\Helpers\UserHelper::getFullName
+    public function getFullName(): string
     {
-        return  sprintf(
+        return sprintf(
             '%s %s %s',
             $this->last_name,
             $this->first_name,

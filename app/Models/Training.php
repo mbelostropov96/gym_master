@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Filterable;
+use App\Models\Traits\Sortable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,6 +27,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 class Training extends Model
 {
     use HasFactory;
+    use Filterable;
+    use Sortable;
 
     public const TABLE = 'trainings';
 

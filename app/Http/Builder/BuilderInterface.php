@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Filters;
+namespace App\Http\Builder;
 
 use Illuminate\Database\Eloquent\Builder;
 
-interface FilterInterface
+// TODO подумать над названием
+interface BuilderInterface
 {
     public function apply(Builder $builder): void;
 }

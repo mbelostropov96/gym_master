@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Filters;
+namespace App\Http\Builder\Filters;
 
+use App\Http\Builder\BuilderInterface;
 use Illuminate\Database\Eloquent\Builder;
 
-abstract class AbstractFilter implements FilterInterface
+abstract class AbstractFilter implements BuilderInterface
 {
     private array $params;
 
