@@ -2,7 +2,7 @@
     <x-slot:body>
         <x-common::form
             :method="'PATCH'"
-            :action="route('users.balance.update', ['id' => $user->id])"
+            :action="route('admin.users.balance.update', ['id' => $user->id])"
             :buttonLabel="__('gym.balance_top_up')"
         >
             <x-slot:content>

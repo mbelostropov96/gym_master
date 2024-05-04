@@ -51,12 +51,9 @@ class TrainingClientController
             return true;
         });
 
-        // TODO выпилить. Инструктора есть в тренировках
-        $instructors = (new User())->newQuery()
-            ->where('role', '=', UserRole::INSTRUCTOR->value)
-            ->get();
+        // TODO выпилиться
 
-        $trainingsListComponent = new ClientTrainings($trainings, $instructors);
+        $trainingsListComponent = new ClientTrainings($trainings);
 
         return $trainingsListComponent->render()->with($trainingsListComponent->data());
     }

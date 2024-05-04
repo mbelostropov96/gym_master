@@ -12,8 +12,10 @@ class Button extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $ref = '',
-        public string $label = '',
+        public readonly string $ref = '',
+        public readonly string $label = '',
+        public readonly bool $post = false,
+        public readonly array $postParams = [],
     ) {}
 
     /**

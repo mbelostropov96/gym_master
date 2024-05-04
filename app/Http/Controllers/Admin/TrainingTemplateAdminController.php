@@ -63,7 +63,7 @@ class TrainingTemplateAdminController extends Controller
         (new TrainingTemplate())->newQuery()
             ->create($data);
 
-        return redirect()->to(route('training-templates.index'));
+        return redirect()->to(route('admin.training-templates.index'));
     }
 
     /**
@@ -92,6 +92,6 @@ class TrainingTemplateAdminController extends Controller
             ->findOrFail($id)
             ->delete();
 
-        return redirect()->to(route('training-templates.index'));
+        return redirect()->to(route('admin.training-templates.index'));
     }
 }

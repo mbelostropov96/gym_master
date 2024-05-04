@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Builder\Filters\TrainingFilter;
 use App\Http\Builder\Sorters\AbstractSorter;
 use App\Http\Builder\Sorters\TrainingSorter;
+use App\Http\Requests\StoreReservationRequest;
 use App\Service\ReservationService;
 use App\Service\TrainingService;
 use App\View\Components\Reservations\ClientReservations;
@@ -43,11 +44,14 @@ class ReservationClientController
     }
 
     /**
-     * @param int $trainingId
+     * @param StoreReservationRequest $request
      * @return RedirectResponse
      */
-    public function store(int $trainingId): RedirectResponse
+    public function store(StoreReservationRequest $request): RedirectResponse
     {
+        $data = $request->validated();
+        $trainingId = $data['training_id'];
+
         DB::beginTransaction();
         try {
             $this->reservationService->store($trainingId);
@@ -57,7 +61,7 @@ class ReservationClientController
             DB::rollBack();
         }
 
-        return redirect()->to(route('trainings.reservations'));
+        return redirect()->to(route('reservations.index'));
     }
 
     /**
@@ -75,6 +79,6 @@ class ReservationClientController
             DB::rollBack();
         }
 
-        return redirect()->to(route('trainings.reservations'));
+        return redirect()->to(route('reservations.index'));
     }
 }
