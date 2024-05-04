@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateTrainingRequest;
 use App\Http\Requests\StoreTrainingRequest;
+use App\Http\Requests\UpdateTrainingRequest;
 use App\Models\Training;
 use App\Models\TrainingTemplate;
 use App\Models\User;
-use App\View\Components\Admin\Training as TrainingComponent;
-use App\View\Components\Admin\CreateTraining as CreateTrainingComponent;
-use App\View\Components\Admin\CreateTrainingByTemplate as CreateTrainingByTemplateComponent;
-use App\View\Components\Admin\Trainings as TrainingsComponent;
+use App\View\Components\Admin\Training\CreateTraining as CreateTrainingComponent;
+use App\View\Components\Admin\Training\CreateTrainingByTemplate as CreateTrainingByTemplateComponent;
+use App\View\Components\Admin\Training\Training as TrainingComponent;
+use App\View\Components\Admin\Training\Trainings as TrainingsComponent;
 use DateInterval;
 use DateTime;
 use Exception;
@@ -61,6 +61,7 @@ class TrainingAdminController extends Controller
         $training = (new Training())->newQuery()
             ->with([
                 'instructor',
+                'reservations',
             ])
             ->findOrFail($id);
 

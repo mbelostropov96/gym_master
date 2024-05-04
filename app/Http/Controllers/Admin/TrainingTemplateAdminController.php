@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTrainingTemplateRequest;
 use App\Http\Requests\UpdateTrainingTemplateRequest;
 use App\Models\TrainingTemplate;
-use App\View\Components\Admin\CreateTrainingTemplate as CreateTrainingTemplateComponent;
+use App\View\Components\Admin\TrainingTemplate\CreateTrainingTemplate as CreateTrainingTemplateComponent;
 use App\View\Components\Admin\TrainingTemplate\TrainingTemplateCard as TrainingTemplateCardComponent;
-use App\View\Components\Admin\TrainingTemplates as TrainingTemplatesComponent;
+use App\View\Components\Admin\TrainingTemplate\TrainingTemplates as TrainingTemplatesComponent;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 

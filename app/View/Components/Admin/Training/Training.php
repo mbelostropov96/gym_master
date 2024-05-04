@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Admin;
+namespace App\View\Components\Admin\Training;
 
 use App\Models\Training as TrainingModel;
 use Closure;
@@ -12,17 +12,12 @@ class Training extends Component
 {
     public array $instructorsMap;
     public string $trainerName = '';
-    /**
-     * Create a new component instance.
-     */
+
     public function __construct(
         public readonly TrainingModel $training,
         public readonly Collection $instructors,
     ) {}
 
-    /**
-     * Get the view / contents that represent the component.
-     */
     public function render(): View|Closure|string
     {
         $this->instructorsMap = [];

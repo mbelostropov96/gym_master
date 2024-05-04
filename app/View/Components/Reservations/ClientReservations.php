@@ -13,9 +13,7 @@ class ClientReservations extends Component
 {
     use HasTableTrait;
 
-    /**
-     * Create a new component instance.
-     */
+
     public function __construct(
         public readonly Collection $reservedTrainings
     ) {

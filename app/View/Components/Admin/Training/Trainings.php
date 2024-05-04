@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Admin;
+namespace App\View\Components\Admin\Training;
 
 use App\View\ComponentTraits\HasTableTrait;
 use Closure;
@@ -12,9 +12,7 @@ class Trainings extends Component
 {
     use HasTableTrait;
 
-    /**
-     * Create a new component instance.
-     */
+
     public function __construct(
         public readonly Collection $trainings,
         public readonly Collection $instructors,
@@ -39,9 +37,7 @@ class Trainings extends Component
         }
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
+
     public function render(): View|Closure|string
     {
         return view('components.admin.trainings.index');

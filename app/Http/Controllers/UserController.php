@@ -6,7 +6,7 @@ use App\Enums\UserRole;
 use App\Http\Requests\UpdateUserRequest;
 use App\Service\DTO\UserDTO;
 use App\Service\UserService;
-use App\View\Components\Admin\User as UserComponent;
+use App\View\Components\Admin\User\User as UserComponent;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use RuntimeException;

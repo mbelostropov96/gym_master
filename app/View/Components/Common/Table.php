@@ -8,19 +8,16 @@ use Illuminate\View\Component;
 
 class Table extends Component
 {
-    /**
-     * Create a new component instance.
-     */
+
     public function __construct(
         public iterable $columnsName,
         public iterable $columns,
         public iterable $contents,
         public string $clickableRouteWithId = '',
+        public array $actions = [],
     ) {}
 
-    /**
-     * Get the view / contents that represent the component.
-     */
+
     public function render(): View|Closure|string
     {
         return view('components.common.table');

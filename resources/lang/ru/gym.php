@@ -88,4 +88,7 @@ return [
     'cancel_reservation' => 'Отменить запись',
     'balance_training_withdraw' => 'Возврат средств за тренировку',
     'delete_user' => 'Удалить пользователя',
+    'clients_reservations' => 'Записи',
+    'client_name' => 'Имя клиента',
+    'table_actions' => 'Действия',
 ];

@@ -67,6 +67,7 @@ class TrainingClientController
         $training = $this->trainingService->show($id, [
             'instructor',
             'clients',
+            'reservations',
         ]);
 
         $trainingComponent = new TrainingCard(

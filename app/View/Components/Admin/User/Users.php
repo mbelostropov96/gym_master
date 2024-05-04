@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Admin;
+namespace App\View\Components\Admin\User;
 
 use App\View\ComponentTraits\HasTableTrait;
 use Closure;
@@ -12,9 +12,7 @@ class Users extends Component
 {
     use HasTableTrait;
 
-    /**
-     * Create a new component instance.
-     */
+
     public function __construct(
         public readonly Collection $users
     ) {
@@ -31,9 +29,7 @@ class Users extends Component
        $this->columns = array_flip($this->attributeNameMap);
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
+
     public function render(): View|Closure|string
     {
         return view('components.admin.users.index');

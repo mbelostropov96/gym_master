@@ -100,7 +100,7 @@ class ReservationService
 
         if (
             $reservation->client_id !== $user->id
-            || $reservation->training->datetime_start > date('Y-m-d H:i:s', time())
+            || $reservation->training->datetime_start < date('Y-m-d H:i:s', time())
         ) {
             throw new RuntimeException('Дальше вы не пройдете пока не получите бумаги', 403);
         }

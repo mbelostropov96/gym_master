@@ -12,9 +12,7 @@ use Illuminate\View\Component;
 
 class GeneralInfo extends Component{
     public array $contents;
-    /**
-     * Create a new component instance.
-     */
+
     public function __construct()
     {
         /** @var User $user */
@@ -23,9 +21,7 @@ class GeneralInfo extends Component{
         $this->contents = $this->addDisplayDataByRole($user);
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
+
     public function render(): View|Closure|string
     {
         return view('components.profile.general-info');

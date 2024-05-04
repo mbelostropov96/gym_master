@@ -71,6 +71,7 @@
                     </x-common::form>
                 </x-slot:body>
             </x-common::card>
+            <x-admin::training.training-users-reservations :training="$training"/>
         </x-slot:content>
     </x-common::justify-container>
 @endsection

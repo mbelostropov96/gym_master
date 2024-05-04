@@ -23,7 +23,9 @@
                             ->format('Y-m-d\TH:i')
                 )
                     <div class="p-2">
-                        <form method="POST" action="{{ route('reservations.destroy', ['id' => $training->id]) }}">
+                        <form method="POST" action="{{ route('reservations.destroy', [
+                            'id' => $training->reservations->where('client_id', '=', Auth::user()->id)->first()->id
+                        ]) }}">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger" type="submit"> {{ __('gym.cancel_reservation') }} </button>
