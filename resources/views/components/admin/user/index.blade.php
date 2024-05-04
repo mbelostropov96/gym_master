@@ -4,7 +4,7 @@
         <x-slot:content>
             <div class="d-flex justify-content-between">
                 <div class="p-1">
-                    <x-common::button :ref="route('users.index')" :label="__('gym.back_to_list')"/>
+                    <x-common::button :ref="route('admin.users.index')" :label="__('gym.back_to_list')"/>
                 </div>
                 <div class="p-1">
                     <form method='POST' action="{{ route('users.destroy', ['id' => $user->id]) }}">
@@ -14,9 +14,15 @@
                     </form>
                 </div>
             </div>
-            <x-admin::user-card :user="$user" />
-            <x-admin::user-balance :user="$user" />
-            <x-admin::user-balance-history :user="$user" />
+            <div class="row">
+                <div class="col-md-6">
+                    <x-admin::user-card :user="$user"/>
+                </div>
+                <div class="col-md-6">
+                    <x-admin::user-balance :user="$user"/>
+                </div>
+            </div>
+            <x-admin::user-balance-history :user="$user"/>
         </x-slot:content>
     </x-common::justify-container>
 @endsection

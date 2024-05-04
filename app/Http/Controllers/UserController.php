@@ -67,6 +67,6 @@ class UserController extends Controller
 
         $this->userService->destroy($id);
 
-        return redirect()->to(route('users.index'));
+        return redirect()->to(route('admin.users.index'));
     }
 }

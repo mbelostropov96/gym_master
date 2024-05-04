@@ -4,7 +4,7 @@ namespace App\Http\Builder;
 
 use Illuminate\Database\Eloquent\Builder;
 
-// TODO подумать над названием
+// TODO не думать над названием
 interface BuilderInterface
 {
     public function apply(Builder $builder): void;

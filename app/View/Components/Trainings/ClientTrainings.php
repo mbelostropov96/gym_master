@@ -19,7 +19,6 @@ class ClientTrainings extends Component
      */
     public function __construct(
         public readonly Collection $trainings,
-        public readonly Collection $instructors,
     ) {
         $this->attributeNameMap = [
             'name' => __('gym.training_name'),
@@ -33,9 +32,8 @@ class ClientTrainings extends Component
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
 
-        $keyedInstructors = $this->instructors->keyBy('id');
         foreach ($this->trainings as $training) {
-            $training->instructor_name = $keyedInstructors[$training->instructor_id]?->getFullName()
+            $training->instructor_name = $training->instructor?->getFullName()
                 ?? $training->instructor_id;
         }
     }

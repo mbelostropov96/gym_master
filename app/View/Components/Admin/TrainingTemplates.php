@@ -25,7 +25,7 @@ class TrainingTemplates extends Component
             'price' => __('gym.training_template_price'),
             'duration' => __('gym.training_template_duration'),
         ];
-        $this->clickableRouteWithId = 'training-templates.update';
+        $this->clickableRouteWithId = 'admin.training-templates.update';
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
     }

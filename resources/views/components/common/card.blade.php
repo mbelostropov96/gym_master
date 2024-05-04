@@ -5,4 +5,6 @@
     <div class="card-body">
         {{ $body }}
     </div>
+    <div class="card-footer">
+    </div>
 </div>

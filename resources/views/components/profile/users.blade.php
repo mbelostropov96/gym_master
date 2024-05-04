@@ -1,1 +1,1 @@
-<x-common::button :ref="route('users.index')" :label="__('gym.dashboard.users.header')" />
+<x-common::button :ref="route('admin.users.index')" :label="__('gym.dashboard.users.header')" />

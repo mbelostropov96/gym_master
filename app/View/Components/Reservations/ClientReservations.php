@@ -20,7 +20,7 @@ class ClientReservations extends Component
         public readonly Collection $reservedTrainings
     ) {
          $this->attributeNameMap = [
-             'training_id' => __('gym.training_id'),
+             'id' => __('gym.training_id'),
              'name' => __('gym.training_name'),
              'type' => __('gym.training_type'),
              'price' => __('gym.training_price'),
@@ -36,7 +36,6 @@ class ClientReservations extends Component
         foreach ($this->reservedTrainings as $training) {
             $training->instructor_name = $training->instructor?->getFullName()
                 ?? $training->instructor_id;
-            $training->id = $training->training_id;
         }
     }
 

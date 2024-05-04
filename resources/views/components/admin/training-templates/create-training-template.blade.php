@@ -4,12 +4,12 @@
 @section('content')
     <x-common::justify-container>
         <x-slot:content>
-            <x-common::button :ref="route('training-templates.index')" :label="__('gym.back_to_list')"/>
+            <x-common::button :ref="route('admin.training-templates.index')" :label="__('gym.back_to_list')"/>
             <x-common::card :headerName="__('gym.create_training_template')">
                 <x-slot:body>
                   <x-common::form
                         :method="'POST'"
-                        :action="route('training-templates.store')"
+                        :action="route('admin.training-templates.store')"
                         :buttonLabel="__('gym.create')"
                     >
                         <x-slot:content>

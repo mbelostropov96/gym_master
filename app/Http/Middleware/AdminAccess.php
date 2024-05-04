@@ -22,7 +22,8 @@ class AdminAccess
         /** @var User $user */
         $user = Auth::user();
 
-        if (!$user || $user->role !== UserRole::ADMIN->value) {
+        // Когда тренера смогут работать, тогда и пофиксица. Нечего ломать функциванял!
+        if (!$user || $user->role === UserRole::CLIENT->value) {
             return redirect(route('profile'));
         }
 

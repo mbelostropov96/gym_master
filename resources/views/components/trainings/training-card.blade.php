@@ -10,11 +10,16 @@
                 </div>
                 @if ($training->clients->where('id', '=', Auth::user()->id)->isEmpty())
                     <div class="p-2">
-                        <x-common::button :ref="route('trainings.reserve', ['id' => $training->id])" :label="__('gym.reserve')"/>
+                        <x-common::button
+                            :ref="route('reservations.store')"
+                            :label="__('gym.reserve')"
+                            :post="true"
+                            :postParams="['training_id' => $training->id]"
+                        />
                     </div>
                 @else
                     <div class="p-2">
-                        <form method='POST' action="{{ route('trainings.reserve.destroy', ['id' => $training->id]) }}">
+                        <form method="POST" action="{{ route('reservations.destroy', ['id' => $training->id]) }}">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger" type="submit"> {{ __('gym.cancel_reservation') }} </button>
