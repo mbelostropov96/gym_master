@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Client;
 
 use App\Enums\TrainingType;
-use App\Enums\UserRole;
 use App\Http\Builder\Filters\TrainingFilter;
 use App\Http\Builder\Sorters\AbstractSorter;
 use App\Http\Builder\Sorters\TrainingSorter;
 use App\Models\Training;
-use App\Models\User;
 use App\Service\TrainingService;
 use App\View\Components\Trainings\ClientTrainings;
 use App\View\Components\Trainings\TrainingCard;

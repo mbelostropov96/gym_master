@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $description
  * @property string $type
  * @property integer $price
+ * @property integer $energy_consumption
+ * @property integer $max_clients
  * @property integer $duration
  * @property string $created_at
  * @property string $updated_at
@@ -28,6 +30,8 @@ class TrainingTemplate extends Model
         'description',
         'type',
         'price',
+        'energy_consumption',
+        'max_clients',
         'duration',
         'created_at',
         'updated_at',
@@ -39,8 +43,10 @@ class TrainingTemplate extends Model
         'description' => 'string',
         'type' => 'string',
         'price' => 'integer',
+        'energy_consumption' => 'integer',
+        'max_clients' => 'integer',
         'duration' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at' => 'string',
+        'updated_at' => 'string',
     ];
 }

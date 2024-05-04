@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\UserRole;
+use App\Http\Builder\Filters\TrainingFilter;
+use App\Http\Builder\Sorters\AbstractSorter;
+use App\Http\Builder\Sorters\TrainingSorter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Models\Training;
 use App\Models\TrainingTemplate;
 use App\Models\User;
+use App\Service\TrainingService;
 use App\View\Components\Admin\Training\CreateTraining as CreateTrainingComponent;
 use App\View\Components\Admin\Training\CreateTrainingByTemplate as CreateTrainingByTemplateComponent;
 use App\View\Components\Admin\Training\Training as TrainingComponent;
@@ -19,34 +23,35 @@ use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
 
 class TrainingAdminController extends Controller
 {
+    public function __construct(
+        private readonly TrainingService $trainingService,
+    ) {}
+
     /**
      * @return Renderable
      */
     public function index(): Renderable
     {
-        $builder = (new Training())->newQuery()
-            ->with([
-                'instructor',
-            ]);
+        $relations = [
+            'instructor',
+        ];
+        // TODO отдельный контроллер для инструктора. Вкуснятина
+        $trainingFilter = auth()->user()->role === UserRole::INSTRUCTOR->value
+            ? new TrainingFilter([
+                TrainingFilter::INSTRUCTOR_ID => auth()->user()->id,
+            ])
+            : null;
+        $trainingSorter = new TrainingSorter([
+            TrainingSorter::ID => AbstractSorter::SORT_DESC,
+        ]);
 
-        if (Auth::user()->role === UserRole::INSTRUCTOR->value) {
-            $builder->where('instructor_id', '=', Auth::id());
-        }
+        $trainings = $this->trainingService->index($relations, $trainingFilter, $trainingSorter);
 
-        $trainings = $builder
-            ->orderByDesc('id')
-            ->get();
-
-        $instructors = (new User())->newQuery()
-            ->where('role', '=', UserRole::INSTRUCTOR->value)
-            ->get();
-
-        $trainingsComponent = new TrainingsComponent($trainings, $instructors);
+        $trainingsComponent = new TrainingsComponent($trainings);
 
         return $trainingsComponent->render()->with($trainingsComponent->data());
     }
@@ -57,13 +62,10 @@ class TrainingAdminController extends Controller
      */
     public function show(int $id): Renderable
     {
-        /** @var Training $training */
-        $training = (new Training())->newQuery()
-            ->with([
-                'instructor',
-                'reservations',
-            ])
-            ->findOrFail($id);
+        $training = $this->trainingService->show($id, [
+            'instructor',
+            'reservations',
+        ]);
 
         $instructors = (new User())->newQuery()
             ->where('role', '=', UserRole::INSTRUCTOR->value)
@@ -147,9 +149,8 @@ class TrainingAdminController extends Controller
     {
         $data = $request->validated();
 
-        (new Training())->newQuery()
-            ->findOrFail($id)
-            ->update($data);
+        $training = $this->trainingService->show($id);
+        $training->update($data);
 
         return redirect()->to(route('admin.trainings.show', ['id' => $id]));
     }
@@ -160,9 +161,8 @@ class TrainingAdminController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        (new Training())->newQuery()
-            ->findOrFail($id)
-            ->delete();
+        $training = $this->trainingService->show($id);
+        $training->delete();
 
         return redirect()->to(route('admin.trainings.index'));
     }

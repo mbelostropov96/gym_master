@@ -3,7 +3,9 @@
 namespace App\Service;
 
 use App\Enums\TrainingType;
+use App\Helpers\UserHelper;
 use App\Models\BalanceEvent;
+use App\Models\ClientInfo;
 use App\Models\Reservation;
 use App\Models\User;
 use RuntimeException;
@@ -84,45 +86,50 @@ class ReservationService
 
     /**
      * @param int $reservationId
-     * @param int|null $userId
      * @return void
      */
-    public function destroy(int $reservationId, int $userId = null): void
+    public function destroy(int $reservationId): void
     {
         /** @var User $user */
-        $user = $userId === null
-            ? auth()->user()
-            : (new User())->newQuery()->findOrFail($userId);
+        $user = auth()->user();
 
         $reservation = $this->show($reservationId, [
             'training',
         ]);
 
+        $reservationIsExpired = $reservation->training->datetime_start < date('Y-m-d H:i:s', time());
+
         if (
-            $reservation->client_id !== $user->id
-            || $reservation->training->datetime_start < date('Y-m-d H:i:s', time())
+            !UserHelper::isAdmin()
+            && (
+                $reservation->client_id !== $user->id
+                || $reservationIsExpired
+            )
         ) {
             throw new RuntimeException('Дальше вы не пройдете пока не получите бумаги', 403);
         }
 
         $reservation->delete();
 
-        $clientInfo = $user->clientInfo;
-        $oldBalance = $clientInfo->balance;
-        $clientInfo->balance += $reservation->training->price;
-        $clientInfo->save();
+        if (!$reservationIsExpired) {
+            /** @var ClientInfo $clientInfo */
+            $clientInfo = (new ClientInfo())->newQuery()->findOrFail($reservation->client_id);
+            $oldBalance = $clientInfo->balance;
+            $clientInfo->balance += $reservation->training->price;
+            $clientInfo->save();
 
-        (new BalanceEvent())->newQuery()
-            ->create([
-                'client_id' => $user->id,
-                'old_balance' => $oldBalance,
-                'balance_change' => $reservation->training->price,
-                'description' => sprintf(
-                    '%s: %s[ID:%s]',
-                    __('gym.balance_training_withdraw'),
-                    $reservation->training->name,
-                    $reservation->training->id,
-                )
-            ]);
+            (new BalanceEvent())->newQuery()
+                ->create([
+                    'client_id' => $clientInfo->client_id,
+                    'old_balance' => $oldBalance,
+                    'balance_change' => $reservation->training->price,
+                    'description' => sprintf(
+                        '%s: %s[ID:%s]',
+                        __('gym.balance_training_withdraw'),
+                        $reservation->training->name,
+                        $reservation->training->id,
+                    )
+                ]);
+        }
     }
 }

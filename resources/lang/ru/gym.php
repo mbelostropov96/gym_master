@@ -54,6 +54,8 @@ return [
     'training_template_type' => 'Тип',
     'training_template_description' => 'Описание тренировки',
     'training_template_price' => 'Стоимость',
+    'training_template_energy_consumption' => 'Энергопотребление (Ккал)',
+    'training_template_max_clients' => 'Макс. количество участников',
     'training_template_duration' => 'Длительность тренировки (в часах)',
     'create_training_template' => 'Создать шаблон тренировки',
     'create_training' => 'Создать тренировку',
@@ -65,6 +67,8 @@ return [
     'trainings' => 'Тренировки',
     'training_name' => 'Название тренировки',
     'training_price' => 'Стоимость',
+    'training_energy_consumption' => 'Энергопотребление (Ккал)',
+    'training_max_clients' => 'Макс. количество участников',
     'training_start' => 'Начало тренировки',
     'training_end' => 'Окончание тренировки',
     'training_description' => 'Описание тренировки',
@@ -91,4 +95,10 @@ return [
     'clients_reservations' => 'Записи',
     'client_name' => 'Имя клиента',
     'table_actions' => 'Действия',
+
+    'validation' => [
+        'message' => [
+            'training_max_client' => 'Лох, слишком много клиентов',
+        ]
+    ]
 ];

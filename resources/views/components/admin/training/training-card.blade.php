@@ -56,6 +56,18 @@
                                 :value="$training->price"
                             />
                             <x-common::input
+                                :label="__('gym.training_energy_consumption')"
+                                :name="'energy_consumption'"
+                                :isDisabled="true"
+                                :value="$training->energy_consumption"
+                            />
+                            <x-common::input
+                                :label="__('gym.training_max_clients')"
+                                :name="'max_clients'"
+                                :isDisabled="true"
+                                :value="$training->max_clients"
+                            />
+                            <x-common::input
                                 :label="__('gym.training_start')"
                                 :name="'datetime_start'"
                                 :type="'datetime-local'"

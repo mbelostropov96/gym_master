@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property string $description
  * @property string $type
  * @property integer $price
+ * @property integer $energy_consumption
+ * @property integer $max_clients
  * @property string $datetime_start
  * @property string $datetime_end
  * @property integer $instructor_id
@@ -41,6 +43,8 @@ class Training extends Model
         'description',
         'type',
         'price',
+        'energy_consumption',
+        'max_clients',
         'datetime_start',
         'datetime_end',
         'instructor_id',
@@ -54,11 +58,13 @@ class Training extends Model
         'description' => 'string',
         'type' => 'string',
         'price' => 'integer',
-        'datetime_start' => 'datetime',
-        'datetime_end' => 'datetime',
+        'energy_consumption' => 'integer',
+        'max_clients' => 'integer',
+        'datetime_start' => 'string',
+        'datetime_end' => 'string',
         'instructor_id' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at' => 'string',
+        'updated_at' => 'string',
     ];
 
     public function instructor(): BelongsTo

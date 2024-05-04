@@ -36,6 +36,17 @@
                                 :type="'number'"
                             />
                             <x-common::input
+                                :label="__('gym.training_template_energy_consumption')"
+                                :name="'energy_consumption'"
+                                :value="$trainingTemplate->energy_consumption"
+                            />
+                            <x-common::input
+                                :label="__('gym.training_template_max_clients')"
+                                :name="'max_clients'"
+                                :value="$trainingTemplate->max_clients"
+                                :type="'number'"
+                            />
+                            <x-common::input
                                 :label="__('gym.training_template_duration')"
                                 :name="'duration'"
                                 :value="$trainingTemplate->duration"

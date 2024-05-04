@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\TrainingType;
+use App\Rules\TrainingMaxClient;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\Rules\Enum;
 
@@ -23,6 +24,12 @@ class StoreTrainingTemplateRequest extends AbstractRequest
                 new Enum(TrainingType::class),
             ],
             'price' => ['required'],
+            'energy_consumption' => ['required', 'string'],
+            'max_clients' => [
+                'required',
+                'string',
+                new TrainingMaxClient(),
+            ],
             'duration' => ['required', 'string'],
         ];
     }

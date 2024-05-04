@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\TrainingType;
 use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
 
 class UpdateTrainingRequest extends AbstractRequest
 {
@@ -20,10 +18,6 @@ class UpdateTrainingRequest extends AbstractRequest
         return [
             'name' => ['string', 'max:255'],
             'description' => ['string'],
-            'type' => [
-                'required',
-                new Enum(TrainingType::class),
-            ],
             'datetime_start' => ['date_format:Y-m-d\TH:i'],
             'datetime_end' => ['date_format:Y-m-d\TH:i'],
             'instructor_id' => [

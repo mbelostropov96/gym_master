@@ -61,8 +61,8 @@ class User extends Authenticatable
         'password' => 'hashed',
         'role' => 'string',
         'remember_token' => 'string',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at' => 'string',
+        'updated_at' => 'string',
     ];
 
     public static function boot(): void

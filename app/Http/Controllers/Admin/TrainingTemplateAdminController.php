@@ -79,7 +79,7 @@ class TrainingTemplateAdminController extends Controller
             ->findOrFail($id)
             ->update($data);
 
-        return redirect()->to(route('training-templates.show', ['id' => $id]));
+        return redirect()->to(route('admin.training-templates.show', ['id' => $id]));
     }
 
     /**

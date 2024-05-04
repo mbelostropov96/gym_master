@@ -32,7 +32,7 @@ class BalanceEvent extends Model
         'old_balance' => 'integer',
         'balance_change' => 'integer',
         'description' => 'string',
-        'created_at' => 'datetime',
+        'created_at' => 'string',
     ];
 
     public static function boot(): void
@@ -40,7 +40,7 @@ class BalanceEvent extends Model
         parent::boot();
 
         static::creating(function (self $model) {
-            $model->created_at = time();
+            $model->created_at = $model->freshTimestamp();
         });
     }
 }
