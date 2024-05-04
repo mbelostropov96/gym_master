@@ -66,7 +66,7 @@ class ReservationService
             ->create([
                 'client_id' => $user->id,
                 'old_balance' => $oldBalance,
-                'balance_change' =>  $clientInfo->balance - $oldBalance,
+                'balance_change' => $clientInfo->balance - $oldBalance,
                 'description' => sprintf(
                     '%s: %s[ID:%s]',
                     __('gym.standard_balance_training_payment'),
