@@ -3,6 +3,9 @@
 namespace App\View\Components\Trainings;
 
 use App\Enums\UserRole;
+use App\Helpers\UserHelper;
+use App\Models\Training;
+use App\Service\DTO\UserDTO;
 use App\View\ComponentTraits\HasTableTrait;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -13,7 +16,6 @@ use Illuminate\View\Component;
 class ClientTrainings extends Component
 {
     use HasTableTrait;
-
 
     public function __construct(
         public readonly Collection $trainings,
@@ -30,12 +32,10 @@ class ClientTrainings extends Component
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
 
-        foreach ($this->trainings as $training) {
-            $training->instructor_name = $training->instructor?->getFullName()
-                ?? $training->instructor_id;
-        }
+        $this->trainings->each(static function (Training $training) {
+            $training->instructor_name = UserHelper::getFullName(new UserDTO($training->instructor->toArray()));
+        });
     }
-
 
     public function render(): View|Closure|string
     {

@@ -38,18 +38,14 @@ class TrainingClientController
 
         $trainings = $trainings->filter(static function (Training $training) {
             if (
-                $training->type === TrainingType::SINGLE->value
-                && $training->clients->isNotEmpty()
-                || $training->type === TrainingType::GROUP->value
-                && $training->clients->contains('id', '=', auth()->user()->id)
+                $training->max_clients <= $training->clients->count()
+                || $training->clients->contains('id', '=', auth()->user()->id)
             ) {
                 return false;
             }
 
             return true;
         });
-
-        // TODO выпилиться
 
         $trainingsListComponent = new ClientTrainings($trainings);
 

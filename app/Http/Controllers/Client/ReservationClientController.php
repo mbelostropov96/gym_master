@@ -15,7 +15,6 @@ use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
-use Throwable;
 
 class ReservationClientController
 {
@@ -63,14 +62,9 @@ class ReservationClientController
         $data = $request->validated();
         $trainingId = $data['training_id'];
 
-        DB::beginTransaction();
-        try {
-            $this->reservationService->store($trainingId);
-
-            DB::commit();
-        } catch (Throwable $e) {
-            DB::rollBack();
-        }
+        DB::transaction(
+            fn() => $this->reservationService->store($trainingId)
+        );
 
         return redirect()->to(route('reservations.index'));
     }
@@ -81,14 +75,9 @@ class ReservationClientController
      */
     public function destroy(int $reservationId): RedirectResponse
     {
-        DB::beginTransaction();
-        try {
-            $this->reservationService->destroy($reservationId);
-
-            DB::commit();
-        } catch (Throwable $e) {
-            DB::rollBack();
-        }
+        DB::transaction(
+            fn() => $this->reservationService->destroy($reservationId)
+        );
 
         return redirect()->to(route('reservations.index'));
     }

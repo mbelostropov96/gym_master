@@ -2,16 +2,20 @@
 
 namespace App\Service;
 
-use App\Enums\TrainingType;
 use App\Helpers\UserHelper;
 use App\Models\BalanceEvent;
 use App\Models\ClientInfo;
 use App\Models\Reservation;
 use App\Models\User;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\Response;
 
 class ReservationService
 {
+    public function __construct(
+        private readonly TrainingService $trainingService,
+    ) {}
+
     /**
      * @param int $id
      * @param array|null $relations
@@ -41,23 +45,21 @@ class ReservationService
             ? auth()->user()
             : (new User())->newQuery()->findOrFail($userId);
 
-        $training = (new TrainingService())->show($trainingId, [
+        $training = $this->trainingService->show($trainingId, [
             'clients',
         ]);
 
         if (
-            $training->type === TrainingType::SINGLE->value
-            && $training->clients->isNotEmpty()
-            || $training->type === TrainingType::GROUP->value
-            && $training->clients->contains('id', '=', $user->id)
+            $training->max_clients <= $training->clients->count()
+            || $training->clients->contains('id', '=', $user->id)
         ) {
-            throw new RuntimeException('snovaa loh', 200);
+            throw new RuntimeException(__('gym.error.reservation.store'), Response::HTTP_BAD_REQUEST);
         }
 
         $clientInfo = $user->clientInfo;
 
         if ($clientInfo->balance < $training->price) {
-            throw new RuntimeException('Your balance is low', 200);
+            throw new RuntimeException(__('gym.error.reservation.balance_is_low'), Response::HTTP_BAD_REQUEST);
         }
 
         $oldBalance = $clientInfo->balance;
@@ -113,7 +115,9 @@ class ReservationService
 
         if (!$reservationIsExpired) {
             /** @var ClientInfo $clientInfo */
-            $clientInfo = (new ClientInfo())->newQuery()->findOrFail($reservation->client_id);
+            $clientInfo = (new ClientInfo())->newQuery()
+                ->where('client_id', '=', $reservation->client_id)
+                ->first();
             $oldBalance = $clientInfo->balance;
             $clientInfo->balance += $reservation->training->price;
             $clientInfo->save();
