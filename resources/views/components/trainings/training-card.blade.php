@@ -6,7 +6,7 @@
         <x-slot:content>
             <div class="d-flex justify-content-between">
                 <div class="p-1">
-                    <x-common::button :ref="route('trainings.index')" :label="__('gym.back_to_trainings')"/>
+                    <x-common::button :ref="route('profile')" :label="__('gym.back_to_profile')"/>
                 </div>
                 @if ($training->clients->where('id', '=', Auth::user()->id)->isEmpty())
                     <div class="p-2">
@@ -17,7 +17,11 @@
                             :postParams="['training_id' => $training->id]"
                         />
                     </div>
-                @else
+                @elseif (
+                    $training->datetime_start >
+                        (new DateTime(timezone: new DateTimeZone(date_default_timezone_get())))
+                            ->format('Y-m-d\TH:i')
+                )
                     <div class="p-2">
                         <form method="POST" action="{{ route('reservations.destroy', ['id' => $training->id]) }}">
                             @csrf

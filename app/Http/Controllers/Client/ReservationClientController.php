@@ -9,6 +9,9 @@ use App\Http\Requests\StoreReservationRequest;
 use App\Service\ReservationService;
 use App\Service\TrainingService;
 use App\View\Components\Reservations\ClientReservations;
+use DateTime;
+use DateTimeZone;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -23,17 +26,25 @@ class ReservationClientController
 
     /**
      * @return Renderable
+     * @throws Exception
      */
     public function index(): Renderable
     {
         $relations = [
             'instructor',
         ];
-        $trainingFilter = new TrainingFilter([
-            TrainingFilter::CLIENT_ID => auth()->user()->id,
-        ]);
+        $trainingFilter = new TrainingFilter(
+            [
+                TrainingFilter::CLIENT_ID => auth()->user()->id,
+                TrainingFilter::MORE_DATETIME_START => (
+                    new DateTime(
+                        timezone: new DateTimeZone(date_default_timezone_get())
+                    )
+                )->format('Y-m-d\TH:i'),
+            ]
+        );
         $trainingSorter = new TrainingSorter([
-            TrainingSorter::ORDER_BY_DATETIME_START => AbstractSorter::SORT_DESC,
+            TrainingSorter::ORDER_BY_DATETIME_START => AbstractSorter::SORT_ASC,
         ]);
 
         $trainings = $this->trainingService->index($relations, $trainingFilter, $trainingSorter);
