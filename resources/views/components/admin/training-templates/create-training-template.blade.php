@@ -35,11 +35,14 @@
                             <x-common::input
                                 :label="__('gym.training_template_energy_consumption')"
                                 :name="'energy_consumption'"
+                                :type="'number'"
+                                :value="1500"
                             />
                             <x-common::input
                                 :label="__('gym.training_template_max_clients')"
                                 :name="'max_clients'"
                                 :type="'number'"
+                                :value="1"
                             />
                             <x-common::input
                                 :label="__('gym.training_template_duration')"
