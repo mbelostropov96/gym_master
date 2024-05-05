@@ -47,7 +47,7 @@ class TrainingUsersReservations extends Component
         $this->actions = [
             new TableButtonAction(
                 __('gym.cancel_reservation'),
-                'reservations.destroy',
+                'admin.reservations.destroy',
                 ['id' => 'reservation_id'],
                 'DELETE',
                 'danger',
