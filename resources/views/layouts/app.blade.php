@@ -17,10 +17,10 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md shadow-sm" style="background-color: purple;">
         <div class="container">
             <a class="navbar-brand" href="{{ route('profile') }}">
-                {{ config('app.name', 'Laravel') }}
+                {{ config('app.name', 'GymMaster') }}
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
