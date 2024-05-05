@@ -17,7 +17,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md shadow-sm" style="background-color: purple;">
+    <nav class="navbar navbar-expand-md shadow-sm bg-primary">
         <div class="container">
             <a class="navbar-brand" href="{{ route('profile') }}">
                 {{ config('app.name', 'GymMaster') }}

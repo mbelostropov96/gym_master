@@ -11,6 +11,8 @@ $navbar-light-color: #ffffff;
 $navbar-light-hover-color: #ccccf6;
 $navbar-light-active-color: #ccccf6;
 
+$primary: rebeccapurple;
+
 .card {
     margin-top: 10px;
 }
@@ -19,9 +21,12 @@ $navbar-light-active-color: #ccccf6;
     margin-top: 10px;
 }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: purple !important;
-}
+ body {
+     background-image: url('../pictures/background.png');
+     background-repeat: repeat-y;
+     background-position: 0 0;
+     background-size: cover;
+ }
 
  body {
      background-image: url('../pictures/background.png');
