@@ -33,19 +33,6 @@ class ReservationClientController
     }
 
     /**
-     * @return Renderable
-     * @throws Exception
-     */
-    public function history(): Renderable
-    {
-        $trainings = (new ClientTrainingFactory())->create(AbstractClientTraining::HISTORY)->index();
-
-        $trainingsListComponent = new ClientReservations($trainings);
-
-        return $trainingsListComponent->render()->with($trainingsListComponent->data());
-    }
-
-    /**
      * @param StoreReservationRequest $request
      * @return RedirectResponse
      */

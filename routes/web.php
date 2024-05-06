@@ -60,10 +60,11 @@ $router->group([
     'middleware' => 'client',
 ], function () use ($router) {
     $router->get('/trainings', [TrainingClientController::class, 'index'])->name('trainings.index');
+    $router->get('/trainings/history', [TrainingClientController::class, 'history'])->name('trainings.history');
     $router->get('/trainings/{id}', [TrainingClientController::class, 'show'])->name('trainings.show');
+    $router->post('/trainings/rating', [TrainingClientController::class, 'saveRating'])->name('trainings.rating');
 
     $router->get('/reservations', [ReservationClientController::class, 'index'])->name('reservations.index');
-    $router->get('/reservations/history', [ReservationClientController::class, 'history'])->name('reservations.history');
     $router->post('/reservations', [ReservationClientController::class, 'store'])->name('reservations.store');
     $router->delete('/reservations/{id}', [ReservationClientController::class, 'destroy'])->name('reservations.destroy');
 });

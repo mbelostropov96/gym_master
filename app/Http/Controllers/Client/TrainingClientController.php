@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Builder\Filters\TrainingFilter;
-use App\Http\Builder\Sorters\AbstractSorter;
-use App\Http\Builder\Sorters\TrainingSorter;
+use App\Http\Requests\StoreRatingRequest;
+use App\Models\Rating;
 use App\Models\Training;
+use App\Models\User;
+use App\Services\ClientTrainings\AbstractClientTraining;
+use App\Services\ClientTrainings\ClientTrainingFactory;
 use App\Services\TrainingService;
+use App\View\Components\Reservations\ClientReservations;
 use App\View\Components\Trainings\ClientTrainings;
 use App\View\Components\Trainings\TrainingCard;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
+use RuntimeException;
+use Symfony\Component\HttpFoundation\Response;
 
 class TrainingClientController
 {
@@ -23,18 +29,7 @@ class TrainingClientController
      */
     public function index(): Renderable
     {
-        $relations = [
-            'clients',
-            'instructor',
-        ];
-        $trainingFilter = new TrainingFilter([
-            TrainingFilter::LESS_DATETIME_START => date('Y-m-d H:i:s', time()),
-        ]);
-        $trainingSorter = new TrainingSorter([
-            TrainingSorter::ORDER_BY_DATETIME_START => AbstractSorter::SORT_ASC,
-        ]);
-
-        $trainings = $this->trainingService->index($relations, $trainingFilter, $trainingSorter);
+        $trainings = (new ClientTrainingFactory())->create(AbstractClientTraining::AVAILABLE)->index();
 
         $trainings = $trainings->filter(static function (Training $training) {
             if (
@@ -53,6 +48,19 @@ class TrainingClientController
     }
 
     /**
+     * @return Renderable
+     * @throws Exception
+     */
+    public function history(): Renderable
+    {
+        $trainings = (new ClientTrainingFactory())->create(AbstractClientTraining::HISTORY)->index();
+
+        $trainingsListComponent = new ClientReservations($trainings);
+
+        return $trainingsListComponent->render()->with($trainingsListComponent->data());
+    }
+
+    /**
      * @param int $id
      * @return Renderable
      */
@@ -63,6 +71,45 @@ class TrainingClientController
             'clients',
             'reservations',
         ]);
+
+        $trainingComponent = new TrainingCard(
+            $training,
+        );
+
+        return $trainingComponent->render()->with($trainingComponent->data());
+    }
+
+    /**
+     * @param StoreRatingRequest $request
+     * @return Renderable
+     */
+    public function saveRating(StoreRatingRequest $request): Renderable
+    {
+        $data = $request->validated();
+
+        /** @var User $user */
+        $user = auth()->user();
+        $trainingId = $data['training_id'];
+
+        $training = $this->trainingService->show($trainingId, [
+            'clients',
+        ]);
+
+        if ($training->clients->doesntContain('id', '=', $user->id)) {
+            throw new RuntimeException('sosi', Response::HTTP_FORBIDDEN);
+        }
+
+        (new Rating())->newQuery()
+            ->updateOrCreate(
+                [
+                    'client_id' => $user->id,
+                    'training_id' => $trainingId,
+                ],
+                [
+                    'instructor_id' => $training->instructor_id,
+                    'rating' => $data['rating'],
+                ]
+            );
 
         $trainingComponent = new TrainingCard(
             $training,

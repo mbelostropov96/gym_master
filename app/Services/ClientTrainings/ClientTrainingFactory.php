@@ -11,6 +11,7 @@ class ClientTrainingFactory
     public function create(string $type): AbstractClientTraining
     {
         return match ($type) {
+            AbstractClientTraining::AVAILABLE => new AvailableClientTraining(),
             AbstractClientTraining::HISTORY => new HistoryClientTraining(),
             default => new ReservedClientTraining(),
         };
