@@ -16,13 +16,13 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <x-admin::user-card :user="$user" />
+                    <x-admin::user.user-card :user="$user" />
                 </div>
                 <div class="col-md-6">
-                    <x-admin::user-balance :user="$user" />
+                    <x-admin::user.user-balance :user="$user" />
                 </div>
             </div>
-            <x-admin::user-balance-history :user="$user" />
+            <x-admin::user.user-balance-history :user="$user" />
         </x-slot:content>
     </x-common::justify-container>
 @endsection
