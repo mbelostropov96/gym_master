@@ -3,9 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Enums\TrainingType;
+use App\Helpers\UserHelper;
 use App\Models\User;
 use App\Rules\TrainingMaxClient;
+use DateInterval;
+use DateTime;
+use Exception;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 
@@ -33,12 +38,33 @@ class StoreTrainingRequest extends AbstractRequest
                 new TrainingMaxClient(),
             ],
             'datetime_start' => ['required', 'date_format:Y-m-d\TH:i'],
-            'duration' => ['required', 'string'],
+            'datetime_end' => ['required', 'date_format:Y-m-d\TH:i'],
             'instructor_id' => [
                 'required',
                 'string',
-                Rule::exists(User::TABLE, 'id')
+                Rule::exists(User::TABLE, 'id')->where(function (Builder $query) {
+                    if (!UserHelper::isAdmin()) {
+                        $query->where('id', '=', auth()->id());
+                    }
+
+                    return $query;
+                }),
             ],
         ];
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function prepareForValidation(): void
+    {
+        if (!isset($this->datetime_end)) {
+            $duration = $this->duration;
+            $datetimeStart = DateTime::createFromFormat('Y-m-d\TH:i', $this->datetime_start);
+            $a = $datetimeStart->add(new DateInterval('PT' . $duration . 'H'));
+            $this->merge([
+                'datetime_end' => $a->format('Y-m-d\TH:i'),
+            ]);
+        }
     }
 }

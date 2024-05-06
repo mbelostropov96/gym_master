@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminAccess
+class InstructorAccess
 {
     /**
      * Handle an incoming request.
@@ -22,7 +22,11 @@ class AdminAccess
         /** @var User $user */
         $user = Auth::user();
 
-        if (!$user || $user->role !== UserRole::ADMIN->value) {
+        if (
+            !$user
+            || $user->role !== UserRole::INSTRUCTOR->value
+            && $user->role !== UserRole::ADMIN->value
+        ) {
             return redirect(route('profile'));
         }
 

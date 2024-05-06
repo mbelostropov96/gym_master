@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Client\ReservationClientController;
 use App\Http\Controllers\Client\TrainingClientController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Instructor\TrainingInstructorController;
 use App\Http\Controllers\UserController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,20 @@ $router->group([
     $router->delete('/trainings/{id}', [TrainingAdminController::class, 'destroy'])->name('admin.trainings.destroy');
 
     $router->delete('/reservations/{id}', [ReservationAdminController::class, 'destroy'])->name('admin.reservations.destroy');
+});
+
+$router->group([
+    'middleware' => 'instructor',
+    'prefix' => 'instructor',
+], function () use ($router) {
+    $router->get('/trainings', [TrainingInstructorController::class, 'index'])->name('instructor.trainings.index');
+    $router->get('/trainings/{id}', [TrainingInstructorController::class, 'show'])->name('instructor.trainings.show')
+        ->where('id', '[0-9]+');
+    $router->get('/trainings/create', [TrainingInstructorController::class, 'create'])->name('instructor.trainings.create');
+    $router->get('/trainings/create-by-template', [TrainingInstructorController::class, 'createByTemplate'])->name('instructor.create-by-template.create');
+    $router->post('/trainings', [TrainingInstructorController::class, 'store'])->name('instructor.trainings.store');
+    $router->patch('/trainings/{id}', [TrainingInstructorController::class, 'update'])->name('instructor.trainings.update');
+    $router->delete('/trainings/{id}', [TrainingInstructorController::class, 'destroy'])->name('instructor.trainings.destroy');
 });
 
 $router->group([

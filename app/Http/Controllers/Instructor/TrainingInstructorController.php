@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Instructor;
 
-use App\Enums\UserRole;
+use App\Http\Builder\Filters\TrainingFilter;
 use App\Http\Builder\Sorters\AbstractSorter;
 use App\Http\Builder\Sorters\TrainingSorter;
 use App\Http\Controllers\Controller;
@@ -10,7 +10,6 @@ use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Models\Training;
 use App\Models\TrainingTemplate;
-use App\Models\User;
 use App\Services\TrainingService;
 use App\View\Components\Admin\Training\CreateTraining as CreateTrainingComponent;
 use App\View\Components\Admin\Training\CreateTrainingByTemplate as CreateTrainingByTemplateComponent;
@@ -18,10 +17,13 @@ use App\View\Components\Admin\Training\Training as TrainingComponent;
 use App\View\Components\Admin\Training\Trainings as TrainingsComponent;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use RuntimeException;
+use Symfony\Component\HttpFoundation\Response;
 
-class TrainingAdminController extends Controller
+class TrainingInstructorController extends Controller
 {
     public function __construct(
         private readonly TrainingService $trainingService,
@@ -36,11 +38,14 @@ class TrainingAdminController extends Controller
         $relations = [
             'instructor',
         ];
+        $trainingFilter = new TrainingFilter([
+            TrainingFilter::INSTRUCTOR_ID => auth()->user()->id,
+        ]);
         $trainingSorter = new TrainingSorter([
             TrainingSorter::ID => AbstractSorter::SORT_DESC,
         ]);
 
-        $trainings = $this->trainingService->index($relations, trainingSorter: $trainingSorter);
+        $trainings = $this->trainingService->index($relations, $trainingFilter, $trainingSorter);
 
         $trainingsComponent = new TrainingsComponent($trainings);
 
@@ -58,13 +63,14 @@ class TrainingAdminController extends Controller
             'reservations',
         ]);
 
-        $instructors = (new User())->newQuery()
-            ->where('role', '=', UserRole::INSTRUCTOR->value)
-            ->get();
+        // TODO выпилить
+//        $instructors = (new User())->newQuery()
+//            ->where('role', '=', UserRole::INSTRUCTOR->value)
+//            ->get();
 
         $trainingComponent = new TrainingComponent(
             $training,
-            $instructors,
+//            $instructors,
         );
 
         return $trainingComponent->render()->with($trainingComponent->data());
@@ -93,13 +99,9 @@ class TrainingAdminController extends Controller
         $trainingTemplate = (new TrainingTemplate())->newQuery()
             ->findOrFail($request->get('id'));
 
-        $instructors = (new User())->newQuery()
-            ->where('role', '=', UserRole::INSTRUCTOR->value)
-            ->get();
-
         $createTrainingByTemplateComponent = new CreateTrainingByTemplateComponent(
             $trainingTemplate,
-            $instructors,
+            new Collection([auth()->user()]),
         );
 
         return $createTrainingByTemplateComponent->render()->with($createTrainingByTemplateComponent->data());
@@ -117,7 +119,7 @@ class TrainingAdminController extends Controller
         (new Training())->newQuery()
             ->create($data);
 
-        return redirect()->to(route('admin.trainings.index'));
+        return redirect()->to(route('instructor.trainings.index'));
     }
 
     /**
@@ -130,9 +132,13 @@ class TrainingAdminController extends Controller
         $data = $request->validated();
 
         $training = $this->trainingService->show($id);
+        if ($training->instructor_id !== auth()->id()) {
+            throw new RuntimeException('loh', Response::HTTP_FORBIDDEN);
+        }
+
         $training->update($data);
 
-        return redirect()->to(route('admin.trainings.show', ['id' => $id]));
+        return redirect()->to(route('instructor.trainings.show', ['id' => $id]));
     }
 
     /**
@@ -142,8 +148,12 @@ class TrainingAdminController extends Controller
     public function destroy(int $id): RedirectResponse
     {
         $training = $this->trainingService->show($id);
+        if ($training->instructor_id !== auth()->id()) {
+            throw new RuntimeException('loh', Response::HTTP_FORBIDDEN);
+        }
+
         $training->delete();
 
-        return redirect()->to(route('admin.trainings.index'));
+        return redirect()->to(route('instructor.trainings.index'));
     }
 }
