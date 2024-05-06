@@ -17,8 +17,8 @@
                 <tr
                     @if ($hasClickableRouteWithId()) class="clickable-row"
                         data-href="{{ route($clickableRouteWithId, ['id' => $element->id]) }}" @endif>
-                    @foreach ($columns as $num => $elementAttribute)
-                        @if ($num === 0)
+                    @foreach ($columns as $elementAttribute)
+                        @if ($elementAttribute === reset($columns))
                             <th>{{ $element->$elementAttribute }}</th>
                         @else
                             <td>

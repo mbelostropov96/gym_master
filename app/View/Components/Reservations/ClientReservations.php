@@ -3,6 +3,7 @@
 namespace App\View\Components\Reservations;
 
 use App\Models\Training;
+use App\Services\ClientTrainings\AbstractClientTraining;
 use App\View\ComponentTraits\HasTableTrait;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -15,7 +16,8 @@ class ClientReservations extends Component
 
 
     public function __construct(
-        public readonly Collection $reservedTrainings
+        public readonly Collection $reservedTrainings,
+        public readonly string $trainingType = AbstractClientTraining::RESERVED,
     ) {
          $this->attributeNameMap = [
              'id' => __('gym.training_id'),

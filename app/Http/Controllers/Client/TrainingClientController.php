@@ -55,7 +55,7 @@ class TrainingClientController
     {
         $trainings = (new ClientTrainingFactory())->create(AbstractClientTraining::HISTORY)->index();
 
-        $trainingsListComponent = new ClientReservations($trainings);
+        $trainingsListComponent = new ClientReservations($trainings, AbstractClientTraining::HISTORY);
 
         return $trainingsListComponent->render()->with($trainingsListComponent->data());
     }
