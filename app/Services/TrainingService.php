@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Services;
 
 use App\Http\Builder\Filters\TrainingFilter;
 use App\Http\Builder\Sorters\TrainingSorter;

@@ -5,7 +5,7 @@ namespace App\View\Components\Trainings;
 use App\Enums\UserRole;
 use App\Helpers\UserHelper;
 use App\Models\Training;
-use App\Service\DTO\UserDTO;
+use App\Services\DTO\UserDTO;
 use App\View\ComponentTraits\HasTableTrait;
 use Closure;
 use Illuminate\Contracts\View\View;

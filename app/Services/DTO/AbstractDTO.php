@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\DTO;
+namespace App\Services\DTO;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;

@@ -85,6 +85,7 @@ return [
     'table_no_data' => 'Нет данных по запросу',
     'available_trainings' => 'Доступные тренировки',
     'your_reservations' => 'Ваши записи',
+    'training_history' => 'История тренировок',
     'instructor_experience' => 'Стаж работы',
     'instructor_qualification' => 'Квалификация',
     'reserve' => 'Записаться',

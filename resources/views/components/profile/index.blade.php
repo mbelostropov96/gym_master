@@ -20,6 +20,9 @@
                     <div class="row">
                         <x-profile::reservations/>
                     </div>
+                    <div class="row">
+                        <x-profile::training-history/>
+                    </div>
                 </x-slot:buttons>
             </x-profile::general-info>
         </x-slot:content>

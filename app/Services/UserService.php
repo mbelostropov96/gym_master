@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service;
+namespace App\Services;
 
 use App\Models\User;
-use App\Service\DTO\UserDTO;
+use App\Services\DTO\UserDTO;
 
 class UserService
 {

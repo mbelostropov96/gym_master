@@ -15,7 +15,6 @@ class TrainingTemplates extends Component
         //
     }
 
-
     public function render(): View|Closure|string
     {
         return view('components.profile.training-templates');

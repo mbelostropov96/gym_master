@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Builder\Filters\TrainingFilter;
-use App\Http\Builder\Sorters\AbstractSorter;
-use App\Http\Builder\Sorters\TrainingSorter;
 use App\Http\Requests\StoreReservationRequest;
-use App\Service\ReservationService;
-use App\Service\TrainingService;
+use App\Services\ReservationService;
+use App\Services\ClientTrainings\AbstractClientTraining;
+use App\Services\ClientTrainings\ClientTrainingFactory;
 use App\View\Components\Reservations\ClientReservations;
-use DateTime;
-use DateTimeZone;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +15,6 @@ use Illuminate\Support\Facades\DB;
 class ReservationClientController
 {
     public function __construct(
-        private readonly TrainingService $trainingService,
         private readonly ReservationService $reservationService,
     ) {}
 
@@ -29,24 +24,20 @@ class ReservationClientController
      */
     public function index(): Renderable
     {
-        $relations = [
-            'instructor',
-        ];
-        $trainingFilter = new TrainingFilter(
-            [
-                TrainingFilter::CLIENT_ID => auth()->user()->id,
-                TrainingFilter::MORE_DATETIME_START => (
-                    new DateTime(
-                        timezone: new DateTimeZone(date_default_timezone_get())
-                    )
-                )->format('Y-m-d\TH:i'),
-            ]
-        );
-        $trainingSorter = new TrainingSorter([
-            TrainingSorter::ORDER_BY_DATETIME_START => AbstractSorter::SORT_ASC,
-        ]);
+        $trainings = (new ClientTrainingFactory())->create(AbstractClientTraining::RESERVED)->index();
 
-        $trainings = $this->trainingService->index($relations, $trainingFilter, $trainingSorter);
+        $trainingsListComponent = new ClientReservations($trainings);
+
+        return $trainingsListComponent->render()->with($trainingsListComponent->data());
+    }
+
+    /**
+     * @return Renderable
+     * @throws Exception
+     */
+    public function history(): Renderable
+    {
+        $trainings = (new ClientTrainingFactory())->create(AbstractClientTraining::HISTORY)->index();
 
         $trainingsListComponent = new ClientReservations($trainings);
 

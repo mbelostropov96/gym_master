@@ -14,7 +14,7 @@ class StoreReservationRequest extends AbstractRequest
     public function rules(): array
     {
         return [
-            'training_id' => ['string'],
+            'training_id' => ['required', 'string'],
         ];
     }
 }

@@ -12,7 +12,7 @@ use App\Http\Requests\UpdateTrainingRequest;
 use App\Models\Training;
 use App\Models\TrainingTemplate;
 use App\Models\User;
-use App\Service\TrainingService;
+use App\Services\TrainingService;
 use App\View\Components\Admin\Training\CreateTraining as CreateTrainingComponent;
 use App\View\Components\Admin\Training\CreateTrainingByTemplate as CreateTrainingByTemplateComponent;
 use App\View\Components\Admin\Training\Training as TrainingComponent;

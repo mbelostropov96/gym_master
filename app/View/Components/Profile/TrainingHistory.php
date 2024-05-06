@@ -5,10 +5,9 @@ namespace App\View\Components\Profile;
 use App\Enums\UserRole;
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
-class Trainings extends Component
+class TrainingHistory extends Component
 {
     public function __construct()
     {
@@ -17,11 +16,11 @@ class Trainings extends Component
 
     public function render(): View|Closure|string
     {
-        return view('components.profile.trainings');
+        return view('components.profile.training-history');
     }
 
     public function shouldRender() : bool
     {
-        return Auth::user()->role !== UserRole::CLIENT->value;
+        return auth()->user()->role === UserRole::CLIENT->value;
     }
 }

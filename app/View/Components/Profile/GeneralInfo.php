@@ -4,13 +4,13 @@ namespace App\View\Components\Profile;
 
 use App\Enums\UserRole;
 use App\Models\User;
-use App\View\ComponentTraits\HasTableTrait;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
-class GeneralInfo extends Component{
+class GeneralInfo extends Component
+{
     public array $contents;
 
     public function __construct()
@@ -20,7 +20,6 @@ class GeneralInfo extends Component{
 
         $this->contents = $this->addDisplayDataByRole($user);
     }
-
 
     public function render(): View|Closure|string
     {

@@ -4,7 +4,7 @@ namespace App\View\Components\Admin\Training;
 
 use App\Helpers\UserHelper;
 use App\Models\User;
-use App\Service\DTO\UserDTO;
+use App\Services\DTO\UserDTO;
 use App\View\ComponentTraits\HasTableTrait;
 use App\View\ValueObject\TableButtonAction;
 use Closure;

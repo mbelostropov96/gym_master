@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
 use App\Http\Requests\UpdateUserRequest;
-use App\Service\DTO\UserDTO;
-use App\Service\UserService;
+use App\Services\DTO\UserDTO;
+use App\Services\UserService;
 use App\View\Components\Admin\User\User as UserComponent;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;

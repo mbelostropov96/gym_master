@@ -13,7 +13,6 @@ class Profile extends Component
         //
     }
 
-
     public function render(): View|Closure|string
     {
         return view('components.profile.index');

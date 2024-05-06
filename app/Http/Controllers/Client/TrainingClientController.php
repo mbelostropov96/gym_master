@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Enums\TrainingType;
 use App\Http\Builder\Filters\TrainingFilter;
 use App\Http\Builder\Sorters\AbstractSorter;
 use App\Http\Builder\Sorters\TrainingSorter;
 use App\Models\Training;
-use App\Service\TrainingService;
+use App\Services\TrainingService;
 use App\View\Components\Trainings\ClientTrainings;
 use App\View\Components\Trainings\TrainingCard;
 use Illuminate\Contracts\Support\Renderable;
@@ -28,7 +27,7 @@ class TrainingClientController
             'instructor',
         ];
         $trainingFilter = new TrainingFilter([
-            TrainingFilter::MORE_DATETIME_START => date('Y-m-d H:i:s', time()),
+            TrainingFilter::LESS_DATETIME_START => date('Y-m-d H:i:s', time()),
         ]);
         $trainingSorter = new TrainingSorter([
             TrainingSorter::ORDER_BY_DATETIME_START => AbstractSorter::SORT_ASC,

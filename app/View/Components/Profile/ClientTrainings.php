@@ -15,7 +15,6 @@ class ClientTrainings extends Component
         //
     }
 
-
     public function render(): View|Closure|string
     {
         return view('components.profile.client-trainings');

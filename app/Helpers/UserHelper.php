@@ -3,7 +3,7 @@
 namespace App\Helpers;
 
 use App\Enums\UserRole;
-use App\Service\DTO\UserDTO;
+use App\Services\DTO\UserDTO;
 
 class UserHelper
 {
