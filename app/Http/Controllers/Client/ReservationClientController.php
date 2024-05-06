@@ -16,7 +16,8 @@ class ReservationClientController
 {
     public function __construct(
         private readonly ReservationService $reservationService,
-    ) {}
+    ) {
+    }
 
     /**
      * @return Renderable

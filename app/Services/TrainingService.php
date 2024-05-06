@@ -19,8 +19,12 @@ class TrainingService
     {
         $builder = (new Training())->newQuery();
 
-        if ($relations !== null) $builder->with($relations);
-        if ($trainingFilter !== null) $builder->filter($trainingFilter);
+        if ($relations !== null) {
+            $builder->with($relations);
+        }
+        if ($trainingFilter !== null) {
+            $builder->filter($trainingFilter);
+        }
 
         /** @var Training $training */
         $training = $builder->findOrFail($id);
@@ -38,9 +42,15 @@ class TrainingService
     {
         $builder = (new Training())->newQuery();
 
-        if ($relations !== null) $builder->with($relations);
-        if ($trainingFilter !== null) $builder->filter($trainingFilter);
-        if ($trainingSorter !== null) $builder->sorter($trainingSorter);
+        if ($relations !== null) {
+            $builder->with($relations);
+        }
+        if ($trainingFilter !== null) {
+            $builder->filter($trainingFilter);
+        }
+        if ($trainingSorter !== null) {
+            $builder->sorter($trainingSorter);
+        }
 
         return $builder->get();
     }

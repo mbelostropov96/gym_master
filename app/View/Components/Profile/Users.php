@@ -20,7 +20,7 @@ class Users extends Component
         return view('components.profile.users');
     }
 
-    public function shouldRender() : bool
+    public function shouldRender(): bool
     {
         return Auth::user()->role === UserRole::ADMIN->value;
     }

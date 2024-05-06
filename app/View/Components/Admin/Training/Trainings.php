@@ -26,6 +26,8 @@ class Trainings extends Component
             'datetime_start' => __('gym.training_start'),
             'datetime_end' => __('gym.training_end'),
             'instructor_name' =>  __('gym.instructor_name'),
+            'energy_consumption' => __('gym.calories_consumption'),
+            'max_clients' => __('gym.max_participants'),
         ];
         $this->clickableRouteWithId = 'admin.trainings.update';
         $this->columnsName = $this->attributeNameMap;

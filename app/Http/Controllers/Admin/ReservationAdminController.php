@@ -11,7 +11,8 @@ class ReservationAdminController
 {
     public function __construct(
         private readonly ReservationService $reservationService,
-    ) {}
+    ) {
+    }
 
     /**
      * @param int $reservationId

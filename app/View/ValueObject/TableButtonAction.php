@@ -11,5 +11,6 @@ class TableButtonAction
         public readonly string $method = 'GET',
         public readonly string $buttonType = 'primary',
         public readonly array $bodyParams = [],
-    ) {}
+    ) {
+    }
 }

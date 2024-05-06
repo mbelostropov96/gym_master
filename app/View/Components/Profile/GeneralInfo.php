@@ -26,7 +26,7 @@ class GeneralInfo extends Component
         return view('components.profile.general-info');
     }
 
-    private function addDisplayDataByRole(User $user) : array
+    private function addDisplayDataByRole(User $user): array
     {
         return match ($user->role) {
             UserRole::ADMIN->value => [
