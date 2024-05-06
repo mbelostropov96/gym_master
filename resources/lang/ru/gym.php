@@ -99,6 +99,7 @@ return [
     'training_rating' => 'Рейтинг тренера',
     'calories_consumption' => 'Энергозатраты (Ккал)',
     'max_participants' => 'Макс. участников',
+    'set_rating' => 'Оценить',
 
     'validation' => [
         'message' => [

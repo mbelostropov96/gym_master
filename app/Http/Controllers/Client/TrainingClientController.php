@@ -15,6 +15,7 @@ use App\View\Components\Trainings\TrainingCard;
 use DateTime;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -83,9 +84,9 @@ class TrainingClientController
 
     /**
      * @param StoreRatingRequest $request
-     * @return Renderable
+     * @return RedirectResponse
      */
-    public function saveRating(StoreRatingRequest $request): Renderable
+    public function saveRating(StoreRatingRequest $request): RedirectResponse
     {
         $data = $request->validated();
 
@@ -98,7 +99,7 @@ class TrainingClientController
         ]);
 
         if (
-            $training->datetime_end < new DateTime()
+            $training->datetime_end > new DateTime()
             || $training->clients->doesntContain('id', '=', $user->id)
         ) {
             throw new RuntimeException('sosi', Response::HTTP_FORBIDDEN);
@@ -116,10 +117,6 @@ class TrainingClientController
                 ]
             );
 
-        $trainingComponent = new TrainingCard(
-            $training,
-        );
-
-        return $trainingComponent->render()->with($trainingComponent->data());
+        return redirect()->to(route('trainings.show', ['id' => $training->id]));
     }
 }

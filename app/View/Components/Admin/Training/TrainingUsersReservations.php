@@ -6,7 +6,7 @@ use App\Helpers\UserHelper;
 use App\Models\User;
 use App\Services\DTO\UserDTO;
 use App\View\ComponentTraits\HasTableTrait;
-use App\View\ValueObject\TableButtonAction;
+use App\View\ValueObject\ButtonTableAction;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -46,7 +46,7 @@ class TrainingUsersReservations extends Component
         $this->columns = array_flip($this->attributeNameMap);
 
         $this->actions = [
-            new TableButtonAction(
+            new ButtonTableAction(
                 __('gym.cancel_reservation'),
                 'admin.reservations.destroy',
                 ['id' => 'reservation_id'],

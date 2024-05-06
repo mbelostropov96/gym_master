@@ -19,7 +19,7 @@ class TrainingHistory extends Component
         return view('components.profile.training-history');
     }
 
-    public function shouldRender() : bool
+    public function shouldRender(): bool
     {
         return auth()->user()->role === UserRole::CLIENT->value;
     }

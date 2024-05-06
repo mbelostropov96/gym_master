@@ -70,7 +70,7 @@ class TrainingInstructorController extends Controller
 
         $trainingComponent = new TrainingComponent(
             $training,
-//            $instructors,
+            //            $instructors,
         );
 
         return $trainingComponent->render()->with($trainingComponent->data());
