@@ -2,7 +2,7 @@
 
 namespace App\View\ValueObject;
 
-class TableButtonAction
+class ButtonTableAction
 {
     public function __construct(
         public readonly string $label,

@@ -25,6 +25,17 @@
                             <button class="btn btn-danger" type="submit"> {{ __('gym.cancel_reservation') }} </button>
                         </form>
                     </div>
+                @else
+                    <form id="rating-form" method="POST" action="{{ route('trainings.rating') }}">
+                        @csrf
+                        <div class="p-1">
+                            <input id="rating" class="rating form-control" name="rating" hidden
+                                value="{{ $training->ratings->where('client_id', '=', Auth::User()->id)?->first()?->rating ?? 10 }}"
+                                min="1" max="10" step="1" type="number">
+                            <input type="hidden" name="training_id" value="{{ $training->id }}" />
+                        </div>
+                        <button class="btn btn-primary" type="submit" hidden> {{ __('gym.set_rating') }} </button>
+                    </form>
                 @endif
             </div>
             <x-common::card :headerName="__('gym.training')">
@@ -49,4 +60,13 @@
             </x-common::card>
         </x-slot:content>
     </x-common::justify-container>
+    <script>
+        $('#rating').rating({
+            showCaption: false,
+            clearButton: '',
+            stars: 10
+        }).on('rating:change', function(event, value, caption) {
+            $('#rating-form').submit();
+        });
+    </script>
 @endsection

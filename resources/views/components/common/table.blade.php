@@ -1,3 +1,7 @@
+@php
+    use App\View\ValueObject\ButtonTableAction;
+    use App\View\ValueObject\StarsTableAction;
+@endphp
 @if ($contents->isEmpty())
     <x-common::alert :type="'warning'" :message="__('gym.table_no_data')" />
 @else
@@ -16,7 +20,7 @@
             @foreach ($contents as $element)
                 <tr
                     @if ($hasClickableRouteWithId()) class="clickable-row"
-                        data-href="{{ route($clickableRouteWithId, ['id' => $element->id]) }}" @endif>
+                data-href="{{ route($clickableRouteWithId, ['id' => $element->id]) }}" @endif>
                     @foreach ($columns as $elementAttribute)
                         @if ($elementAttribute === reset($columns))
                             <th>{{ $element->$elementAttribute }}</th>
@@ -31,25 +35,29 @@
                     @if ($actions)
                         <td>
                             @foreach ($actions as $action)
-                                <form method="{{ $action->method === 'GET' ?: 'POST' }}"
-                                    @php
+                                @switch(true)
+                                    @case($action instanceof ButtonTableAction)
+                                        <form method="{{ $action->method === 'GET' ?: 'POST' }}"
+                                            @php
 $routeParams = [];
-                                        foreach ($action->routeParams as $name => $value) {
-                                            $routeParams[$name] = $element->$value;
-                                        } @endphp
-                                    action="{{ route($action->route, $routeParams) }}">
-                                    @csrf
-                                    @method($action->method)
-                                    <button class="btn btn-{{ $action->buttonType }}" type="submit">
-                                        {{ $action->label }}
-                                    </button>
-                                    @if ($action === 'POST')
-                                        @foreach ($params as $name => $value)
-                                            <input type="hidden" name="{{ $name }}"
-                                                value="{{ $value }}" />
-                                        @endforeach
-                                    @endif
-                                </form>
+                                              foreach ($action->routeParams as $name => $value) {
+                                                  $routeParams[$name] = $element->$value;
+                                              } @endphp
+                                            action="{{ route($action->route, $routeParams) }}">
+                                            @csrf
+                                            @method($action->method)
+                                            <button class="btn btn-{{ $action->buttonType }}" type="submit">
+                                                {{ $action->label }}
+                                            </button>
+                                            @if ($action === 'POST')
+                                                @foreach ($params as $name => $value)
+                                                    <input type="hidden" name="{{ $name }}"
+                                                        value="{{ $value }}" />
+                                                @endforeach
+                                            @endif
+                                        </form>
+                                    @break
+                                @endswitch
                             @endforeach
                         </td>
                     @endif
