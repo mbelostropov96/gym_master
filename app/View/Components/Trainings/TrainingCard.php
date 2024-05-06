@@ -9,10 +9,10 @@ use Illuminate\View\Component;
 
 class TrainingCard extends Component
 {
-
     public function __construct(
         public readonly Training $training,
-    ) {}
+    ) {
+    }
 
 
     public function render(): View|Closure|string

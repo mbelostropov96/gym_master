@@ -8,11 +8,11 @@ use Illuminate\View\Component;
 
 class Alert extends Component
 {
-
     public function __construct(
         public readonly string $type,
         public readonly string $message,
-    ) {}
+    ) {
+    }
 
 
     public function render(): View|Closure|string

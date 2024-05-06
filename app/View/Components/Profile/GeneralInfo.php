@@ -10,7 +10,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
-class GeneralInfo extends Component{
+class GeneralInfo extends Component
+{
     public array $contents;
 
     public function __construct()
@@ -27,7 +28,7 @@ class GeneralInfo extends Component{
         return view('components.profile.general-info');
     }
 
-    private function addDisplayDataByRole(User $user) : array
+    private function addDisplayDataByRole(User $user): array
     {
         return match ($user->role) {
             UserRole::ADMIN->value => [

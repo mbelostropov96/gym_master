@@ -27,12 +27,14 @@ class TrainingMaxClient implements ValidationRule, DataAwareRule
                 $fail(__('gym.validation.message.training_max_client'));
             }
         } else {
-            if (!filter_var($value, FILTER_VALIDATE_INT, [
+            if (
+                !filter_var($value, FILTER_VALIDATE_INT, [
                 'options' => [
                     'min_range' => 1,
                     'max_range' => 10,
                 ],
-            ])) {
+                ])
+            ) {
                 $fail(__('gym.validation.message.training_max_client'));
             }
         }

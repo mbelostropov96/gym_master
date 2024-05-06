@@ -25,16 +25,16 @@ class ClientReservations extends Component
              'datetime_start' => __('gym.training_start'),
              'datetime_end' => __('gym.training_end'),
              'instructor_name' =>  __('gym.instructor_name'),
-        ];
-        $this->clickableRouteWithId = 'trainings.show';
-        $this->columnsName = $this->attributeNameMap;
-        $this->columns = array_flip($this->attributeNameMap);
+         ];
+         $this->clickableRouteWithId = 'trainings.show';
+         $this->columnsName = $this->attributeNameMap;
+         $this->columns = array_flip($this->attributeNameMap);
 
         /** @var Training $training */
-        foreach ($this->reservedTrainings as $training) {
-            $training->instructor_name = $training->instructor?->getFullName()
+         foreach ($this->reservedTrainings as $training) {
+             $training->instructor_name = $training->instructor?->getFullName()
                 ?? $training->instructor_id;
-        }
+         }
     }
 
     public function render(): View|Closure|string

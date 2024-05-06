@@ -8,10 +8,9 @@ use Illuminate\View\Component;
 
 class Card extends Component
 {
-
     public function __construct(
         public string $headerName
-    ){
+    ) {
     }
 
 

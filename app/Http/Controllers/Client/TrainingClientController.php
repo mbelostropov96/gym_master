@@ -16,7 +16,8 @@ class TrainingClientController
 {
     public function __construct(
         private readonly TrainingService $trainingService,
-    ) {}
+    ) {
+    }
 
     /**
      * @return Renderable

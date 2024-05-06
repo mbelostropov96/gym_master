@@ -8,14 +8,14 @@ use Illuminate\View\Component;
 
 class Table extends Component
 {
-
     public function __construct(
         public iterable $columnsName,
         public iterable $columns,
         public iterable $contents,
         public string $clickableRouteWithId = '',
         public array $actions = [],
-    ) {}
+    ) {
+    }
 
 
     public function render(): View|Closure|string

@@ -8,13 +8,13 @@ use Illuminate\View\Component;
 
 class Form extends Component
 {
-
     public function __construct(
         public readonly string $method,
         public readonly string $action,
         public readonly string $buttonLabel,
         public readonly bool $noAction = false,
-    ) {}
+    ) {
+    }
 
 
     public function render(): View|Closure|string

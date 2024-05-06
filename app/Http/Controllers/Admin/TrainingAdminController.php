@@ -29,7 +29,8 @@ class TrainingAdminController extends Controller
 {
     public function __construct(
         private readonly TrainingService $trainingService,
-    ) {}
+    ) {
+    }
 
     /**
      * @return Renderable
@@ -77,7 +78,6 @@ class TrainingAdminController extends Controller
         );
 
         return $trainingComponent->render()->with($trainingComponent->data());
-
     }
 
     /**

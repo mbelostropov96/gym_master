@@ -20,7 +20,7 @@ class Reservations extends Component
         return view('components.profile.reservations');
     }
 
-    public function shouldRender() : bool
+    public function shouldRender(): bool
     {
         return Auth::user()->role === UserRole::CLIENT->value;
     }

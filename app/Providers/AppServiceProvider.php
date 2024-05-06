@@ -21,9 +21,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::directive('gymLang', function ($value) {
-            return __('gym.' . $value) === 'gym.' .$value
+            return __('gym.' . $value) === 'gym.' . $value
                 ? $value
-                :  __('gym.' .$value);
-            });
+                :  __('gym.' . $value);
+        });
     }
 }

@@ -21,7 +21,7 @@ class TrainingTemplates extends Component
         return view('components.profile.training-templates');
     }
 
-    public function shouldRender() : bool
+    public function shouldRender(): bool
     {
         return Auth::user()->role === UserRole::ADMIN->value;
     }

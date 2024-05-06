@@ -9,10 +9,10 @@ use Illuminate\View\Component;
 
 class UserCard extends Component
 {
-
     public function __construct(
         public User $user
-    ) {}
+    ) {
+    }
 
 
     public function render(): View|Closure|string

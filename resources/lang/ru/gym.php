@@ -95,6 +95,7 @@ return [
     'clients_reservations' => 'Записи',
     'client_name' => 'Имя клиента',
     'table_actions' => 'Действия',
+    'training_rating' => 'Рейтинг тренера',
 
     'validation' => [
         'message' => [

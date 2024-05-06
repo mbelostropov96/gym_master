@@ -8,7 +8,6 @@ use Illuminate\View\Component;
 
 class Textarea extends Component
 {
-
     public function __construct(
         public string $id = '',
         public string $label = '',
@@ -16,7 +15,8 @@ class Textarea extends Component
         public mixed $value = '',
         public bool $isDisabled = false,
         public ?string $type = null,
-    ) {}
+    ) {
+    }
 
 
     public function render(): View|Closure|string
