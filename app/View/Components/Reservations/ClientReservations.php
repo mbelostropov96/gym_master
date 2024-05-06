@@ -19,12 +19,13 @@ class ClientReservations extends Component
     ) {
          $this->attributeNameMap = [
              'id' => __('gym.training_id'),
+             'datetime_start' => __('gym.training_start'),
+             'datetime_end' => __('gym.training_end'),
              'name' => __('gym.training_name'),
              'type' => __('gym.training_type'),
              'price' => __('gym.training_price'),
-             'datetime_start' => __('gym.training_start'),
-             'datetime_end' => __('gym.training_end'),
              'instructor_name' =>  __('gym.instructor_name'),
+             'energy_consumption' => __('gym.calories_consumption'),
          ];
          $this->clickableRouteWithId = 'trainings.show';
          $this->columnsName = $this->attributeNameMap;

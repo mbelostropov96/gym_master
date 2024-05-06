@@ -96,6 +96,8 @@ return [
     'client_name' => 'Имя клиента',
     'table_actions' => 'Действия',
     'training_rating' => 'Рейтинг тренера',
+    'calories_consumption' => 'Энергозатраты (Ккал)',
+    'max_participants' => 'Макс. участников',
 
     'validation' => [
         'message' => [

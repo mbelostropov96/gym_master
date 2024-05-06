@@ -21,12 +21,14 @@ class ClientTrainings extends Component
         public readonly Collection $trainings,
     ) {
         $this->attributeNameMap = [
+            'datetime_start' => __('gym.training_start'),
+            'datetime_end' => __('gym.training_end'),
             'name' => __('gym.training_name'),
             'type' => __('gym.training_type'),
             'price' => __('gym.training_price'),
-            'datetime_start' => __('gym.training_start'),
-            'datetime_end' => __('gym.training_end'),
             'instructor_name' =>  __('gym.instructor_name'),
+            'energy_consumption' => __('gym.calories_consumption'),
+            'max_clients' => __('gym.max_participants'),
         ];
         $this->clickableRouteWithId = 'trainings.show';
         $this->columnsName = $this->attributeNameMap;

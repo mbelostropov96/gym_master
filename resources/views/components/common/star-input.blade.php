@@ -3,6 +3,7 @@
         {{ $label }}
     </label>
     <div class="col-md-6">
-        <input id="{{ $id }}" class="rating form-control" name="{{ $name }}" value="{{ $value }}" type="{{ $type ?? 'text' }}">
+        <input id="{{ $id }}" class="rating form-control" name="{{ $name }}" value="{{ $value }}"
+            type="{{ $type ?? 'text' }}">
     </div>
 </div>

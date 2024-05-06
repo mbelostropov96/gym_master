@@ -22,6 +22,8 @@ class CreateTraining extends Component
             'type' => __('gym.training_template_type'),
             'price' => __('gym.training_template_price'),
             'duration' => __('gym.training_template_duration'),
+            'energy_consumption' => __('gym.calories_consumption'),
+            'max_clients' => __('gym.max_participants'),
         ];
         $this->clickableRouteWithId = 'admin.create-by-template.create';
         $this->columnsName = $this->attributeNameMap;
