@@ -21,6 +21,7 @@ class HistoryClientTraining extends AbstractClientTraining
     {
         $relations = [
             'instructor',
+            'ratings',
         ];
         $trainingFilter = new TrainingFilter(
             [

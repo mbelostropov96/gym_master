@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property User $instructor
  * @property Collection|Reservation[] $reservations
  * @property Collection|User[] $clients
+ * @property Collection|Rating[] $ratings
  */
 class Training extends Model
 {
@@ -94,6 +95,15 @@ class Training extends Model
             'id',
             'id',
             'client_id'
+        );
+    }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(
+            Rating::class,
+            'training_id',
+            'id'
         );
     }
 }

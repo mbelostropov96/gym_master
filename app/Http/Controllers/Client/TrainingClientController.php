@@ -12,6 +12,7 @@ use App\Services\TrainingService;
 use App\View\Components\Reservations\ClientReservations;
 use App\View\Components\Trainings\ClientTrainings;
 use App\View\Components\Trainings\TrainingCard;
+use DateTime;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use RuntimeException;
@@ -70,6 +71,7 @@ class TrainingClientController
             'instructor',
             'clients',
             'reservations',
+            'ratings',
         ]);
 
         $trainingComponent = new TrainingCard(
@@ -95,7 +97,10 @@ class TrainingClientController
             'clients',
         ]);
 
-        if ($training->clients->doesntContain('id', '=', $user->id)) {
+        if (
+            $training->datetime_end < new DateTime()
+            || $training->clients->doesntContain('id', '=', $user->id)
+        ) {
             throw new RuntimeException('sosi', Response::HTTP_FORBIDDEN);
         }
 
