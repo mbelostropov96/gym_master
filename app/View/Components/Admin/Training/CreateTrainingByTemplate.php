@@ -19,7 +19,8 @@ class CreateTrainingByTemplate extends Component
     public function __construct(
         public TrainingTemplate $trainingTemplate,
         public Collection $instructors,
-    ) {}
+    ) {
+    }
 
     public function render(): View|Closure|string
     {
@@ -41,7 +42,7 @@ class CreateTrainingByTemplate extends Component
         return view('components.admin.training.create-training-by-template');
     }
 
-    public function isInstructor() : bool
+    public function isInstructor(): bool
     {
         return Auth::user()->role === UserRole::INSTRUCTOR->value;
     }

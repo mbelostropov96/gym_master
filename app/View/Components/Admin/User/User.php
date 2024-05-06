@@ -9,10 +9,10 @@ use Illuminate\View\Component;
 
 class User extends Component
 {
-
     public function __construct(
         public UserModel $userModel
-    ) {}
+    ) {
+    }
 
 
     public function render(): View|Closure|string

@@ -10,10 +10,10 @@ use Illuminate\View\Component;
 
 class UserBalanceHistory extends Component
 {
-
     public function __construct(
         public User $user
-    ) {}
+    ) {
+    }
 
 
     public function render(): View|Closure|string
@@ -21,7 +21,7 @@ class UserBalanceHistory extends Component
         return view('components.admin.user.user-balance-history');
     }
 
-    public function shouldRender() : bool
+    public function shouldRender(): bool
     {
         return $this->user->role === UserRole::CLIENT->value;
     }

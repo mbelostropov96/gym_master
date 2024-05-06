@@ -16,7 +16,7 @@ class Users extends Component
     public function __construct(
         public readonly Collection $users
     ) {
-       $this->attributeNameMap = [
+        $this->attributeNameMap = [
             'id' => 'ID',
             'last_name' => __('gym.last_name'),
             'first_name' => __('gym.first_name'),
@@ -24,9 +24,9 @@ class Users extends Component
             'email' => __('gym.email'),
             'role' => __('gym.role'),
         ];
-       $this->clickableRouteWithId = 'users.update';
-       $this->columnsName = $this->attributeNameMap;
-       $this->columns = array_flip($this->attributeNameMap);
+        $this->clickableRouteWithId = 'users.update';
+        $this->columnsName = $this->attributeNameMap;
+        $this->columns = array_flip($this->attributeNameMap);
     }
 
 

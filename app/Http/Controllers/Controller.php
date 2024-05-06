@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Cookie;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, ValidatesRequests;
+    use AuthorizesRequests;
+    use ValidatesRequests;
 
     protected function setCookie(string $name, array $value, int $minutes = 60): void
     {

@@ -21,7 +21,7 @@ class Trainings extends Component
         return view('components.profile.trainings');
     }
 
-    public function shouldRender() : bool
+    public function shouldRender(): bool
     {
         return Auth::user()->role !== UserRole::CLIENT->value;
     }

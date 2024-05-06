@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Input extends Component
+class StarInput extends Component
 {
     public function __construct(
         public string $id = '',
@@ -14,13 +14,11 @@ class Input extends Component
         public string $name = '',
         public mixed $value = '',
         public bool $isDisabled = false,
-        public ?string $type = null,
     ) {
     }
 
-
     public function render(): View|Closure|string
     {
-        return view('components.common.input');
+        return view('components.common.star-input');
     }
 }

@@ -16,7 +16,8 @@ class Training extends Component
     public function __construct(
         public readonly TrainingModel $training,
         public readonly Collection $instructors,
-    ) {}
+    ) {
+    }
 
     public function render(): View|Closure|string
     {

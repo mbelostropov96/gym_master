@@ -42,7 +42,7 @@ class ClientTrainings extends Component
         return view('components.trainings.index');
     }
 
-    public function shouldRender() : bool
+    public function shouldRender(): bool
     {
         return Auth::user()->role === UserRole::CLIENT->value;
     }

@@ -8,7 +8,6 @@ use Illuminate\View\Component;
 
 class Select extends Component
 {
-
     public function __construct(
         public readonly array $values = [],
         public readonly mixed $currentValue = '',
@@ -16,8 +15,7 @@ class Select extends Component
         public readonly string $name = '',
         public readonly bool $isDisabled = false,
         public readonly bool $useValueId = false,
-    )
-    {
+    ) {
         //
     }
 

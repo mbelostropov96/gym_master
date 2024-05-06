@@ -34,7 +34,8 @@ class TrainingUsersReservations extends Component
                         'first_name' => $user->first_name,
                         'last_name' => $user->last_name,
                         'middle_name' => $user->middle_name,
-                    ]));
+                    ])
+                );
                 $user->reservation_id = $training->reservations->where('client_id', $user->id)->first()->id;
             },
             $this->users->all(),

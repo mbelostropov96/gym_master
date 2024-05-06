@@ -14,7 +14,8 @@ class ReservationService
 {
     public function __construct(
         private readonly TrainingService $trainingService,
-    ) {}
+    ) {
+    }
 
     /**
      * @param int $id
@@ -25,7 +26,9 @@ class ReservationService
     {
         $builder = (new Reservation())->newQuery();
 
-        if ($relations !== null) $builder->with($relations);
+        if ($relations !== null) {
+            $builder->with($relations);
+        }
 
         /** @var Reservation $reservation */
         $reservation = $builder->findOrFail($id);

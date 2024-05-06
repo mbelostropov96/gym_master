@@ -1,7 +1,4 @@
-<form
-    method="{{ $method == 'GET' ? 'GET' : 'POST' }}"
-    action="{{ $action }}"
->
+<form method="{{ $method == 'GET' ? 'GET' : 'POST' }}" action="{{ $action }}">
     @csrf
     @method($method)
     {{ $content }}
