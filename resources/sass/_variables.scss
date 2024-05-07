@@ -28,3 +28,10 @@ body {
  background-position: 0 0;
  background-size: cover;
 }
+
+.profile-picture {
+    background-image: url('../pictures/profile.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 320px;
+}

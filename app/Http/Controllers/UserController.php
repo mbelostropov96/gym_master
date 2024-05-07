@@ -12,6 +12,7 @@ use App\Services\ClientTrainings\ClientTrainingFactory;
 use App\Services\DTO\UserDTO;
 use App\Services\UserService;
 use App\View\Components\Admin\User\User as UserComponent;
+use App\View\Components\Instructor\InstructorCard;
 use App\View\Components\Profile\Profile;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -90,7 +91,6 @@ class UserController extends Controller
         }
 
         $clientInfo->update($data);
-
     }
 
     /**
@@ -114,6 +114,7 @@ class UserController extends Controller
      */
     public function showInstructor(int $id): Renderable
     {
+        /** @var User $instructor */
         $instructor = (new User())->newQuery()
             ->where('role', '=', UserRole::INSTRUCTOR->value)
             ->with([
@@ -122,6 +123,8 @@ class UserController extends Controller
             ])
             ->findOrFail($id);
 
-        // TODO add cumponent
+        $instructorComponent = new InstructorCard($instructor);
+
+        return $instructorComponent->render()->with($instructorComponent->data());
     }
 }

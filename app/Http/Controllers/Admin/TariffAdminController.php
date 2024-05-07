@@ -18,7 +18,6 @@ class TariffAdminController extends Controller
     {
         $tariffs = (new Tariff())->newQuery()
             ->get();
-
     }
 
     /**
@@ -30,7 +29,6 @@ class TariffAdminController extends Controller
         /** @var Tariff $tariff */
         $tariff = (new Tariff())->newQuery()
             ->findOrFail($id);
-
     }
 
     /**
@@ -38,7 +36,6 @@ class TariffAdminController extends Controller
      */
     public function create(): Renderable
     {
-
     }
 
     /**
@@ -51,7 +48,6 @@ class TariffAdminController extends Controller
 
         (new Tariff())->newQuery()
             ->create($data);
-
     }
 
     /**
@@ -66,7 +62,6 @@ class TariffAdminController extends Controller
         (new Tariff())->newQuery()
             ->findOrFail($id)
             ->update($data);
-
     }
 
     /**
@@ -78,6 +73,5 @@ class TariffAdminController extends Controller
         (new Tariff())->newQuery()
             ->findOrFail($id)
             ->delete();
-
     }
 }

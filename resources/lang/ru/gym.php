@@ -100,6 +100,9 @@ return [
     'calories_consumption' => 'Энергозатраты (Ккал)',
     'max_participants' => 'Макс. участников',
     'set_rating' => 'Оценить',
+    'photo' => 'Фото',
+    'average_rating' => 'Средняя оценка',
+    'about_instructor' => 'О тренере',
 
     'validation' => [
         'message' => [
