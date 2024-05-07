@@ -2,6 +2,8 @@
 
 namespace App\View\ValueObject;
 
+use Closure;
+
 class ButtonTableAction
 {
     public function __construct(
@@ -11,6 +13,7 @@ class ButtonTableAction
         public readonly string $method = 'GET',
         public readonly string $buttonType = 'primary',
         public readonly array $bodyParams = [],
+        public readonly array $condition = [],
     ) {
     }
 }

@@ -15,18 +15,18 @@ class TrainingTemplates extends Component
     public function __construct(
         public readonly Collection $trainingTemplates,
     ) {
-        $this->attributeNameMap = [
-            'id' => 'ID',
-            'name' => __('gym.training_template_name'),
-            'type' => __('gym.training_template_type'),
-            'price' => __('gym.training_template_price'),
-            'duration' => __('gym.training_template_duration'),
-            'energy_consumption' => __('gym.calories_consumption'),
-            'max_clients' => __('gym.max_participants'),
-        ];
-        $this->clickableRouteWithId = 'admin.training-templates.update';
-        $this->columnsName = $this->attributeNameMap;
-        $this->columns = array_flip($this->attributeNameMap);
+        $this->prepareTableData(
+            'admin.training-templates.update',
+            [
+                'id' => 'ID',
+                'name' => __('gym.training_template_name'),
+                'type' => __('gym.training_template_type'),
+                'price' => __('gym.training_template_price'),
+                'duration' => __('gym.training_template_duration'),
+                'energy_consumption' => __('gym.calories_consumption'),
+                'max_clients' => __('gym.max_participants'),
+            ]
+        );
     }
 
     public function render(): View|Closure|string

@@ -18,20 +18,20 @@ class Trainings extends Component
     public function __construct(
         public readonly Collection $trainings,
     ) {
-        $this->attributeNameMap = [
-            'id' => 'ID',
-            'name' => __('gym.training_name'),
-            'type' => __('gym.training_type'),
-            'price' => __('gym.training_price'),
-            'datetime_start' => __('gym.training_start'),
-            'datetime_end' => __('gym.training_end'),
-            'instructor_name' =>  __('gym.instructor_name'),
-            'energy_consumption' => __('gym.calories_consumption'),
-            'max_clients' => __('gym.max_participants'),
-        ];
-        $this->clickableRouteWithId = 'admin.trainings.update';
-        $this->columnsName = $this->attributeNameMap;
-        $this->columns = array_flip($this->attributeNameMap);
+        $this->prepareTableData(
+            'admin.trainings.update',
+            [
+                'id' => 'ID',
+                'name' => __('gym.training_name'),
+                'type' => __('gym.training_type'),
+                'price' => __('gym.training_price'),
+                'datetime_start' => __('gym.training_start'),
+                'datetime_end' => __('gym.training_end'),
+                'instructor_name' =>  __('gym.instructor_name'),
+                'energy_consumption' => __('gym.calories_consumption'),
+                'max_clients' => __('gym.max_participants'),
+            ]
+        );
 
         $this->trainings->each(static function (Training $training) {
             $training->instructor_name = UserHelper::getFullName(new UserDTO($training->instructor->toArray()));

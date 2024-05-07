@@ -19,25 +19,25 @@ class ClientReservations extends Component
         public readonly Collection $reservedTrainings,
         public readonly string $trainingType = AbstractClientTraining::RESERVED,
     ) {
-         $this->attributeNameMap = [
-             'id' => __('gym.training_id'),
-             'datetime_start' => __('gym.training_start'),
-             'datetime_end' => __('gym.training_end'),
-             'name' => __('gym.training_name'),
-             'type' => __('gym.training_type'),
-             'price' => __('gym.training_price'),
-             'instructor_name' =>  __('gym.instructor_name'),
-             'energy_consumption' => __('gym.calories_consumption'),
-         ];
-         $this->clickableRouteWithId = 'trainings.show';
-         $this->columnsName = $this->attributeNameMap;
-         $this->columns = array_flip($this->attributeNameMap);
+         $this->prepareTableData(
+             'trainings.show',
+             [
+                 'id' => __('gym.training_id'),
+                 'datetime_start' => __('gym.training_start'),
+                 'datetime_end' => __('gym.training_end'),
+                 'name' => __('gym.training_name'),
+                 'type' => __('gym.training_type'),
+                 'price' => __('gym.training_price'),
+                 'instructor_name' =>  __('gym.instructor_name'),
+                 'energy_consumption' => __('gym.calories_consumption'),
+             ]
+         );
 
         /** @var Training $training */
-         foreach ($this->reservedTrainings as $training) {
-             $training->instructor_name = $training->instructor?->getFullName()
-                ?? $training->instructor_id;
-         }
+        foreach ($this->reservedTrainings as $training) {
+            $training->instructor_name = $training->instructor?->getFullName()
+               ?? $training->instructor_id;
+        }
     }
 
     public function render(): View|Closure|string

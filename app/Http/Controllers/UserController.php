@@ -14,6 +14,7 @@ use App\Services\UserService;
 use App\View\Components\Admin\User\User as UserComponent;
 use App\View\Components\Instructor\InstructorCard;
 use App\View\Components\Profile\Profile;
+use App\View\Components\Tariff\Tariffs;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use RuntimeException;
@@ -50,14 +51,41 @@ class UserController extends Controller
 
         $trainings = (new ClientTrainingFactory())->create(AbstractClientTraining::HISTORY)->index();
         $availableTariffs = (new Tariff())->newQuery()
-            ->where('id', '>', $user->clientInfo->tariff_id)
-            ->where('number_of_trainings', '<=', $trainings->count())
+            ->where('id', '>', $user->clientInfo->tariff_id) // это что за мегакринж. типа мы только в порядке возрастания тариф создать можем?
+//            ->where('number_of_trainings', '<=', $trainings->count())
             ->get();
 
         // TODO будущий профиль?
         $userComponent = new UserComponent($user);
 
         return (new Profile())->render();
+    }
+
+    /**
+     * @return Renderable
+     */
+    public function tariffs(): Renderable
+    {
+        /** @var User $user */
+        $user = auth()->user();
+        $relations = match ($user->role) {
+            UserRole::CLIENT->value => [
+                'clientInfo',
+                'balanceEvents',
+            ],
+            default => [],
+        };
+
+        $user->load($relations);
+
+        $trainings = (new ClientTrainingFactory())->create(AbstractClientTraining::HISTORY)->index();
+        $tariffs = (new Tariff())->newQuery()
+            ->where('id', '!=', $user->clientInfo->tariff_id)
+            ->get();
+
+        $tariffsComponent = new Tariffs($tariffs, $trainings->count());
+
+        return $tariffsComponent->render()->with($tariffsComponent->data());
     }
 
     /**
@@ -91,6 +119,8 @@ class UserController extends Controller
         }
 
         $clientInfo->update($data);
+
+        return redirect()->to(route('profile'));
     }
 
     /**
