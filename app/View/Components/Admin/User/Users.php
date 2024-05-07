@@ -24,7 +24,7 @@ class Users extends Component
             'email' => __('gym.email'),
             'role' => __('gym.role'),
         ];
-        $this->clickableRouteWithId = 'users.update';
+        $this->clickableRouteWithId = 'admin.users.show';
         $this->columnsName = $this->attributeNameMap;
         $this->columns = array_flip($this->attributeNameMap);
     }

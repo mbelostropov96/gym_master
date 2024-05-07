@@ -30,8 +30,8 @@
                         @csrf
                         <div class="p-1">
                             <input id="rating" class="rating form-control" name="rating" hidden
-                                value="{{ $training->ratings->where('client_id', '=', Auth::User()->id)?->first()?->rating ?? 10 }}"
-                                min="1" max="10" step="1" type="number">
+                                value="{{ $training->ratings->where('client_id', '=', Auth::User()->id)?->first()?->rating ?? null }}"
+                                min="0" max="10" step="1" type="number">
                             <input type="hidden" name="training_id" value="{{ $training->id }}" />
                         </div>
                         <button class="btn btn-primary" type="submit" hidden> {{ __('gym.set_rating') }} </button>
@@ -56,6 +56,12 @@
                                 :isDisabled="true" />
                         </x-slot:content>
                     </x-common::form>
+                    <div class="row mb-3">
+                        <label for="" class="col-md-4 col-form-label text-md-end"></label>
+                        <div class="col-md-6">
+                            <x-common::button :ref="route('users.instructors.show', ['id' => $training->instructor->id])" :label="__('gym.about_instructor')" />
+                        </div>
+                    </div>
                 </x-slot:body>
             </x-common::card>
         </x-slot:content>

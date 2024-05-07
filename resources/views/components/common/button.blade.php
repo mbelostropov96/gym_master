@@ -8,7 +8,7 @@
 @if (!$post)
     <a href="{{ $ref }}">
 @endif
-<button type="submit" class="btn btn-primary">{{ $label }}</button></a>
+<button @if ($post) type="submit" @endif class="btn btn-primary">{{ $label }}</button></a>
 @if ($post)
     </form>
 @endif
