@@ -3,7 +3,7 @@
 @section('content')
     <x-common::justify-container>
         <x-slot:content>
-            <x-profile::general-info>
+            <x-profile::general-info :$tariffs>
                 <x-slot:buttons>
                     <div class="row">
                         <x-profile::users />
@@ -22,6 +22,9 @@
                     </div>
                     <div class="row">
                         <x-profile::training-history />
+                    </div>
+                    <div class="row">
+                        <x-profile::tariffs />
                     </div>
                 </x-slot:buttons>
             </x-profile::general-info>

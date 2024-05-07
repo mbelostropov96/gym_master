@@ -12,21 +12,20 @@ class Users extends Component
 {
     use HasTableTrait;
 
-
     public function __construct(
         public readonly Collection $users
     ) {
-        $this->attributeNameMap = [
-            'id' => 'ID',
-            'last_name' => __('gym.last_name'),
-            'first_name' => __('gym.first_name'),
-            'middle_name' => __('gym.middle_name'),
-            'email' => __('gym.email'),
-            'role' => __('gym.role'),
-        ];
-        $this->clickableRouteWithId = 'admin.users.show';
-        $this->columnsName = $this->attributeNameMap;
-        $this->columns = array_flip($this->attributeNameMap);
+        $this->prepareTableData(
+            'admin.users.show',
+            [
+                'id' => 'ID',
+                'last_name' => __('gym.last_name'),
+                'first_name' => __('gym.first_name'),
+                'middle_name' => __('gym.middle_name'),
+                'email' => __('gym.email'),
+                'role' => __('gym.role'),
+            ]
+        );
     }
 
 

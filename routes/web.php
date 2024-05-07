@@ -87,6 +87,9 @@ $router->group([
 $router->group([
     'middleware' => 'client',
 ], function () use ($router) {
+
+    $router->get('/tariffs', [UserController::class, 'tariffs'])->name('tariffs.index');
+
     $router->get('/trainings', [TrainingClientController::class, 'index'])->name('trainings.index');
     $router->get('/trainings/history', [TrainingClientController::class, 'history'])->name('trainings.history');
     $router->get('/trainings/{id}', [TrainingClientController::class, 'show'])->name('trainings.show');

@@ -103,6 +103,15 @@ return [
     'photo' => 'Фото',
     'average_rating' => 'Средняя оценка',
     'about_instructor' => 'О тренере',
+    'create_tariff' => 'Создать тариф',
+    'tariffs' => 'Тарифы',
+    'tariff_name' => 'Название тарифа',
+    'tariff_discount' => 'Процент скидки',
+    'min_tariff_number_of_trainings' => 'Минимальное кол-во тренировок для активации тарифа',
+    'tariff_standard' => 'Стандартный',
+    'tariff_text' => ':name (скидка - :discount%)',
+    'change_tariff' => 'Сменить тариф',
+    'your_trainings_count' => 'Количество проведенных тренировок - :count',
 
     'validation' => [
         'message' => [

@@ -9,5 +9,10 @@ trait HasTableTrait
     public array $columns;
     public array $actions = [];
 
-    private array $attributeNameMap;
+    private function prepareTableData(string $route, array $attributeNameMap): void
+    {
+        $this->clickableRouteWithId = $route;
+        $this->columnsName = $attributeNameMap;
+        $this->columns = array_flip($attributeNameMap);
+    }
 }

@@ -1,21 +1,21 @@
 <?php
 
-namespace App\View\Components\Profile;
+namespace App\View\Components\Admin\Tariff;
 
+use App\Models\Tariff;
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
-class Profile extends Component
+class TariffCard extends Component
 {
     public function __construct(
-        public readonly Collection $tariffs,
+        public readonly Tariff $tariff,
     ) {
     }
 
     public function render(): View|Closure|string
     {
-        return view('components.profile.index');
+        return view('components.admin.tariff.tariff-card');
     }
 }

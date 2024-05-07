@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTariffRequest;
 use App\Http\Requests\UpdateTariffRequest;
+use App\View\Components\Admin\Tariff\CreateTariff;
+use App\View\Components\Admin\Tariff\TariffCard;
+use App\View\Components\Admin\Tariff\Tariffs as TariffComponent;
 use App\Models\Tariff;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +20,12 @@ class TariffAdminController extends Controller
     public function index(): Renderable
     {
         $tariffs = (new Tariff())->newQuery()
+            ->orderBy('discount')
             ->get();
+
+        $tariffsComponent = new TariffComponent($tariffs);
+
+        return $tariffsComponent->render()->with($tariffsComponent->data());
     }
 
     /**
@@ -29,6 +37,10 @@ class TariffAdminController extends Controller
         /** @var Tariff $tariff */
         $tariff = (new Tariff())->newQuery()
             ->findOrFail($id);
+
+        $tariffCardComponent = new TariffCard($tariff);
+
+        return $tariffCardComponent->render()->with($tariffCardComponent->data());
     }
 
     /**
@@ -36,6 +48,9 @@ class TariffAdminController extends Controller
      */
     public function create(): Renderable
     {
+        $tariffsComponent = new CreateTariff();
+
+        return $tariffsComponent->render()->with($tariffsComponent->data());
     }
 
     /**
@@ -48,6 +63,8 @@ class TariffAdminController extends Controller
 
         (new Tariff())->newQuery()
             ->create($data);
+
+        return redirect()->to(route('admin.tariffs.index'));
     }
 
     /**
@@ -62,6 +79,8 @@ class TariffAdminController extends Controller
         (new Tariff())->newQuery()
             ->findOrFail($id)
             ->update($data);
+
+        return redirect()->to(route('admin.tariffs.show', ['id' => $id]));
     }
 
     /**
@@ -73,5 +92,7 @@ class TariffAdminController extends Controller
         (new Tariff())->newQuery()
             ->findOrFail($id)
             ->delete();
+
+        return redirect()->to(route('admin.tariffs.index'));
     }
 }

@@ -21,12 +21,24 @@ class TrainingUsersReservations extends Component
     public function __construct(
         public \App\Models\Training $training,
     ) {
-        $this->users = $this->training->clients;
-        $this->attributeNameMap = [
-            'id' => 'ID',
-            'full_name' => __('gym.client_name'),
+        $this->prepareTableData(
+            'admin.users.show',
+            [
+                'id' => 'ID',
+                'full_name' => __('gym.client_name'),
+            ]
+        );
+        $this->actions = [
+            new ButtonTableAction(
+                __('gym.cancel_reservation'),
+                'admin.reservations.destroy',
+                ['id' => 'reservation_id'],
+                'DELETE',
+                'danger',
+            ),
         ];
 
+        $this->users = $this->training->clients;
         array_map(
             static function (User $user) use ($training) {
                 $user->full_name = UserHelper::getFullName(
@@ -40,20 +52,6 @@ class TrainingUsersReservations extends Component
             },
             $this->users->all(),
         );
-
-        $this->clickableRouteWithId = 'admin.users.show';
-        $this->columnsName = $this->attributeNameMap;
-        $this->columns = array_flip($this->attributeNameMap);
-
-        $this->actions = [
-            new ButtonTableAction(
-                __('gym.cancel_reservation'),
-                'admin.reservations.destroy',
-                ['id' => 'reservation_id'],
-                'DELETE',
-                'danger',
-            ),
-        ];
     }
 
     public function render(): View|Closure|string
