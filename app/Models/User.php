@@ -26,6 +26,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property ClientInfo $clientInfo
  * @property InstructorInfo $instructorInfo
  * @property Collection|BalanceEvent[] $balanceEvents
+ * @property Collection|Rating[] $ratings
  */
 class User extends Authenticatable
 {
@@ -103,6 +104,15 @@ class User extends Authenticatable
             'client_id',
             'id'
         )->orderByDesc('created_at');
+    }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(
+            Rating::class,
+            'instructor_id',
+            'id'
+        );
     }
 
     // TODO use \App\Helpers\UserHelper::getFullName

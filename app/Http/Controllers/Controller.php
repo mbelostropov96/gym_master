@@ -12,6 +12,11 @@ class Controller extends BaseController
     use AuthorizesRequests;
     use ValidatesRequests;
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     protected function setCookie(string $name, array $value, int $minutes = 60): void
     {
         $value = base64_encode(json_encode($value));

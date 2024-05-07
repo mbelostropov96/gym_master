@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRatingRequest;
 use App\Models\Rating;
 use App\Models\Training;
@@ -19,11 +20,12 @@ use Illuminate\Http\RedirectResponse;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
-class TrainingClientController
+class TrainingClientController extends Controller
 {
     public function __construct(
         private readonly TrainingService $trainingService,
     ) {
+        parent::__construct();
     }
 
     /**

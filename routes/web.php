@@ -21,11 +21,12 @@ $router->get('/', function () {
     return redirect('/profile');
 });
 
-$router->get('/profile', [HomeController::class, 'index'])->name('profile');
+$router->get('/profile', [HomeController::class, 'profile'])->name('profile');
 
-$router->get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 $router->patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
 $router->delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+$router->get('/users/instructors/{id}', [UserController::class, 'showInstructor'])->name('users.instructors.show');
 
 $router->group([
     'middleware' => 'admin',

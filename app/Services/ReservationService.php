@@ -7,6 +7,7 @@ use App\Models\BalanceEvent;
 use App\Models\ClientInfo;
 use App\Models\Reservation;
 use App\Models\User;
+use DateTime;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -102,7 +103,7 @@ class ReservationService
             'training',
         ]);
 
-        $reservationIsExpired = $reservation->training->datetime_start < date('Y-m-d H:i:s', time());
+        $reservationIsExpired = $reservation->training->datetime_start < new DateTime();
 
         if (
             !UserHelper::isAdmin()

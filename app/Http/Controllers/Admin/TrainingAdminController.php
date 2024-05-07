@@ -26,6 +26,7 @@ class TrainingAdminController extends Controller
     public function __construct(
         private readonly TrainingService $trainingService,
     ) {
+        parent::__construct();
     }
 
     /**

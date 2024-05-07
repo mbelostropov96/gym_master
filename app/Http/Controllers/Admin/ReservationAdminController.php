@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Services\ReservationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
-use Throwable;
 
-class ReservationAdminController
+class ReservationAdminController extends Controller
 {
     public function __construct(
         private readonly ReservationService $reservationService,
     ) {
+        parent::__construct();
     }
 
     /**
@@ -20,14 +21,9 @@ class ReservationAdminController
      */
     public function destroy(int $reservationId): RedirectResponse
     {
-        DB::beginTransaction();
-        try {
-            $this->reservationService->destroy($reservationId);
-
-            DB::commit();
-        } catch (Throwable $e) {
-            DB::rollBack();
-        }
+        DB::transaction(
+            fn() => $this->reservationService->destroy($reservationId)
+        );
 
         return redirect()->to(route('reservations.index'));
     }

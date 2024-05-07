@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReservationRequest;
 use App\Services\ReservationService;
 use App\Services\ClientTrainings\AbstractClientTraining;
@@ -12,11 +13,12 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 
-class ReservationClientController
+class ReservationClientController extends Controller
 {
     public function __construct(
         private readonly ReservationService $reservationService,
     ) {
+        parent::__construct();
     }
 
     /**
