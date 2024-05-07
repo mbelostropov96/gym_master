@@ -104,6 +104,7 @@ return [
     'validation' => [
         'message' => [
             'training_max_client' => 'Лох, слишком много клиентов',
+            'tariff_not_available' => 'Лох, тариф недоступен',
         ]
     ],
     'error' => [

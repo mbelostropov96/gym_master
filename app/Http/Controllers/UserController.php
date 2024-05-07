@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
+use App\Http\Requests\UpdateClientInfoRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Tariff;
 use App\Models\User;
+use App\Services\ClientTrainings\AbstractClientTraining;
+use App\Services\ClientTrainings\ClientTrainingFactory;
 use App\Services\DTO\UserDTO;
 use App\Services\UserService;
 use App\View\Components\Admin\User\User as UserComponent;
@@ -12,6 +16,7 @@ use App\View\Components\Profile\Profile;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -42,6 +47,12 @@ class UserController extends Controller
 
         $user->load($relations);
 
+        $trainings = (new ClientTrainingFactory())->create(AbstractClientTraining::HISTORY)->index();
+        $availableTariffs = (new Tariff())->newQuery()
+            ->where('id', '>', $user->clientInfo->tariff_id)
+            ->where('number_of_trainings', '<=', $trainings->count())
+            ->get();
+
         // TODO будущий профиль?
         $userComponent = new UserComponent($user);
 
@@ -60,6 +71,26 @@ class UserController extends Controller
         $this->userService->update($id, new UserDTO($data));
 
         return redirect()->to(route('users.update', ['id' => $id]));
+    }
+
+    /**
+     * @param UpdateClientInfoRequest $request
+     * @return RedirectResponse
+     */
+    public function updateClientInfo(UpdateClientInfoRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+
+        /** @var User $user */
+        $user = auth()->user();
+        $clientInfo = $user->clientInfo;
+
+        if ($clientInfo->client_id !== $user->id) {
+            throw new RuntimeException('sosi loh', Response::HTTP_FORBIDDEN);
+        }
+
+        $clientInfo->update($data);
+
     }
 
     /**

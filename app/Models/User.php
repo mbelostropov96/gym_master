@@ -88,15 +88,6 @@ class User extends Authenticatable
         );
     }
 
-    public function instructorInfo(): HasOne
-    {
-        return $this->hasOne(
-            InstructorInfo::class,
-            'instructor_id',
-            'id'
-        );
-    }
-
     public function balanceEvents(): HasMany
     {
         return $this->hasMany(
@@ -104,6 +95,15 @@ class User extends Authenticatable
             'client_id',
             'id'
         )->orderByDesc('created_at');
+    }
+
+    public function instructorInfo(): HasOne
+    {
+        return $this->hasOne(
+            InstructorInfo::class,
+            'instructor_id',
+            'id'
+        );
     }
 
     public function ratings(): HasMany

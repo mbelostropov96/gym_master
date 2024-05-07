@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ReservationAdminController;
+use App\Http\Controllers\Admin\TariffAdminController;
 use App\Http\Controllers\Admin\TrainingAdminController;
 use App\Http\Controllers\Admin\TrainingTemplateAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
@@ -23,7 +24,10 @@ $router->get('/', function () {
 
 $router->get('/profile', [HomeController::class, 'profile'])->name('profile');
 
-$router->patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
+$router->get('/users/profile', [UserController::class, 'profile'])->name('users.profile');
+$router->patch('/users/{id}', [UserController::class, 'update'])->name('users.update')
+    ->where('id', '[0-9]+');
+$router->patch('/users/client-info', [UserController::class, 'updateClientInfo'])->name('users.client-info.update');
 $router->delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
 $router->get('/users/instructors/{id}', [UserController::class, 'showInstructor'])->name('users.instructors.show');
@@ -56,6 +60,14 @@ $router->group([
     $router->delete('/trainings/{id}', [TrainingAdminController::class, 'destroy'])->name('admin.trainings.destroy');
 
     $router->delete('/reservations/{id}', [ReservationAdminController::class, 'destroy'])->name('admin.reservations.destroy');
+
+    $router->get('/tariffs', [TariffAdminController::class, 'index'])->name('admin.tariffs.index');
+    $router->get('/tariffs/{id}', [TariffAdminController::class, 'show'])->name('admin.tariffs.show')
+        ->where('id', '[0-9]+');
+    $router->get('/tariffs/create', [TariffAdminController::class, 'create'])->name('admin.tariffs.create');
+    $router->post('/tariffs', [TariffAdminController::class, 'store'])->name('admin.tariffs.store');
+    $router->patch('/tariffs/{id}', [TariffAdminController::class, 'update'])->name('admin.tariffs.update');
+    $router->delete('/tariffs/{id}', [TariffAdminController::class, 'destroy'])->name('admin.tariffs.destroy');
 });
 
 $router->group([
