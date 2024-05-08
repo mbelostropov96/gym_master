@@ -28,6 +28,7 @@
                     </div>
                 </x-slot:buttons>
             </x-profile::general-info>
+            <x-profile::user-statistics :$historyTrainings />
         </x-slot:content>
     </x-common::justify-container>
 @endsection

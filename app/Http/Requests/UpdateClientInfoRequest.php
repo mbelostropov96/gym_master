@@ -15,6 +15,10 @@ class UpdateClientInfoRequest extends AbstractRequest
     public function rules(): array
     {
         return [
+            'age' => ['string'],
+            'gender' => ['string'],
+            'weight' => ['string'],
+            'height' => ['string'],
             'tariff_id' => [
                 'string',
                 new AvailableTariff(),

@@ -24,6 +24,7 @@ class UpdateTrainingRequest extends AbstractRequest
             'description' => ['string'],
             'datetime_start' => ['date_format:Y-m-d\TH:i'],
             'datetime_end' => ['date_format:Y-m-d\TH:i'],
+            'energy_consumption' => ['string'],
             'instructor_id' => [
                 Rule::prohibitedIf(!UserHelper::isAdmin()),
                 'string',

@@ -22,6 +22,10 @@ class ClientInfo extends Model
         'client_id',
         'balance',
         'tariff_id',
+        'gender',
+        'weight',
+        'height',
+        'age',
     ];
 
     protected $casts = [
@@ -29,5 +33,9 @@ class ClientInfo extends Model
         'client_id' => 'integer',
         'balance' => 'integer',
         'tariff_id' => 'integer',
+        'gender' => 'string',
+        'weight' => 'float',
+        'height' => 'float',
+        'age' => 'float',
     ];
 }

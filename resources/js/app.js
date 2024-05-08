@@ -1,6 +1,6 @@
-import './bootstrap';
 import jQuery from 'jquery';
-
+import './bootstrap';
+import './statistics-chart.js';
 
 window.$ = jQuery;
 
