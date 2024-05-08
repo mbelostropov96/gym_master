@@ -112,6 +112,16 @@ return [
     'tariff_text' => ':name (скидка - :discount%)',
     'change_tariff' => 'Сменить тариф',
     'your_trainings_count' => 'Количество проведенных тренировок - :count',
+    'statistics' => 'Статистика тренировок за последний месяц',
+    'your_daily_consumption' => 'Ваша суточная норма потребления белков/жиров/углеводов при учете текущих параметров тела: :consumption Ккал',
+    'register_data' => 'Регистрационные данные',
+    'your_parameters' => 'Ваши параметры',
+    'male' => 'Мужчина',
+    'female' => 'Женщина',
+    'gender' => 'Пол',
+    'age' => 'Возраст',
+    'height' => 'Рост (см)',
+    'weight' => 'Вес (кг)',
 
     'validation' => [
         'message' => [
