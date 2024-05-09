@@ -124,6 +124,27 @@ class UserController extends Controller
     }
 
     /**
+     * Сделай плес
+     *  нужно создавать или апдейтить
+     * */
+    public function updateInstructorInfo($request): RedirectResponse
+    {
+//        $data = $request->validated();
+//
+//        /** @var User $user */
+//        $user = auth()->user();
+//        $clientInfo = $user->clientInfo;
+//
+//        if ($clientInfo->client_id !== $user->id) {
+//            throw new RuntimeException('sosi loh', Response::HTTP_FORBIDDEN);
+//        }
+//
+//        $clientInfo->update($data);
+
+        return redirect()->to(route('profile'));
+    }
+
+    /**
      * @param int $id
      * @return RedirectResponse
      */

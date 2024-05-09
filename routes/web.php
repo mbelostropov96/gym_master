@@ -28,6 +28,8 @@ $router->get('/users/profile', [UserController::class, 'profile'])->name('users.
 $router->patch('/users/{id}', [UserController::class, 'update'])->name('users.update')
     ->where('id', '[0-9]+');
 $router->patch('/users/client-info', [UserController::class, 'updateClientInfo'])->name('users.client-info.update');
+$router->patch('/users/instructor-info', [UserController::class, 'updateInstructorInfo'])->name('users.instructor-info.update');
+
 $router->delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
 $router->get('/users/instructors/{id}', [UserController::class, 'showInstructor'])->name('users.instructors.show');

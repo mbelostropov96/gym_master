@@ -25,12 +25,11 @@ class UpdateTrainingRequest extends AbstractRequest
             'datetime_start' => ['date_format:Y-m-d\TH:i'],
             'datetime_end' => ['date_format:Y-m-d\TH:i'],
             'energy_consumption' => ['string'],
-            // починить нельзя забить
-//            'instructor_id' => [
-//                Rule::prohibitedIf(!UserHelper::isAdmin()),
-//                'string',
-//                Rule::exists(User::TABLE, 'id')
-//            ],
+            'instructor_id' => [
+                Rule::prohibitedIf(!UserHelper::isAdmin()),
+                'string',
+                Rule::exists(User::TABLE, 'id')
+            ],
         ];
     }
 

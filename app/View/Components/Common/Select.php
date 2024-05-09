@@ -15,6 +15,7 @@ class Select extends Component
         public readonly string $name = '',
         public readonly bool $isDisabled = false,
         public readonly bool $useValueId = false,
+        public readonly bool $needSend = true,
     ) {
         //
     }

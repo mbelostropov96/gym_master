@@ -8,7 +8,7 @@
                 </option>
             @endforeach
         </select>
-        @if ($isDisabled)
+        @if ($isDisabled && $needSend)
             <input type="hidden" name="{{ $name }}"
                 value="{{ $useValueId ? array_flip($values)[$currentValue] : $currentValue }}" />
         @endif
