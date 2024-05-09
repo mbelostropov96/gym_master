@@ -17,6 +17,7 @@ class HomeController extends Controller
      */
     public function profile(): Renderable
     {
+        // кринге чел, почини \App\Http\Controllers\UserController::profile и перестань получать данные с шаблонов
         $tariffs = (new Tariff())->newQuery()
             ->orderBy('discount')
             ->get();

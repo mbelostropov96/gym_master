@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $experience
  * @property string $qualification
  * @property string|null $description
+ * @property string|null $image
  */
 class InstructorInfo extends Model
 {
@@ -24,6 +25,7 @@ class InstructorInfo extends Model
         'experience',
         'qualification',
         'description',
+        'image',
     ];
 
     protected $casts = [
@@ -32,5 +34,6 @@ class InstructorInfo extends Model
         'experience' => 'string',
         'qualification' => 'string',
         'description' => 'string',
+        'image' => 'string',
     ];
 }

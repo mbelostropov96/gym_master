@@ -19,6 +19,7 @@ use App\View\Components\Profile\Profile;
 use App\View\Components\Tariff\Tariffs;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\UploadedFile;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -138,6 +139,20 @@ class UserController extends Controller
 
         if ($user->role !== UserRole::INSTRUCTOR->value) {
             throw new RuntimeException('ny loh je', Response::HTTP_FORBIDDEN);
+        }
+
+        if (isset($data['image'])) {
+            /** @var UploadedFile $image */
+            $image = $data['image'];
+
+            $imagePath = $image->storeAs(
+                'public/images/instructors',
+                $image->getClientOriginalName(),
+            );
+
+            $data = array_merge($data, [
+                'image' => $imagePath,
+            ]);
         }
 
         (new InstructorInfo())->newQuery()

@@ -1,4 +1,4 @@
-<form method="{{ $method == 'GET' ? 'GET' : 'POST' }}" action="{{ $action }}">
+<form method="{{ $method == 'GET' ? 'GET' : 'POST' }}" action="{{ $action }}" enctype="{{ $encrypt }}">
     @csrf
     @method($method)
     {{ $content }}
