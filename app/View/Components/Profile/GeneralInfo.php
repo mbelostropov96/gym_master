@@ -48,28 +48,17 @@ class GeneralInfo extends Component
         return match ($user->role) {
             UserRole::ADMIN->value => [
                 __('gym.role') => $user->role,
-                __('gym.first_name') => $user->first_name,
                 __('gym.email') => $user->email,
             ],
             UserRole::CLIENT->value => [
                 __('gym.user_id') => $user->id,
-                __('gym.first_name') => $user->first_name,
-                __('gym.last_name') => $user->last_name,
-                __('gym.middle_name') => $user->middle_name,
-                __('gym.email') => $user->email,
                 __('gym.role') => $user->role,
                 __('gym.balance') => $user->clientInfo?->balance . ' ' . __('gym.currency_symbol'),
                 __('gym.tariff') => $tariffOutput,
             ],
             UserRole::INSTRUCTOR->value => [
                 __('gym.user_id') => $user->id,
-                __('gym.first_name') => $user->first_name,
-                __('gym.last_name') => $user->last_name,
-                __('gym.middle_name') => $user->middle_name,
-                __('gym.email') => $user->email,
                 __('gym.role') => $user->role,
-                __('gym.instructor_experience') => $user->instructorInfo?->experience,
-                __('gym.instructor_qualification') => $user->instructorInfo?->qualification
             ],
             default => [],
         };

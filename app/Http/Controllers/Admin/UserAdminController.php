@@ -65,7 +65,7 @@ class UserAdminController extends Controller
 
         $this->userService->update($id, new UserDTO($data));
 
-        return redirect()->to(route('users.update', ['id' => $id]));
+        return redirect()->to(route('admin.users.show', ['id' => $id]));
     }
 
     /**
@@ -101,7 +101,7 @@ class UserAdminController extends Controller
                 'description' => __('gym.standard_balance_top_up'),
             ]);
 
-        return redirect()->to(route('users.show', ['id' => $id]));
+        return redirect()->to(route('admin.users.show', ['id' => $id]));
     }
 
     /**

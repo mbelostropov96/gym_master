@@ -1,6 +1,5 @@
 @php
     use App\View\ValueObject\ButtonTableAction;
-    use App\View\ValueObject\StarsTableAction;
 @endphp
 @if ($contents->isEmpty())
     <x-common::alert :type="'warning'" :message="__('gym.table_no_data')" />
@@ -22,6 +21,9 @@
                     @if ($hasClickableRouteWithId()) class="clickable-row"
                 data-href="{{ route($clickableRouteWithId, ['id' => $element->id]) }}" @endif>
                     @foreach ($columns as $elementAttribute)
+                        @if (DateTime::createFromFormat('Y-m-d H:i:s', $element->$elementAttribute))
+                            @php $element->$elementAttribute = DateTime::createFromFormat('Y-m-d H:i:s', $element->$elementAttribute, new DateTimeZone(date_default_timezone_get()))->format('d.m.Y H:i'); @endphp
+                        @endif
                         @if ($elementAttribute === reset($columns))
                             <th>{{ $element->$elementAttribute }}</th>
                         @else

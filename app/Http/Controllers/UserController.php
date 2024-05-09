@@ -102,7 +102,7 @@ class UserController extends Controller
 
         $this->userService->update($id, new UserDTO($data));
 
-        return redirect()->to(route('users.update', ['id' => $id]));
+        return redirect()->to(route('profile'));
     }
 
     /**
@@ -126,10 +126,6 @@ class UserController extends Controller
         return redirect()->to(route('profile'));
     }
 
-    /**
-     * Сделай плес
-     *  нужно создавать или апдейтить
-     * */
     public function updateInstructorInfo(UpdateInstructorInfoRequest $request): RedirectResponse
     {
         $data = $request->validated();
@@ -145,13 +141,13 @@ class UserController extends Controller
             /** @var UploadedFile $image */
             $image = $data['image'];
 
-            $imagePath = $image->storeAs(
+            $image->storeAs(
                 'public/images/instructors',
                 $image->getClientOriginalName(),
             );
 
             $data = array_merge($data, [
-                'image' => $imagePath,
+                'image' => 'images/instructors/' . $image->getClientOriginalName(),
             ]);
         }
 

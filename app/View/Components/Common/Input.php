@@ -14,6 +14,7 @@ class Input extends Component
         public string $name = '',
         public mixed $value = '',
         public bool $isDisabled = false,
+        public bool $isRequired = true,
         public ?string $type = null,
     ) {
     }

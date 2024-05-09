@@ -19,9 +19,9 @@
                                 <x-common::input :label="__('gym.last_name')" :value="$instructor->last_name" :$isDisabled />
                                 <x-common::input :label="__('gym.first_name')" :value="$instructor->first_name" :$isDisabled />
                                 <x-common::input :label="__('gym.middle_name')" :value="$instructor->middle_name" :$isDisabled />
-                                <x-common::input :label="__('gym.instructor_qualification')" :value="$instructor->clientInfo?->qualification" :$isDisabled />
-                                <x-common::input :label="__('gym.instructor_experience')" :value="$instructor->clientInfo?->experience" :$isDisabled />
-                                <x-common::textarea :label="__('gym.about_instructor')" :value="$instructor->clientInfo?->description" :$isDisabled />
+                                <x-common::input :label="__('gym.instructor_qualification')" :value="$instructor->instructorInfo?->qualification" :$isDisabled />
+                                <x-common::input :label="__('gym.instructor_experience')" :value="$instructor->instructorInfo?->experience" :$isDisabled />
+                                <x-common::textarea :label="__('gym.about_instructor')" :value="$instructor->instructorInfo?->description" :$isDisabled />
                                 <div class="row mb-3">
                                     <label for="rating" class="col-md-4 col-form-label text-md-end">
                                         {{ __('gym.average_rating') . ':' }}</label>
@@ -37,7 +37,12 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="container-fluid body-content">
-                                        <div class="profile-picture center-block"></div>
+                                        @if (!empty($instructor->instructorInfo?->image))
+                                            <img src="{{ asset('storage/' . $instructor->instructorInfo->image) }}"
+                                                class="img-fluid" alt="{{ __('gym.photo') }}">
+                                        @else
+                                            <div class="profile-picture center-block"></div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

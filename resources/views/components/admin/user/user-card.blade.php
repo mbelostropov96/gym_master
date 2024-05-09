@@ -1,7 +1,7 @@
 @php use App\Enums\UserRole @endphp
 <x-common::card :headerName="__('gym.user.card')">
     <x-slot:body>
-        <x-common::form :method="'PATCH'" :action="route('users.update', ['id' => $user->id])" :buttonLabel="__('gym.save')">
+        <x-common::form :method="'PATCH'" :action="route('admin.users.update', ['id' => $user->id])" :buttonLabel="__('gym.save')">
             <x-slot:content>
                 <x-common::input :label="__('gym.last_name')" :value="$user->last_name" :name="'last_name'" />
                 <x-common::input :label="__('gym.first_name')" :value="$user->first_name" :name="'first_name'" />

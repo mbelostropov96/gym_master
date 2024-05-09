@@ -20,7 +20,7 @@ class UserStatistics extends Component
 {
     public string $chartData;
 
-    public int $dailyEnergyConsumption = 2000;
+    public int $dailyEnergyConsumption = 0;
     public function __construct(
         public readonly Collection $historyTrainings,
     ) {
@@ -30,7 +30,12 @@ class UserStatistics extends Component
     {
         /** @var ClientInfo $clientInfo */
         $clientInfo = Auth::user()?->clientInfo;
-        if ($clientInfo !== null) {
+        if (
+            $clientInfo !== null
+            && ((int)$clientInfo->weight) !== 0
+            && ((int)$clientInfo->height) !== 0
+            && ((int)$clientInfo->age) !== 0
+        ) {
             $this->dailyEnergyConsumption = DailyEnergyConsumptionCalculator::calculate(
                 $clientInfo->gender,
                 $clientInfo->weight,

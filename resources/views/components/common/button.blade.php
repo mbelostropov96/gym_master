@@ -6,9 +6,9 @@
         @endforeach
 @endif
 @if (!$post)
-    <a href="{{ $ref }}">
-@endif
-<button @if ($post) type="submit" @endif class="btn btn-primary">{{ $label }}</button></a>
-@if ($post)
-    </form>
-@endif
+<a href="{{ $ref }}" @else <button @endif
+        @if ($post) type="submit" @endif class="btn btn-primary">{{ $label }}</button></a>
+    </a>
+    @if ($post)
+        </form>
+    @endif
