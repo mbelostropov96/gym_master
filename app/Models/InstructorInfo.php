@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * @property integer $id
  * @property integer $instructor_id
- * @property integer $experience
+ * @property string $experience
  * @property string $qualification
+ * @property string|null $description
  */
 class InstructorInfo extends Model
 {
@@ -22,12 +23,14 @@ class InstructorInfo extends Model
         'instructor_id',
         'experience',
         'qualification',
+        'description',
     ];
 
     protected $casts = [
         'id' => 'integer',
         'instructor_id' => 'integer',
-        'experience' => 'integer',
+        'experience' => 'string',
         'qualification' => 'string',
+        'description' => 'string',
     ];
 }

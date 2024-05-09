@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
 use App\Http\Requests\UpdateClientInfoRequest;
+use App\Http\Requests\UpdateInstructorInfoRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\InstructorInfo;
 use App\Models\Tariff;
 use App\Models\User;
 use App\Services\ClientTrainings\AbstractClientTraining;
@@ -127,19 +129,24 @@ class UserController extends Controller
      * Сделай плес
      *  нужно создавать или апдейтить
      * */
-    public function updateInstructorInfo($request): RedirectResponse
+    public function updateInstructorInfo(UpdateInstructorInfoRequest $request): RedirectResponse
     {
-//        $data = $request->validated();
-//
-//        /** @var User $user */
-//        $user = auth()->user();
-//        $clientInfo = $user->clientInfo;
-//
-//        if ($clientInfo->client_id !== $user->id) {
-//            throw new RuntimeException('sosi loh', Response::HTTP_FORBIDDEN);
-//        }
-//
-//        $clientInfo->update($data);
+        $data = $request->validated();
+
+        /** @var User $user */
+        $user = auth()->user();
+
+        if ($user->role !== UserRole::INSTRUCTOR->value) {
+            throw new RuntimeException('ny loh je', Response::HTTP_FORBIDDEN);
+        }
+
+        (new InstructorInfo())->newQuery()
+            ->updateOrCreate(
+                [
+                    'instructor_id' => $user->id,
+                ],
+                $data,
+            );
 
         return redirect()->to(route('profile'));
     }

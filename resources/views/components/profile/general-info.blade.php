@@ -51,7 +51,7 @@
                     <h5>{{ __('gym.your_data') }}</h5>
                     <x-common::form :method="'PATCH'" :action="route('users.instructor-info.update')" :buttonLabel="__('gym.save')">
                         <x-slot:content>
-                            <x-common::textarea :label="__('gym.about_instructor')" :type="'description'" :name="'age'"
+                            <x-common::textarea :label="__('gym.about_instructor')" :type="'description'" :name="'description'"
                                 :value="$instructorInfo->description" />
                             <x-common::input :label="__('gym.instructor_experience')" :name="'experience'" :value="$instructorInfo->experience" />
                             <x-common::textarea :label="__('gym.instructor_qualification')" :name="'qualification'" :value="$instructorInfo->qualification" />

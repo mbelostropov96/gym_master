@@ -6,6 +6,7 @@ use App\Helpers\UserHelper;
 use App\Models\BalanceEvent;
 use App\Models\ClientInfo;
 use App\Models\Reservation;
+use App\Models\Tariff;
 use App\Models\User;
 use DateTime;
 use RuntimeException;
@@ -66,8 +67,14 @@ class ReservationService
             throw new RuntimeException(__('gym.error.reservation.balance_is_low'), Response::HTTP_BAD_REQUEST);
         }
 
+        /** @var Tariff $clientTariff */
+        $clientTariff = (new Tariff())->newQuery()
+            ->findOrFail($clientInfo->tariff_id);
+
+        $trainingPrice = (int)ceil($training->price * ((100 - $clientTariff->discount) / 100));
+
         $oldBalance = $clientInfo->balance;
-        $clientInfo->balance -= $training->price;
+        $clientInfo->balance -= $trainingPrice;
         $clientInfo->save();
 
         (new BalanceEvent())->newQuery()
@@ -87,6 +94,7 @@ class ReservationService
             ->create([
                 'training_id' => $trainingId,
                 'client_id' => $user->id,
+                'price' => $trainingPrice,
             ]);
     }
 
@@ -103,7 +111,7 @@ class ReservationService
             'training',
         ]);
 
-        $reservationIsExpired = $reservation->training->datetime_start < new DateTime();
+        $reservationIsExpired = $reservation->training->datetime_start > new DateTime();
 
         if (
             !UserHelper::isAdmin()
@@ -123,14 +131,14 @@ class ReservationService
                 ->where('client_id', '=', $reservation->client_id)
                 ->first();
             $oldBalance = $clientInfo->balance;
-            $clientInfo->balance += $reservation->training->price;
+            $clientInfo->balance += $reservation->price;
             $clientInfo->save();
 
             (new BalanceEvent())->newQuery()
                 ->create([
                     'client_id' => $clientInfo->client_id,
                     'old_balance' => $oldBalance,
-                    'balance_change' => $reservation->training->price,
+                    'balance_change' => $reservation->price,
                     'description' => sprintf(
                         '%s: %s[ID:%s]',
                         __('gym.balance_training_withdraw'),
