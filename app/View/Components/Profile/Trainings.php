@@ -10,6 +10,8 @@ use Illuminate\View\Component;
 
 class Trainings extends Component
 {
+    public string $route;
+
     public function __construct()
     {
         //
@@ -17,6 +19,11 @@ class Trainings extends Component
 
     public function render(): View|Closure|string
     {
+        $this->route = match (Auth::user()->role) {
+            UserRole::ADMIN->value => 'admin.trainings.index',
+            UserRole::INSTRUCTOR->value => 'instructor.trainings.index',
+        };
+
         return view('components.profile.trainings');
     }
 

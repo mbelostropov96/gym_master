@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Admin\Training;
 
+use App\Enums\UserRole;
 use App\Helpers\UserHelper;
 use App\Models\User;
 use App\Services\DTO\UserDTO;
@@ -57,5 +58,10 @@ class TrainingUsersReservations extends Component
     public function render(): View|Closure|string
     {
         return view('components.admin.training.training-users-reservations');
+    }
+
+    public function shouldRender(): bool
+    {
+        return auth()->user()->role === UserRole::ADMIN->value;
     }
 }
