@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Instructor;
 
+use App\Enums\UserRole;
 use App\Http\Builder\Filters\TrainingFilter;
 use App\Http\Builder\Sorters\AbstractSorter;
 use App\Http\Builder\Sorters\TrainingSorter;
@@ -10,6 +11,7 @@ use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Models\Training;
 use App\Models\TrainingTemplate;
+use App\Models\User;
 use App\Services\TrainingService;
 use App\View\Components\Admin\Training\CreateTraining as CreateTrainingComponent;
 use App\View\Components\Admin\Training\CreateTrainingByTemplate as CreateTrainingByTemplateComponent;
@@ -41,9 +43,10 @@ class TrainingInstructorController extends Controller
         ];
         $trainingFilter = new TrainingFilter([
             TrainingFilter::INSTRUCTOR_ID => auth()->user()->id,
+            TrainingFilter::LESS_DATETIME_START => date('Y-m-d H:i:s', time()),
         ]);
         $trainingSorter = new TrainingSorter([
-            TrainingSorter::ID => AbstractSorter::SORT_DESC,
+            TrainingSorter::ID => AbstractSorter::SORT_ASC,
         ]);
 
         $trainings = $this->trainingService->index($relations, $trainingFilter, $trainingSorter);
@@ -64,15 +67,11 @@ class TrainingInstructorController extends Controller
             'reservations',
         ]);
 
-        // TODO выпилить
-//        $instructors = (new User())->newQuery()
-//            ->where('role', '=', UserRole::INSTRUCTOR->value)
-//            ->get();
+        $instructors = (new User())->newQuery()
+            ->where('role', '=', UserRole::INSTRUCTOR->value)
+            ->get();
 
-        $trainingComponent = new TrainingComponent(
-            $training,
-            //            $instructors,
-        );
+        $trainingComponent = new TrainingComponent($training, $instructors);
 
         return $trainingComponent->render()->with($trainingComponent->data());
     }

@@ -8,7 +8,7 @@
                     <x-common::button :ref="route('profile')" :label="__('gym.back_to_profile')" />
                 </div>
                 <div class="p-1">
-                    <x-common::button :ref="route('admin.trainings.create')" :label="__('gym.create_training')" />
+                    <x-common::button :ref="route($createTrainingRoute)" :label="__('gym.create_training')" />
                 </div>
             </div>
             <x-common::card :headerName="__('gym.trainings')">

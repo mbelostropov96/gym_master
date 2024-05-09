@@ -16,6 +16,9 @@ class CreateTrainingByTemplate extends Component
     public string $currentTrainerName = '';
     public array $instructorsMap;
 
+    public string $saveTrainingRoute;
+    public string $trainingListRoute;
+
     public function __construct(
         public TrainingTemplate $trainingTemplate,
         public Collection $instructors,
@@ -24,6 +27,8 @@ class CreateTrainingByTemplate extends Component
 
     public function render(): View|Closure|string
     {
+        $this->prepareRoutesByRole();
+
         $currentUserId = Auth::id();
 
         $this->instructorsMap = [];
@@ -45,5 +50,17 @@ class CreateTrainingByTemplate extends Component
     public function isInstructor(): bool
     {
         return Auth::user()->role === UserRole::INSTRUCTOR->value;
+    }
+
+    private function prepareRoutesByRole(): void
+    {
+        $this->saveTrainingRoute = match (Auth::user()->role) {
+            UserRole::ADMIN->value => 'admin.trainings.store',
+            UserRole::INSTRUCTOR->value => 'instructor.trainings.store',
+        };
+        $this->trainingListRoute = match (Auth::user()->role) {
+            UserRole::ADMIN->value => 'admin.trainings.create',
+            UserRole::INSTRUCTOR->value => 'instructor.trainings.create',
+        };
     }
 }

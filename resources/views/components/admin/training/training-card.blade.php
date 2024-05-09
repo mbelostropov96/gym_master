@@ -9,10 +9,10 @@
         <x-slot:content>
             <div class="d-flex justify-content-between">
                 <div class="p-1">
-                    <x-common::button :ref="route('admin.trainings.index')" :label="__('gym.back_to_trainings')" />
+                    <x-common::button :ref="route($trainingsRoute)" :label="__('gym.back_to_trainings')" />
                 </div>
                 <div class="p-1">
-                    <form method='POST' action="{{ route('admin.trainings.destroy', ['id' => $training->id]) }}">
+                    <form method='POST' action="{{ route($deleteTrainingRoute, ['id' => $training->id]) }}">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger" type="submit"> {{ __('gym.delete') }} </button>
@@ -21,7 +21,7 @@
             </div>
             <x-common::card :headerName="__('gym.training')">
                 <x-slot:body>
-                    <x-common::form :method="'PATCH'" :action="route('admin.trainings.update', ['id' => $training->id])" :buttonLabel="__('gym.save')">
+                    <x-common::form :method="'PATCH'" :action="route($updateTrainingRoute, ['id' => $training->id])" :buttonLabel="__('gym.save')">
                         <x-slot:content>
                             <x-common::input :label="__('gym.training_name')" :name="'name'" :value="$training->name" />
                             <x-common::select :label="__('gym.instructor_name')" :name="'instructor_id'" :values="$instructorsMap" :current-value="$training->instructor->getFullName()"
