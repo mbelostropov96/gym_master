@@ -69,9 +69,9 @@ class ReservationService
 
         /** @var Tariff $clientTariff */
         $clientTariff = (new Tariff())->newQuery()
-            ->findOrFail($clientInfo->tariff_id);
+            ->find($clientInfo->tariff_id);
 
-        $trainingPrice = (int)ceil($training->price * ((100 - $clientTariff->discount) / 100));
+        $trainingPrice = (int)ceil($training->price * ((100 - $clientTariff?->discount ?? 0) / 100));
 
         $oldBalance = $clientInfo->balance;
         $clientInfo->balance -= $trainingPrice;

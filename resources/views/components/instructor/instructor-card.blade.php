@@ -11,6 +11,7 @@
 @section('content')
     <x-common::justify-container>
         <x-slot:content>
+            <a onclick="history.back();" class="btn btn-primary"> {{ __('gym.back') }} </a>
             <x-common::card :headerName="__('gym.instructor')">
                 <x-slot:body>
                     <div class="row">

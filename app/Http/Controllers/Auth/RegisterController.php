@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\Gender;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -75,6 +76,10 @@ class RegisterController extends Controller
 
         $user->clientInfo()->create([
             'client_id' => $user->id,
+            Gender::MALE->value,
+            'weight' => 0,
+            'height' => 0,
+            'age' => 0,
         ]);
 
         return $user;
